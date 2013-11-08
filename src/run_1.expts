@@ -1,0 +1,53 @@
+#!/bin/bash
+#./run_1.expts
+# Used for generating measurements using Simulate/Simulate3 for various algorithms
+# Algorithm is indicated by algnum
+# algnum: 0 is Directed Graph
+#         1 is Access Matrix
+#         2 is Authorization Recycling
+#         3 is CPOL
+#         4 is both Bloom and Cascade Bloom filter (as dictated by depth)
+# Note: for authorization recycling, we need to use Simulate/Simulate2 instead because
+#       the way authorization recycling does access enforcement is different from the others
+#       as it goes to the PDP on-demand, and no a priori.
+
+rm -f stats.sperac_*
+rm Data/means
+for dataset in 5
+do
+	for rbac in 1
+	do
+	cp rbac$rbac Data/rbac-state
+		for session in 20
+		do 
+			cp dataset$dataset/instructions$rbac.$session Data/instructions
+			for algnum in 0 1 3
+			do
+				LOOPLIMIT=5
+				touch Data/means
+				#cp _stats.R$rbac.argv$session.S$sessions.alg$algnum Data/means
+				for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+				do 
+				    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state $algnum 98726 2 3
+				    java Simulate.Measurements
+				done 
+				mv Data/means _stats.dataset$dataset.R$rbac.S$session.alg$algnum.CBF
+			done
+		#	for algnum in 2
+                #        do
+                #                LOOPLIMIT=5
+                #                touch Data/means
+                #                #cp _stats.R$rbac.argv$session.S$sessions.alg$algnum Data/means
+                #                for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+                #                do
+                #                    java -Xms1500M -Xmx1500M Simulate.Simulate2 Data/rbac-state $algnum
+                #                        java Simulate.Measurements
+                #                done
+                #                mv Data/means _stats.dataset$dataset.R$rbac.S$session.alg$algnum
+                #        done
+
+		done
+	done
+
+done
+exit 0

@@ -1,0 +1,47 @@
+#!/bin/bash
+# An Example of using the generators for generating RBAC policies (or configurations)
+# and session profiles.
+# For RBAC Configs, we use Generator/RBAConfiguration
+# For session profiles, we use Generator/SessionProfile
+# This script gives examples of the parameters that may be specified
+# See the pdf in Generator/ for details
+
+
+java Generator.RBAConfiguration 2500 100 100 3 1 5 0 0 1 1 1
+cp Data/rbac-state rbac0
+
+java Generator.RBAConfiguration 2500 100 100 3 1 5 0 1 1 1 1
+cp Data/rbac-state rbac1
+
+java Generator.RBAConfiguration 2500 100 100 3 1 1 0 0 1 1 1
+cp Data/rbac-state rbac2
+
+mkdir dataset3
+
+for sessions in 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+do
+	mkdir dataset3/number_of_sessions_$sessions
+	for rbac in 0 1 2
+	do
+		let ACCESSCHECKS=5*$sessions
+		touch dataset3/number_of_sessions_$sessions/instructions$rbac.3
+		java Generator.SessionProfile rbac$rbac $sessions $sessions 3 1 $ACCESSCHECKS 1
+		cp Data/instructions dataset3/number_of_sessions_$sessions/instructions$rbac.3
+	done
+done
+
+mkdir dataset4
+
+for sessions in 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+do
+        mkdir dataset4/number_of_sessions_$sessions
+        for rbac in 0 1 2
+        do
+		let ACCESSCHECKS=5*$sessions
+		let ACTIVESESSIONS=$sessions/2
+                touch dataset4/number_of_sessions_$sessions/instructions$rbac.3
+                java Generator.SessionProfile rbac$rbac $sessions $ACTIVESESSIONS 3 1 $ACCESSCHECKS 1
+                cp Data/instructions dataset4/number_of_sessions_$sessions/instructions$rbac.3
+        done
+done
+

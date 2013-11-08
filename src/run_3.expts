@@ -1,0 +1,720 @@
+#!/bin/bash
+#./run_3.expts
+# Used to check whether heuristic for CBF works -- need to check with various input values
+
+rm -f stats.sperac_*
+rm Data/means
+cp rbac0 Data/rbac-state
+cp dataset4/number_of_sessions_2/instructions0.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 190 43 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S2.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 350 18 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S2.algCBF
+
+cp rbac1 Data/rbac-state
+cp dataset4/number_of_sessions_2/instructions1.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 4 16 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S2.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 82 55 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S2.algCBF
+
+cp rbac2 Data/rbac-state
+cp dataset4/number_of_sessions_2/instructions2.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 2 55 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S2.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 82 55 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S2.algCBF
+
+cp rbac0 Data/rbac-state
+cp dataset4/number_of_sessions_3/instructions0.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 150 37 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S3.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 254 8 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S3.algCBF
+
+cp rbac1 Data/rbac-state
+cp dataset4/number_of_sessions_3/instructions1.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 70 8 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S3.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 90 66 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S3.algCBF
+
+cp rbac2 Data/rbac-state
+cp dataset4/number_of_sessions_3/instructions2.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 6 48 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S3.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 162 32 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S3.algCBF
+
+cp rbac0 Data/rbac-state
+cp dataset4/number_of_sessions_4/instructions0.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 150 90 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S4.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 310 117 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S4.algCBF
+
+cp rbac1 Data/rbac-state
+cp dataset4/number_of_sessions_4/instructions1.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 33 70 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S4.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 90 110 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S4.algCBF
+
+cp rbac2 Data/rbac-state
+cp dataset4/number_of_sessions_4/instructions2.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 24 2 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S4.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 82 198 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S4.algCBF
+
+cp rbac0 Data/rbac-state
+cp dataset4/number_of_sessions_5/instructions0.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 200 170 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S5.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 438 170 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S5.algCBF
+
+cp rbac1 Data/rbac-state
+cp dataset4/number_of_sessions_5/instructions1.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 10 162 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S5.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 90 162 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S5.algCBF
+
+cp rbac2 Data/rbac-state
+cp dataset4/number_of_sessions_5/instructions2.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 30 4 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S5.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 246 29 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S5.algCBF
+
+cp rbac0 Data/rbac-state
+cp dataset4/number_of_sessions_6/instructions0.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 260 145 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S6.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 498 131 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S6.algCBF
+
+cp rbac1 Data/rbac-state
+cp dataset4/number_of_sessions_6/instructions1.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 141 85 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S6.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 82 285 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S6.algCBF
+
+cp rbac2 Data/rbac-state
+cp dataset4/number_of_sessions_6/instructions2.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 40 5 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S6.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 324 63 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S6.algCBF
+
+cp rbac0 Data/rbac-state
+cp dataset4/number_of_sessions_7/instructions0.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 340 92 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S7.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 656 37 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S7.algCBF
+
+cp rbac1 Data/rbac-state
+cp dataset4/number_of_sessions_7/instructions1.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 48 36 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S7.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 338 38 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S7.algCBF
+
+cp rbac2 Data/rbac-state
+cp dataset4/number_of_sessions_7/instructions2.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 20 38 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S7.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 324 63 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S7.algCBF
+
+cp rbac0 Data/rbac-state
+cp dataset4/number_of_sessions_8/instructions0.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 490 123 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S8.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 886 41 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S8.algCBF
+
+cp rbac1 Data/rbac-state
+cp dataset4/number_of_sessions_8/instructions1.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 336 21 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S8.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 497 65 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S8.algCBF
+
+cp rbac2 Data/rbac-state
+cp dataset4/number_of_sessions_8/instructions2.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 25 47 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S8.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 404 78 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S8.algCBF
+
+cp rbac0 Data/rbac-state
+cp dataset4/number_of_sessions_9/instructions0.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 450 125 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S9.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 846 61 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S9.algCBF
+
+cp rbac1 Data/rbac-state
+cp dataset4/number_of_sessions_9/instructions1.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 100 45 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S9.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 82 396 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S9.algCBF
+
+cp rbac2 Data/rbac-state
+cp dataset4/number_of_sessions_9/instructions2.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 20 74 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S9.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 404 78 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S9.algCBF
+
+cp rbac0 Data/rbac-state
+cp dataset4/number_of_sessions_10/instructions0.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 530 143 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S10.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 1004 57 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S10.algCBF
+
+cp rbac1 Data/rbac-state
+cp dataset4/number_of_sessions_10/instructions1.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 195 53 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S10.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 552 103 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S10.algCBF
+
+cp rbac2 Data/rbac-state
+cp dataset4/number_of_sessions_10/instructions2.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 24 89 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S10.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 489 57 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S10.algCBF
+
+cp rbac0 Data/rbac-state
+cp dataset4/number_of_sessions_11/instructions0.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 200 291 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S11.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 310 290 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S11.algCBF
+
+cp rbac1 Data/rbac-state
+cp dataset4/number_of_sessions_11/instructions1.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 36 234 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S11.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 494 320 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S11.algCBF
+
+cp rbac2 Data/rbac-state
+cp dataset4/number_of_sessions_11/instructions2.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 10 297 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S11.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 404 297 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S11.algCBF
+
+cp rbac0 Data/rbac-state
+cp dataset4/number_of_sessions_12/instructions0.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 680 173 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S12.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 1232 57 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S12.algCBF
+
+cp rbac1 Data/rbac-state
+cp dataset4/number_of_sessions_12/instructions1.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 162 39 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S12.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 617 65 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S12.algCBF
+
+cp rbac2 Data/rbac-state
+cp dataset4/number_of_sessions_12/instructions2.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 35 65 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S12.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 572 42 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S12.algCBF
+
+cp rbac0 Data/rbac-state
+cp dataset4/number_of_sessions_13/instructions0.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 795 122 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S13.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 1004 176 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S13.algCBF
+
+cp rbac1 Data/rbac-state
+cp dataset4/number_of_sessions_13/instructions1.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 240 84 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S13.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 672 115 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S13.algCBF
+
+cp rbac2 Data/rbac-state
+cp dataset4/number_of_sessions_13/instructions2.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 35 65 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S13.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 572 42 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S13.algCBF
+
+cp rbac0 Data/rbac-state
+cp dataset4/number_of_sessions_14/instructions0.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 770 177 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S14.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 1402 73 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S14.algCBF
+
+cp rbac1 Data/rbac-state
+cp dataset4/number_of_sessions_14/instructions1.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 112 115 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S14.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 700 100 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S14.algCBF
+
+cp rbac2 Data/rbac-state
+cp dataset4/number_of_sessions_14/instructions2.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 40 74 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S14.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 652 75 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S14.algCBF
+
+cp rbac0 Data/rbac-state
+cp dataset4/number_of_sessions_15/instructions0.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 770 182 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S15.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 1402 70 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R0.argv3.S15.algCBF
+
+cp rbac1 Data/rbac-state
+cp dataset4/number_of_sessions_15/instructions1.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 318 43 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S15.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 778 63 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R1.argv3.S15.algCBF
+
+cp rbac2 Data/rbac-state
+cp dataset4/number_of_sessions_15/instructions2.3 Data/instructions
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 56 29 1
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S15.algBF
+touch Data/means
+for ((a=0 ; a <= 30; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+do 
+    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state 4 486 462 3
+	java Simulate.Measurements
+done 
+mv Data/means dataset4/_stats.R2.argv3.S15.algCBF
+exit 0
