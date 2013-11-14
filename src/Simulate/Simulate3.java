@@ -18,6 +18,8 @@ import BloomFilter.SDP_Bloom;
 import Cpol.PDP_Cpol;
 import Cpol.SDP_Cpol;
 import Cpol.Session_Cpol;
+import MapBitSet.SDP_MapBitSet;
+import MapBitSet.PDP_MapBitSet;
 import PDP_SDP.PDP;
 import PDP_SDP.SDP;
 import PDP_SDP.Session;
@@ -52,7 +54,7 @@ public class Simulate3 {
 
 			try {
 				algorithm = Integer.parseInt(args[1]);
-				if(algorithm > 4 || algorithm < 0) {
+				if(algorithm > 5 || algorithm < 0) {
 					System.out.println(errorMessage());
 					System.exit(0);
 				}
@@ -94,6 +96,10 @@ public class Simulate3 {
 					System.exit(0);
 				}
 				break;
+      case 5:
+        pdp = new PDP_MapBitSet();
+        sdp = new SDP_MapBitSet(pdp);
+        break;
 			}
 
 			String filename = args[0];//construct file name
@@ -227,9 +233,10 @@ public class Simulate3 {
 		"\t1: Access Matrix\n" +
 		"\t2: Recycling\n" +
 		"\t3: Cpol\n" +
-		"\t4: Cascade Bloom Filter\n\n" +
-		"In case 4:\n" +
-		"Usage: java Simulate2 4 <m> <Elen> <MAX_DEPTH>";
+		"\t4: Cascade Bloom Filter\n" +
+    "\t5: Map with BitSet\n" +
+		"\n\t\tIn case 4:\n" +
+		"\t\tUsage: java Simulate2 4 <m> <Elen> <MAX_DEPTH>";
 		return error;
 	}
 
