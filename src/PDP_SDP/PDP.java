@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import Helper.Parser;
 import RbacGraph.RbacGraph;
 import Structures.RBAC;
-
+import Structures.Vertex;
+import Structures.RoleVertex;
+import Structures.UserVertex;
 
 public abstract class PDP {
 	/*public RBAC getG();//returns a RBAC data structure from PDP
@@ -45,7 +47,28 @@ public abstract class PDP {
 
 	}
 	
-	public abstract SDP_Data_Structure request(Session s, String[] roles);
+	public SDP_Data_Structure request(Session s, String[] roles)
+  {
+    UserVertex user = ((RbacGraph)g).FindUser(s.user_id);
+    if (user == null ) {
+      return null;
+    }
+    
+    // Convert requested roles into RoleVertex types
+    ArrayList<RoleVertex> Roles = new ArrayList();
+    for ( int i = 0; i < roles.length; i++ ) {
+      Roles.add(((RbacGraph)g).FindRole(roles[i]));
+    }
+
+    // Verify all requested roles are in the user's induced subgraph
+    ArrayList<Vertex> userSubgraph =
+      ((RbacGraph)g).getInducedGraph(new ArrayList<Vertex>(), (Vertex)user);
+    if (!userSubgraph.containsAll(Roles)) {
+      return null;
+    }
+
+    return new PDP_Response(Roles, userSubgraph);
+  }
 	public abstract SDP_Data_Structure delete(int session_id);
 	
 }

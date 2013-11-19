@@ -5,7 +5,7 @@ SOURCEPATH=${MAIN_DIR}
 %.class:%.java
 	javac -classpath ${CLASSPATH} -sourcepath ${SOURCEPATH} $<
 
-all: PDP.class SDP_Data_Structure.class SDP.class Session.class
+all: PDP.class PDP_Response.class SDP_Data_Structure.class SDP.class Session.class
 
 clean:
 	rm -rf *.class a.out core

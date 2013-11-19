@@ -2,9 +2,14 @@ package MapBitSet;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 import PDP_SDP.PDP;
+import PDP_SDP.PDP_Response;
 import PDP_SDP.SDP_Data_Structure;
 import PDP_SDP.Session;
 import RbacGraph.RbacGraph;
@@ -24,30 +29,11 @@ public class PDP_MapBitSet extends PDP {
 	@Override
 	public SDP_Data_Structure request(Session s, String[] roles) {
 
-    // Validate user
-    UserVertex user = ((RbacGraph)g).FindUser(s.user_id);
-    if (user == null ) {
-      // FIXME: error checking or throw exception?
+    PDP_Response P = (PDP_Response)super.request(s, roles);
+    if ( P == null )
       return null;
-    }
-
-    // Convert requested roles into RoleVertex types
-    ArrayList<RoleVertex> Roles = new ArrayList();
-    for ( int i = 0; i < roles.length; i++ ) {
-			Roles.add(((RbacGraph)g).FindRole(roles[i]));
-		}
-
-    // Get the induced graph for the user
-    ArrayList<Vertex> userSubgraph =
-      ((RbacGraph)g).getInducedGraph(new ArrayList<Vertex>(), (Vertex)user);
-
-    // Verify all requested roles are in the user's induced subgraph
-    if (!userSubgraph.containsAll(Roles)) {
-      // FIXME: error checking or throw exception?
-      return null;
-    }
-    // TODO: Everything up to here can probably be shared between
-    //       PDP implementations that generate an SDP data structure.
+    ArrayList<RoleVertex> Roles = P.getRoles();
+    ArrayList<Vertex> userSubgraph = P.getUserGraph();
 
     // Construct set of permissions for requested roles in this session
     /* FIXME:
