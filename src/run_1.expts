@@ -11,6 +11,9 @@
 #       the way authorization recycling does access enforcement is different from the others
 #       as it goes to the PDP on-demand, and no a priori.
 
+M5OP=/home/gedare/work/gem5/gem5/util/m5
+PSEUDO=/home/gedare/work/research/hwds/gem5/pseudo_insn
+
 rm -f stats.sperac_*
 rm Data/means
 for dataset in 5
@@ -21,14 +24,17 @@ do
 		for session in 20
 		do 
 			cp dataset$dataset/instructions$rbac.$session Data/instructions
-			for algnum in 0 1 3 5
+			for algnum in 1 5 6 
 			do
 				LOOPLIMIT=5
 				touch Data/means
 				#cp _stats.R$rbac.argv$session.S$sessions.alg$algnum Data/means
 				for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
 				do 
-				    java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state $algnum 98726 2 3
+				    java -Xms1500M -Xmx1500M \
+              -classpath ${CLASSPATH}:${M5OP}:${PSEUDO} \
+              -Djava.library.path=${M5OP} \
+              Simulate.Simulate3 Data/rbac-state $algnum 98726 2 3
 				    java Simulate.Measurements
 				done 
 				mv Data/means _stats.dataset$dataset.R$rbac.S$session.alg$algnum.CBF

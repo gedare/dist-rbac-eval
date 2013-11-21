@@ -18,6 +18,8 @@ import BloomFilter.SDP_Bloom;
 import Cpol.PDP_Cpol;
 import Cpol.SDP_Cpol;
 import Cpol.Session_Cpol;
+import HWDS.SDP_HWDS;
+import HWDS.PDP_HWDS;
 import MapBitSet.SDP_MapBitSet;
 import MapBitSet.PDP_MapBitSet;
 import PDP_SDP.PDP;
@@ -54,7 +56,7 @@ public class Simulate3 {
 
 			try {
 				algorithm = Integer.parseInt(args[1]);
-				if(algorithm > 5 || algorithm < 0) {
+				if(algorithm > 6 || algorithm < 0) {
 					System.out.println(errorMessage());
 					System.exit(0);
 				}
@@ -99,6 +101,10 @@ public class Simulate3 {
       case 5:
         pdp = new PDP_MapBitSet();
         sdp = new SDP_MapBitSet(pdp);
+        break;
+      case 6:
+        pdp = new PDP_HWDS();
+        sdp = new SDP_HWDS(pdp);
         break;
 			}
 
