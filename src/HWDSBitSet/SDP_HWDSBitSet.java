@@ -11,12 +11,12 @@ import hwds.*;
 public class SDP_HWDSBitSet extends SDP {
 
   // A subset of the PDP's Sessions map.
-  private HWDSBitSet hwds;
+  private HWDS hwds;
   private HashMap<Integer,CountedBitSet> hashed_bitsets;
 
 	public SDP_HWDSBitSet(PDP pdp) {
 		super(pdp);
-    hwds = new SimulatedHWDSBitSet();
+    hwds = new SimulatedHWDS();
     hashed_bitsets = new HashMap<Integer,CountedBitSet>();
 	}
 

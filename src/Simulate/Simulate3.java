@@ -20,6 +20,8 @@ import Cpol.SDP_Cpol;
 import Cpol.Session_Cpol;
 import HWDS.SDP_HWDS;
 import HWDS.PDP_HWDS;
+import HWDSBitSet.SDP_HWDSBitSet;
+import HWDSBitSet.PDP_HWDSBitSet;
 import MapBitSet.SDP_MapBitSet;
 import MapBitSet.PDP_MapBitSet;
 import PDP_SDP.PDP;
@@ -56,7 +58,7 @@ public class Simulate3 {
 
 			try {
 				algorithm = Integer.parseInt(args[1]);
-				if(algorithm > 6 || algorithm < 0) {
+				if(algorithm > 7 || algorithm < 0) {
 					System.out.println(errorMessage());
 					System.exit(0);
 				}
@@ -103,6 +105,10 @@ public class Simulate3 {
         sdp = new SDP_MapBitSet(pdp);
         break;
       case 6:
+        pdp = new PDP_HWDSBitSet();
+        sdp = new SDP_HWDSBitSet(pdp);
+        break;
+      case 7:
         pdp = new PDP_HWDS();
         sdp = new SDP_HWDS(pdp);
         break;

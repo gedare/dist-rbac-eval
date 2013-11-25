@@ -24,7 +24,7 @@ do
 		for session in 20
 		do 
 			cp dataset$dataset/instructions$rbac.$session Data/instructions
-			for algnum in 1 5 6 
+			for algnum in 1 5 7 
 			do
 				LOOPLIMIT=5
 				touch Data/means
