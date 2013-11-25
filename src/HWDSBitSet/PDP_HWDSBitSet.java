@@ -1,4 +1,4 @@
-package HWDS;
+package HWDSBitSet;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -15,13 +15,13 @@ import PDP_SDP.Session;
 import RbacGraph.RbacGraph;
 import Structures.*;
 
-public class PDP_HWDS extends PDP {
+public class PDP_HWDSBitSet extends PDP {
 
   // The Sessions is a map of session ids as keys and permission bits as values
   // TODO: Use a sparse representation when permissions are sparse/dense.
   public Map<Integer, BitSet> Sessions;
 	
-	public PDP_HWDS() {
+	public PDP_HWDSBitSet() {
     super();
     this.Sessions = new TreeMap<Integer, BitSet>();
 	}

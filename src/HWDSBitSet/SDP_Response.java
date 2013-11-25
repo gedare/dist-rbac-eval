@@ -1,4 +1,4 @@
-package HWDS;
+package HWDSBitSet;
 
 import java.util.*;
 

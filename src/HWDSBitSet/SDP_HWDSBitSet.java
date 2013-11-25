@@ -1,4 +1,4 @@
-package HWDS;
+package HWDSBitSet;
 
 import PDP_SDP.PDP;
 import PDP_SDP.SDP;
@@ -8,15 +8,15 @@ import java.util.*;
 import jni.gem5Op;
 import hwds.*;
 
-public class SDP_HWDS extends SDP {
+public class SDP_HWDSBitSet extends SDP {
 
   // A subset of the PDP's Sessions map.
-  private HWDS hwds;
+  private HWDSBitSet hwds;
   private HashMap<Integer,CountedBitSet> hashed_bitsets;
 
-	public SDP_HWDS(PDP pdp) {
+	public SDP_HWDSBitSet(PDP pdp) {
 		super(pdp);
-    hwds = new SimulatedHWDS();
+    hwds = new SimulatedHWDSBitSet();
     hashed_bitsets = new HashMap<Integer,CountedBitSet>();
 	}
 
