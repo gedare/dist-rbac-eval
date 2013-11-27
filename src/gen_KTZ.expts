@@ -1,0 +1,195 @@
+#!/bin/bash
+
+# This script attempts to reproduce the experiments from
+# the paper by Komlenovic, Tripunitara, and Zitouni.
+#
+# Time efficiency experiments are the only ones implemented so far.
+
+outdir=dataset_KTZ
+mkdir ${outdir}
+
+echo "Generating ${outdir}"
+
+## RBAC Configurations
+# java RBAConfiguration #U #R #P R/U R/P Depth_of_RH Shape_of_RH
+#     Nature_of_RH R_Connectivity U_Connectivity P_Connectivity
+#
+# Depth_of_RH <- int in [1..5]
+# Shape_of_RH <- 0: rectangle, 1: pyramid, 2: inverse pyramid, 3: diamond
+# Nature_of_RH <- 0: Stanford, 1: Hybrid
+# R_Connectivity <- 0: random, 1: uniform
+# U_Connectivity <- 0: random, 1: uniform, 2: exactly 1
+# P_Connectivity <- 0: random, 1: uniform, 2: exactly 1
+
+# RBAC Configurations for inter-session experiments
+# #U = 25
+# #R = 100
+# #P = 250
+# R/U = ?, say #R/#U = 4
+# R/P = ?, say round(#P/#R) = 3
+# Depth_of_RH = [1..5]                        # Note: Stanford Depth_of_RH = 5.
+# Shape_of_RH = ?, say 0
+# Nature_of_RH = [Stanford, Hybrid] = [0,1]   # Note: Core is Depth_of_RH = 1.
+# R_Connectivity = ?, say 1
+# U_Connectivity = ?, say 1
+# P_Connectivity = ?, say 1
+
+U=25
+R=100
+P=250
+RperU=4
+RperP=3
+Shape_of_RH=0
+R_Connectivity=1
+U_Connectivity=1
+P_Connectivity=1
+
+# Stanford RH
+Depth_of_RH=5
+Nature_of_RH=0
+java Generator.RBAConfiguration ${U} ${R} ${P} ${RperU} ${RperP} \
+      ${Depth_of_RH} ${Shape_of_RH} ${Nature_of_RH} \
+      ${R_Connectivity} ${U_Connectivity} ${P_Connectivity}
+cp Data/rbac-state ${outdir}/rbac_inter_${Depth_of_RH}_${Nature_of_RH}
+
+# Hybrid RH (Note: Core=Hybrid with Depth_of_RH of 1)
+Nature_of_RH=1
+for Depth_of_RH in {1..5}
+do
+  java Generator.RBAConfiguration ${U} ${R} ${P} ${RperU} ${RperP} \
+      ${Depth_of_RH} ${Shape_of_RH} ${Nature_of_RH} \
+      ${R_Connectivity} ${U_Connectivity} ${P_Connectivity}
+  cp Data/rbac-state ${outdir}/rbac_inter_${Depth_of_RH}_${Nature_of_RH}
+done
+
+echo "Done generating inter-session experiment configurations"
+
+# RBAC Configurations for intra-session experiments
+# #U = ?, say 25
+# #R = [10, 50, 100, 500, 700, 2000, 3000, 6000, 8000, 10000], say 10000
+# #P = say 10000, [10, 50, 100, 500, 700, 2000, 3000, 6000, 8000, 10000]
+# R/U = #R
+# R/P = #R
+# Depth_of_RH = [1..5]
+# Shape_of_RH = say 0
+# Nature_of_RH = [Stanford, Hybrid] = [0,1] # Note: core is depth=1
+# R_Connectivity = say 1
+# U_Connectivity = say 1
+# P_Connectivity = say 1
+
+U=25
+Shape_of_RH=0
+R_Connectivity=1
+U_Connectivity=1
+P_Connectivity=1
+
+# Varying Roles
+for R in 10 50 100 500 700 2000 3000 6000 8000 10000
+do
+  P=10000
+  RperU=$R
+  RperP=$R
+
+  # Stanford RH
+  Depth_of_RH=5
+  Nature_of_RH=0
+  java Generator.RBAConfiguration ${U} ${R} ${P} ${RperU} ${RperP} \
+      ${Depth_of_RH} ${Shape_of_RH} ${Nature_of_RH} \
+      ${R_Connectivity} ${U_Connectivity} ${P_Connectivity}
+  cp Data/rbac-state ${outdir}/rbac_intra_${Depth_of_RH}_${Nature_of_RH}_${R}_${P}
+
+  # Hybrid/Core RH
+  Nature_of_RH=1
+  for Depth_of_RH in {1..5}
+  do
+    java Generator.RBAConfiguration ${U} ${R} ${P} ${RperU} ${RperP} \
+      ${Depth_of_RH} ${Shape_of_RH} ${Nature_of_RH} \
+      ${R_Connectivity} ${U_Connectivity} ${P_Connectivity}
+    cp Data/rbac-state ${outdir}/rbac_intra_${Depth_of_RH}_${Nature_of_RH}_${R}_${P}
+  done
+done
+
+echo "Done generating intra-session experiment configurations for varying roles"
+
+#Varying Permissions
+for P in 10 50 100 500 700 2000 3000 6000 8000 # Note: already have 10000
+do
+  R=10000
+  RperU=$R
+  RperP=$R
+
+  # Stanford RH
+  Depth_of_RH=5
+  Nature_of_RH=0
+  java Generator.RBAConfiguration ${U} ${R} ${P} ${RperU} ${RperP} \
+      ${Depth_of_RH} ${Shape_of_RH} ${Nature_of_RH} \
+      ${R_Connectivity} ${U_Connectivity} ${P_Connectivity}
+  cp Data/rbac-state ${outdir}/rbac_intra_${Depth_of_RH}_${Nature_of_RH}_${R}_${P}
+
+  # Hybrid/Core RH
+  Nature_of_RH=1
+  for Depth_of_RH in {1..5}
+  do
+    java Generator.RBAConfiguration ${U} ${R} ${P} ${RperU} ${RperP} \
+      ${Depth_of_RH} ${Shape_of_RH} ${Nature_of_RH} \
+      ${R_Connectivity} ${U_Connectivity} ${P_Connectivity}
+    cp Data/rbac-state ${outdir}/rbac_intra_${Depth_of_RH}_${Nature_of_RH}_${R}_${P}
+  done
+done
+
+echo "Done generating intra-session experiment configurations for varying permissions"
+
+## Session Profiles
+# java Generator.SessionProfile rbac_configuration sessions 
+#     sessions_per_access_check roles_per_session nature_of_roles
+#     access_checks nature_of_access_checks
+
+
+# Session Profiles for inter-session experiments
+# rbac_configuration = generated above
+# sessions = 2 to 15
+# sessions_per_access_check = 
+# roles_per_session = 
+# nature_of_roles = 
+# access_checks = 
+# nature_of_access_checks = 
+
+echo "Generating inter-session experiment session profiles"
+
+
+
+
+# Sessions are from 2 through 15
+for sessions in {2..15}
+do
+	mkdir ${outdir}/number_of_sessions_$sessions
+
+  # Stanford RH
+  Depth_of_RH=5
+  Nature_of_RH=0
+
+
+	for rbac in 0 1 2
+	do
+		let ACCESSCHECKS=5*$sessions
+		touch ${outdir}/number_of_sessions_$sessions/instructions$rbac.3
+		java Generator.SessionProfile rbac$rbac $sessions $sessions 3 1 $ACCESSCHECKS 1
+		cp Data/instructions dataset3/number_of_sessions_$sessions/instructions$rbac.3
+	done
+done
+
+mkdir dataset4
+
+for sessions in 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+do
+        mkdir dataset4/number_of_sessions_$sessions
+        for rbac in 0 1 2
+        do
+		let ACCESSCHECKS=5*$sessions
+		let ACTIVESESSIONS=$sessions/2
+                touch dataset4/number_of_sessions_$sessions/instructions$rbac.3
+                java Generator.SessionProfile rbac$rbac $sessions $ACTIVESESSIONS 3 1 $ACCESSCHECKS 1
+                cp Data/instructions dataset4/number_of_sessions_$sessions/instructions$rbac.3
+        done
+done
+
