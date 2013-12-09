@@ -18,7 +18,7 @@
 # Note: for the Bloom Filters Simulate3 accepts 3 additional undocumented args
 #
 
-outdir=stats_KTZ
+outdir=stats_KTZsubset
 mkdir ${outdir}
 
 rm -f ${outdir}/*
