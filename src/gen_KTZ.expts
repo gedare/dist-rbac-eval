@@ -94,25 +94,14 @@ do
   RperU=$R
   RperP=$R
 
-  # Stanford RH
-  Depth_of_RH=5
-  Nature_of_RH=0
+  # Core RH
+  Nature_of_RH=1
+  Depth_of_RH=1
   java Generator.RBAConfiguration ${U} ${R} ${P} ${RperU} ${RperP} \
       ${Depth_of_RH} ${Shape_of_RH} ${Nature_of_RH} \
       ${R_Connectivity} ${U_Connectivity} ${P_Connectivity}
   mkdir ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}
   cp Data/rbac-state ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}
-
-  # Hybrid/Core RH
-  Nature_of_RH=1
-  for Depth_of_RH in {1..5}
-  do
-    java Generator.RBAConfiguration ${U} ${R} ${P} ${RperU} ${RperP} \
-      ${Depth_of_RH} ${Shape_of_RH} ${Nature_of_RH} \
-      ${R_Connectivity} ${U_Connectivity} ${P_Connectivity}
-    mkdir ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}
-    cp Data/rbac-state ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}
-  done
 done
 
 echo "Done generating intra-session experiment configurations for varying roles"
@@ -124,25 +113,14 @@ do
   RperU=$R
   RperP=$R
 
-  # Stanford RH
-  Depth_of_RH=5
-  Nature_of_RH=0
+  # Core RH
+  Nature_of_RH=1
+  Depth_of_RH=1
   java Generator.RBAConfiguration ${U} ${R} ${P} ${RperU} ${RperP} \
       ${Depth_of_RH} ${Shape_of_RH} ${Nature_of_RH} \
       ${R_Connectivity} ${U_Connectivity} ${P_Connectivity}
   mkdir ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}
   cp Data/rbac-state ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}
-
-  # Hybrid/Core RH
-  Nature_of_RH=1
-  for Depth_of_RH in {1..5}
-  do
-    java Generator.RBAConfiguration ${U} ${R} ${P} ${RperU} ${RperP} \
-      ${Depth_of_RH} ${Shape_of_RH} ${Nature_of_RH} \
-      ${R_Connectivity} ${U_Connectivity} ${P_Connectivity}
-    mkdir ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}
-    cp Data/rbac-state ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}
-  done
 done
 
 echo "Done generating intra-session experiment configurations for varying permissions"
@@ -217,29 +195,15 @@ for R in 10 50 100 500 700 2000 3000 6000 8000 10000
 do
   P=250
 
-  # Stanford RH
-  Depth_of_RH=5
-  Nature_of_RH=0
+  # Core RH
+  Depth_of_RH=1
+  Nature_of_RH=1
   sessions_per_access_check=15
   roles_per_session=${R}
   nature_of_roles=1
   let access_checks=5*$sessions
   nature_of_access_checks=1
   java Generator.SessionProfile \
-    ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state \
-    $sessions \
-    $sessions_per_access_check \
-    $roles_per_session \
-    $nature_of_roles \
-    $access_checks \
-    $nature_of_access_checks
-  cp Data/instructions ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
-
-  # Hybrid/Core RH
-  Nature_of_RH=1
-  for Depth_of_RH in {1..5}
-  do
-    java Generator.SessionProfile \
       ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state \
       $sessions \
       $sessions_per_access_check \
@@ -247,8 +211,7 @@ do
       $nature_of_roles \
       $access_checks \
       $nature_of_access_checks
-    cp Data/instructions ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
-  done
+  cp Data/instructions ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
 done
 
 #Varying Permissions
@@ -256,29 +219,15 @@ for P in 10 50 100 500 700 2000 3000 6000 8000 10000
 do
   R=100
 
-  # Stanford RH
-  Depth_of_RH=5
-  Nature_of_RH=0
+  # Hybrid/Core RH
+  Depth_of_RH=1
+  Nature_of_RH=1
   sessions_per_access_check=15
   roles_per_session=${R}
   nature_of_roles=1
   let access_checks=5*$sessions
   nature_of_access_checks=1
   java Generator.SessionProfile \
-    ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state \
-    $sessions \
-    $sessions_per_access_check \
-    $roles_per_session \
-    $nature_of_roles \
-    $access_checks \
-    $nature_of_access_checks
-  cp Data/instructions ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
-
-  # Hybrid/Core RH
-  Nature_of_RH=1
-  for Depth_of_RH in {1..5}
-  do
-    java Generator.SessionProfile \
       ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state \
       $sessions \
       $sessions_per_access_check \
@@ -286,7 +235,6 @@ do
       $nature_of_roles \
       $access_checks \
       $nature_of_access_checks
-    cp Data/instructions ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
-  done
+  cp Data/instructions ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
 done
 
