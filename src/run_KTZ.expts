@@ -32,6 +32,7 @@ echo "Starting inter-session experiments"
 mkdir ${outdir}/rbac_inter
 for sessions in {2..15}
 do
+  echo "Sessions: ${sessions}"
   # Stanford RH
   Depth_of_RH=5
   Nature_of_RH=0
@@ -138,6 +139,7 @@ echo "Intra-session experiments: varying roles"
 # Varying Roles
 for R in 10 50 100 500 700 2000 3000 6000 8000 10000
 do
+  echo "Roles: ${R}"
   P=250
   cp ${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3 Data/instructions
   cp ${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state Data/
@@ -186,6 +188,7 @@ echo "Intra-session experiments: varying permissions"
 # Varying Permissions
 for P in 10 50 100 500 700 2000 3000 6000 8000 10000
 do
+  echo "Permissions: ${P}"
   R=100
   cp ${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3 Data/instructions
   cp ${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state Data/
