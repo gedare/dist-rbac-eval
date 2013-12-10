@@ -24,7 +24,7 @@ mkdir ${outdir}
 rm -f ${outdir}/*
 rm Data/means
 
-indir=dataset_KTZ
+indir=dataset_KTZsubset
 
 echo "Starting inter-session experiments"
 
@@ -78,7 +78,7 @@ do
 
   # Core RH
   Nature_of_RH=1
-  Depth_of_RH=0
+  Depth_of_RH=1
   cp ${indir}/rbac_inter/${Depth_of_RH}_${Nature_of_RH}/instructions_${sessions}.3 Data/instructions
   cp ${indir}/rbac_inter/${Depth_of_RH}_${Nature_of_RH}/rbac-state Data/
   for algnum in 0 1 3
