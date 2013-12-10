@@ -46,7 +46,7 @@ do
       java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state $algnum
       java Simulate.Measurements
     done
-    mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$session.$algnum.CBF
+    mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
   done
 
   # Bloom Filters
@@ -60,7 +60,7 @@ do
         98726 2 3
       java Simulate.Measurements
     done
-    mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$session.$algnum.CBF
+    mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
   done
 
   # Authorization Recycling
@@ -73,7 +73,7 @@ do
       java -Xms1500M -Xmx1500M Simulate.Simulate2 Data/rbac-state $algnum
       java Simulate.Measurements
     done
-      mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$session.$algnum.CBF
+      mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
   done
 
   # Hybrid/Core RH
@@ -91,7 +91,7 @@ do
         java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state $algnum
         java Simulate.Measurements
       done
-      mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$session.$algnum.CBF
+      mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
     done
   
     # Bloom Filters
@@ -105,7 +105,7 @@ do
           98726 2 3
         java Simulate.Measurements
       done
-      mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$session.$algnum.CBF
+      mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
     done
   
     # Authorization Recycling
@@ -118,7 +118,7 @@ do
         java -Xms1500M -Xmx1500M Simulate.Simulate2 Data/rbac-state $algnum
         java Simulate.Measurements
       done
-        mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$session.$algnum.CBF
+        mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
     done
   done
 done
