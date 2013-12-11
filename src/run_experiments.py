@@ -65,9 +65,9 @@ def main():
   for x in experiments:
     try:
       func = dispatch_map[x]
-      func(base)
     except KeyError:
       raise ValueError('Invalid experiment ' + x)
+    func(base)
 
 # script entry point
 if __name__ == "__main__":
