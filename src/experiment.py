@@ -36,7 +36,7 @@ class Experiment(object):
     self.outputdir = os.path.join(self.basedir, str(output))
     # The arguments should be sanitized before touching the filesystem
     if not os.path.exists(self.outputdir):
-      os.mkdirs(self.outputdir)
+      os.makedirs(self.outputdir)
     assert os.path.isdir(self.outputdir)
 
     self.datadir = os.path.join(self.basedir, 'Data')
@@ -78,8 +78,11 @@ class InterSessionExperiment(Experiment):
   def __init__(self, base, input, output):
     super(InterSessionExperiment, self).__init__(base, input, output)
     self.inputdir = os.path.join(self.inputdir, "rbac_inter")
+    assert(os.path.isdir(self.inputdir))
     self.outputdir = os.path.join(self.outputdir, "rbac_inter")
-    print self.inputdir
+    if not os.path.exists(self.outputdir):
+      os.makedirs(self.outputdir)
+    assert(os.path.isdir(self.outputdir))
 
   def run_experiments(self, sessions, algorithms):
     rh = [ (0, [5]), (1, [1]) , (1, [1,2,3,4,5]) ]
@@ -102,4 +105,38 @@ class InterSessionExperiment(Experiment):
             filename = os.path.join(self.outputdir,
               "_stats." + d + "." + n + "." + str(s) + "." + str(a) + ".CBF")
             super(InterSessionExperiment, self).run_instance(a, [], 5, filename)
+
+class IntraSessionExperiment(Experiment):
+  def __init__(self, base, input, output):
+    super(IntraSessionExperiment, self).__init__(base, input, output)
+    self.inputdir = os.path.join(self.inputdir, "rbac_intra")
+    assert(os.path.isdir(self.inputdir))
+    self.outputdir = os.path.join(self.outputdir, "rbac_intra")
+    if not os.path.exists(self.outputdir):
+      os.makedirs(self.outputdir)
+    assert(os.path.isdir(self.outputdir))
+
+  def run_experiments(self, roles_and_permissions, algorithms):
+    # only use Core
+    nature_of_rh = 1
+    depth_of_rh = 1
+    n = str(nature_of_rh)
+    d = str(depth_of_rh)
+    for Role, Permission in roles_and_permissions:
+      R = str(Role)
+      P = str(Permission)
+      print("Roles: " + R + "\tPermissions: " + P)
+      expdir = os.path.join(self.inputdir, d + "_" + n + "_" + R + "_" + P)
+      assert os.path.exists(expdir)
+      insn = os.path.join(expdir, "instructions.3")
+      assert os.path.isfile(insn)
+      rbac = os.path.join(expdir, "rbac-state")
+      assert os.path.isfile(rbac)
+      shutil.copyfile(os.path.join(self.inputdir, insn),
+          os.path.join(self.datadir, 'instructions'))
+      shutil.copy(os.path.join(self.inputdir, rbac), self.datadir)
+      for a in algorithms:
+        filename = os.path.join(self.outputdir,
+          "_stats." + d + "." + n + "." + R + "." + P + "." + str(a) + ".CBF")
+        super(IntraSessionExperiment, self).run_instance(a, [], 5, filename)
 
