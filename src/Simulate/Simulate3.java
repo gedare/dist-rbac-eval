@@ -42,8 +42,8 @@ public class Simulate3 {
 	    FileWriter fstream1 = new FileWriter("Data/timinginfo");
         BufferedWriter out1 = new BufferedWriter(fstream1);
 
-//        for(int iterations = 0; iterations < NUM_ITERATIONS; iterations++) {
-	        // int numAccessChecks = 0;
+        for(int iterations = 0; iterations < NUM_ITERATIONS; iterations++) {
+	         int numAccessChecks = 0;
         	HashMap<Integer,Integer> sessions = new HashMap();
 
 			long initiation_time = System.nanoTime();
@@ -144,12 +144,12 @@ public class Simulate3 {
 						//	long startSystemTimeNano = getSystemTime( );
 						//	long startUserTimeNano   = getUserTime( );
 							
-							for(int i = 0; i < NUM_ITERATIONS; i++) {
+							//for(int i = 0; i < NUM_ITERATIONS; i++) {
 								long time1 = System.nanoTime();
 								sdp.access_request(sessionid, permissionid);
 														//		long taskUserTimeNano    = getUserTime( ) - startUserTimeNano;
 						//		long taskSystemTimeNano  = getSystemTime( ) - startSystemTimeNano;
-								// numAccessChecks++;
+							 numAccessChecks++;
 							//	out1.write("\n\n" + "new result: " + new Benchmark(task).toStringFull());
 								long time2 = System.nanoTime();
 						/*		if(time2-time1>500000000*10) {
@@ -158,8 +158,8 @@ public class Simulate3 {
 								}*/
 								
 								access_request_time = time2 - time1;
-								times[i] = times[i] + access_request_time;
-							}
+								times[iterations] = times[iterations] + access_request_time;
+							//}
 					//		System.out.print(decision);	
 				//		System.out.println(time2-time1);
 						/*	
@@ -196,12 +196,13 @@ public class Simulate3 {
 			}	//end of while loop
 			long end_time = System.nanoTime();
 			long difference = end_time - initiation_time;
-			for(int i = 0; i < NUM_ITERATIONS; i++) {
-				out1.write(times[i] + "\n");
-		//	}
-			}
+      times[iterations] = times[iterations] / numAccessChecks;
 			f.close();
 			fReader.close();
+        }
+			for(int i = 0; i < NUM_ITERATIONS; i++) {
+				out1.write(times[i] + "\n");
+			}
 		/*	System.out.println("Access Request Time:\t\t" + access_request_time);//time from access requests
 
 			System.out.println("Initiation Request Time:\t" + initiation_request_time);//time from requests initiation

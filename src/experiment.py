@@ -87,7 +87,7 @@ class InterSessionExperiment(Experiment):
   def run_experiments(self, sessions, role_hierarchies, algorithms):
     for s in sessions:
       print("Sessions: " + str(s))
-      for nature_of_rh, depth_of_rh in rh:
+      for nature_of_rh, depth_of_rh in role_hierarchies:
         n = str(nature_of_rh)
         for depth in depth_of_rh:
           d = str(depth)

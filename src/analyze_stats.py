@@ -170,8 +170,7 @@ def create_plot(type, datasets, xmin, xmax, xlabel, ylabel, title, outfile):
     for dataset in datasets:
       lp = "'-' title \"" + dataset[0] + "\" with linespoints ls " + str(i)
       if len(dataset[1]) > 2:
-        lp = lp + ",'-' title \"" + dataset[0] + " (std)\""
-        lp = lp + " with errorbars ls " + str(i)
+        lp = lp + ",'-' notitle with errorbars ls " + str(i)
       plotcmd = plotcmd + lp
       for d in dataset[1:]:
         data = data + " ".join(d) + "\n"
@@ -197,11 +196,11 @@ def create_plot(type, datasets, xmin, xmax, xlabel, ylabel, title, outfile):
 ##
 def extract_dataset(results, x, y, err):
   dataset = []
-  xmin = float(get_field(results[0], x))
+  xmin = int(get_field(results[0], x))
   xmax = xmin
   for r in results:
     data = []
-    rx = float(get_field(r,x))
+    rx = int(get_field(r,x))
     if rx < xmin:
       xmin = rx
     if rx > xmax:
@@ -210,6 +209,7 @@ def extract_dataset(results, x, y, err):
     data.append(str(get_field(r, y)))
     data.append(str(get_field(r, err)))
     dataset.append(data)
+  dataset.sort(key=lambda xcoord: int(xcoord[0])) # sort by numerical value of x
   return dataset, xmin, xmax
 
 def analyze_it(results, tag, output):

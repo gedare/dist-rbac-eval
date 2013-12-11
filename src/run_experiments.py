@@ -21,7 +21,7 @@ def do_KTZsmall_inter(base):
   sessions = [x for x in range(2, 5)] # 2--4
   algorithms = [x for x in range(0, 4)] # 0--3
   rh = [ (0, [5]), (1, [1]) ]
-  inter.run_experiments(sessions, algorithms)
+  inter.run_experiments(sessions, rh, algorithms)
 
 def do_KTZsmall_intra(base):
   intra = experiment.IntraSessionExperiment(base, 'dataset_KTZsubset',
