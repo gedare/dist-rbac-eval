@@ -15,11 +15,54 @@ Usage: python run_experiments.py -[hb:e:]\n\
                       KTZ_intra: KTZ intra-session experiments\n\
 "
 
+def do_KTZsmall_inter(base):
+  inter = experiment.InterSessionExperiment(base, 'dataset_KTZsubset',
+      'stats_KTZsmall')
+  sessions = [x for x in range(2, 5)] # 2--4
+  algorithms = [x for x in range(0, 4)] # 0--3
+  rh = [ (0, [5]), (1, [1]) ]
+  inter.run_experiments(sessions, algorithms)
+
+def do_KTZsmall_intra(base):
+  intra = experiment.IntraSessionExperiment(base, 'dataset_KTZsubset',
+      'stats_KTZsmall')
+  RP = []
+  P = 250
+  for R in [10,50,100]:
+    RP.append((R,P))
+  R = 100
+  for P in [10,50,100]:
+    RP.append((R,P))
+  algorithms = [x for x in range(0, 4)] # 0--3
+  intra.run_experiments(RP, algorithms)
+
+def do_KTZsubset_inter(base):
+  inter = experiment.InterSessionExperiment(base, 'dataset_KTZsubset',
+      'stats_KTZsubset')
+  sessions = [x for x in range(2, 9)] # 2--8
+  algorithms = [x for x in range(0, 4)] # 0--3
+  rh = [ (0, [5]), (1, [1]) ]
+  inter.run_experiments(sessions, rh, algorithms)
+
+def do_KTZsubset_intra(base):
+  intra = experiment.IntraSessionExperiment(base, 'dataset_KTZsubset',
+      'stats_KTZsubset')
+  RP = []
+  P = 250
+  for R in [10,50,100,500,700,2000]:
+    RP.append((R,P))
+  R = 100
+  for P in [10,50,100,500,700,2000]:
+    RP.append((R,P))
+  algorithms = [x for x in range(0, 4)] # 0--3
+  intra.run_experiments(RP, algorithms)
+
 def do_KTZ_inter(base):
   inter = experiment.InterSessionExperiment(base, 'dataset_KTZ', 'stats_KTZ')
   sessions = [x for x in range(2, 16)] # 2--15
   algorithms = [x for x in range(0, 4)] # 0--3
-  inter.run_experiments(sessions, algorithms)
+  rh = [ (0, [5]), (1, [1]) , (1, [1,2,3,4,5]) ]
+  inter.run_experiments(sessions, rh, algorithms)
 
 def do_KTZ_intra(base):
   intra = experiment.IntraSessionExperiment(base, 'dataset_KTZ', 'stats_KTZ')
@@ -61,6 +104,10 @@ def main():
   dispatch_map = {
       'KTZ_inter' : do_KTZ_inter,
       'KTZ_intra' : do_KTZ_intra,
+      'KTZsubset_inter' : do_KTZsubset_inter,
+      'KTZsubset_intra' : do_KTZsubset_intra,
+      'KTZsmall_inter' : do_KTZsmall_inter,
+      'KTZsmall_intra' : do_KTZsmall_intra,
       }
   for x in experiments:
     try:

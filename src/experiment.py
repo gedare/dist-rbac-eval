@@ -84,8 +84,7 @@ class InterSessionExperiment(Experiment):
       os.makedirs(self.outputdir)
     assert(os.path.isdir(self.outputdir))
 
-  def run_experiments(self, sessions, algorithms):
-    rh = [ (0, [5]), (1, [1]) , (1, [1,2,3,4,5]) ]
+  def run_experiments(self, sessions, role_hierarchies, algorithms):
     for s in sessions:
       print("Sessions: " + str(s))
       for nature_of_rh, depth_of_rh in rh:
