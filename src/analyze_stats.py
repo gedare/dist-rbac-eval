@@ -11,6 +11,7 @@ import array
 import os
 import copy
 import string
+import numpy
 
 def usage():
   print "\
@@ -55,7 +56,7 @@ set key outside right\n\
 # first column contains a high-level tag for the experiment (e.g. rbac_inter
 # or rbac_intra), so the key "tag" maps to 0 (since the columns are 0-indexed)
 index_by_name=dict(tag=0, depth_of_rh=1, nature_of_rh=2, roles=3, permissions=4,
-    sessions=5, algorithm=6, list_of_mean_times=7) #FIXME
+    sessions=5, algorithm=6, mean=7, std=8) #FIXME
 
 # return the value in the field with given name for a single row of the results
 def get_field(result,name):
@@ -65,7 +66,7 @@ def get_field(result,name):
 # this is used for example to reduce the results by matching a given field
 # such as filter_field_by_value(results, tag, 'rbac_inter') to get only the
 # results for the experiments tagged as rbac_inter.
-def filter_field_by_value(results, field_name, value):
+def filter_results_by_field_value(results, field_name, value):
   reduce_results = []
   for r in results:
     if get_field(r, field_name) == str(value):
@@ -112,7 +113,9 @@ def get_results_from_CBF(filename, tag):
     sys.exit(2)
 
   f = open(filename)
-  results.append([line.strip() for line in f])
+  arr = numpy.array([ float(line.strip()) for line in f ])
+  results.append(numpy.mean(arr))
+  results.append(numpy.std(arr))
   f.close()
   assert len(index_by_name) == len(results)
   return results
@@ -137,16 +140,99 @@ def get_CBF_files(input, tag):
       files.remove(f)
   return files
 
+def create_lineplots_header(xmin, xmax, xlabel, ylabel, title, outfile):
+  return"\
+set terminal postscript eps enhanced solid color lw 1 \"Times-Roman\" 18\n\
+set key outside right\n\
+set xlabel '" + xlabel + "' font \"Times-Roman,18\"\n\
+set ylabel '" + ylabel + "' font \"Times-Roman,18\"\n\
+set output \"" + outfile + ".eps\"\n\
+set title \"" + title + "\" font \"Times-Roman,20\"\n\
+set xrange [" + xmin + ":" + xmax + "] noreverse nowriteback\n"
+
+# type can be:
+#   line
+# datasets is a list of lists that contain a name and data to plot.
+#   data is of the form:
+#     [xcoord, yvalue], or 
+#     [xcoord, yvalue, err], or 
+#     [xcoord, yvalue, +err, -err]
+def create_plot(type, datasets, xmin, xmax, xlabel, ylabel, title, outfile):
+  if type == 'line':
+    header = create_lineplots_header(xmin, xmax, xlabel, ylabel, title, outfile)
+
+    plotcmd = "plot "
+    i = 1
+    data = ""
+    for dataset in datasets:
+      plottitle = " title \"" + dataset[0] + "\""
+      if len(dataset[1]) > 2:
+        plottitle = plottitle + " with errorbars"
+      plotcmd = plotcmd + "'-'" + plottitle
+      for d in dataset[1:]:
+        data = data + " ".join(d) + "\n"
+      if i < len(datasets):
+        plotcmd = plotcmd + ","
+        data = data + "e\n"
+      i = i + 1
+
+    plotcmd = plotcmd + "\n"
+    print header
+    print plotcmd
+    print data
+
+  else:
+    assert False, "Unknown plot type: " + type
+
 ##
 # Analysis
 ##
-def analyze_it(input, output, tags):
-  for tag in tags:
-    print("Analyzing: " + input + ":" + tag + " -> " + output)
-    files = get_CBF_files(input, tag)
-    results = get_results_from_CBF_files(files, tag)
-    # TODO: process the results.
+def extract_dataset(results, x, y, err):
+  dataset = []
+  xmin = get_field(results[0], x)
+  xmax = xmin
+  for r in results:
+    data = []
+    rx = get_field(r,x)
+    if rx < xmin:
+      xmin = rx
+    if rx > xmax:
+      xmax = rx
+    data.append(str(rx))
+    data.append(str(get_field(r, y)))
+    data.append(str(get_field(r, err)))
+    dataset.append(data)
+  return dataset, xmin, xmax
 
+def analyze_it(results, tag):
+  if tag == 'rbac_inter':
+    for algorithm in xrange(6):
+      r = filter_results_by_field_value(results, 'algorithm', algorithm)
+      if len(r) == 0:
+        continue
+      s = filter_results_by_field_value(r, 'nature_of_rh', 0)
+      h = filter_results_by_field_value(r, 'nature_of_rh', 1)
+      c = filter_results_by_field_value(h, 'depth_of_rh', 1)
+      sd, sxmin, sxmax = extract_dataset(s, 'sessions', 'mean', 'std')
+      hd, hxmin, hxmax = extract_dataset(h, 'sessions', 'mean', 'std')
+      cd, cxmin, cxmax = extract_dataset(c, 'sessions', 'mean', 'std')
+      xmin = sxmin
+      xmax = sxmax
+      Stanford = ["Stanford"]
+      Stanford.extend(sd)
+      Hybrid = ["Hybrid"]
+      Hybrid.extend(hd)
+      Core = ["Core"]
+      Core.extend(cd)
+      create_plot('line', [Stanford, Core], str(xmin), str(xmax),
+          "# Sessions", "Access check time (us)",
+          str(algorithm), "inter" + str(algorithm))
+
+  elif tag == 'rbac_intra':
+    pass
+  else: # this shouldn't happen. 
+    assert False, "Unknown tag: " + tag
+    sys.exit(2)
 
 
 ##
@@ -195,8 +281,12 @@ def main():
       usage()
       sys.exit(2)
 
-  # TODO: do it.
-  analyze_it(input, output, tags)
+  # do it.
+  for tag in tags:
+    print("Analyzing: " + input + ":" + tag + " -> " + output)
+    files = get_CBF_files(input, tag)
+    results = get_results_from_CBF_files(files, tag)
+    analyze_it(results, tag)
 
 # the actual entry point.
 if __name__ == "__main__":

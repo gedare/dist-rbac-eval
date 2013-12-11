@@ -50,32 +50,32 @@ do
     mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
   done
 
-  # Bloom Filters
-  for algnum in 4
-  do
-    LOOPLIMIT=5
-    touch Data/means
-    for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
-    do
-      java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state $algnum \
-        98726 2 3
-      java Simulate.Measurements
-    done
-    mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
-  done
-
-  # Authorization Recycling
-  for algnum in 2
-  do
-    LOOPLIMIT=5
-    touch Data/means
-    for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
-    do
-      java -Xms1500M -Xmx1500M Simulate.Simulate2 Data/rbac-state $algnum
-      java Simulate.Measurements
-    done
-      mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
-  done
+#  # Bloom Filters
+#  for algnum in 4
+#  do
+#    LOOPLIMIT=5
+#    touch Data/means
+#    for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+#    do
+#      java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state $algnum \
+#        98726 2 3
+#      java Simulate.Measurements
+#    done
+#    mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
+#  done
+#
+#  # Authorization Recycling
+#  for algnum in 2
+#  do
+#    LOOPLIMIT=5
+#    touch Data/means
+#    for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+#    do
+#      java -Xms1500M -Xmx1500M Simulate.Simulate2 Data/rbac-state $algnum
+#      java Simulate.Measurements
+#    done
+#      mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
+#  done
 
   # Hybrid/Core RH
   Nature_of_RH=1
@@ -95,32 +95,32 @@ do
       mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
     done
   
-    # Bloom Filters
-    for algnum in 4
-    do
-      LOOPLIMIT=5
-      touch Data/means
-      for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
-      do
-        java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state $algnum \
-          98726 2 3
-        java Simulate.Measurements
-      done
-      mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
-    done
-  
-    # Authorization Recycling
-    for algnum in 2
-    do
-      LOOPLIMIT=5
-      touch Data/means
-      for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
-      do
-        java -Xms1500M -Xmx1500M Simulate.Simulate2 Data/rbac-state $algnum
-        java Simulate.Measurements
-      done
-        mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
-    done
+#    # Bloom Filters
+#    for algnum in 4
+#    do
+#      LOOPLIMIT=5
+#      touch Data/means
+#      for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+#      do
+#        java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state $algnum \
+#          98726 2 3
+#        java Simulate.Measurements
+#      done
+#      mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
+#    done
+#  
+#    # Authorization Recycling
+#    for algnum in 2
+#    do
+#      LOOPLIMIT=5
+#      touch Data/means
+#      for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+#      do
+#        java -Xms1500M -Xmx1500M Simulate.Simulate2 Data/rbac-state $algnum
+#        java Simulate.Measurements
+#      done
+#        mv Data/means ${outdir}/rbac_inter/_stats.${Depth_of_RH}.${Nature_of_RH}.$sessions.$algnum.CBF
+#    done
   done
 done
 
@@ -155,32 +155,32 @@ do
     mv Data/means ${outdir}/rbac_intra/_stats.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.$algnum.CBF
   done
 
-  # Bloom Filters
-  for algnum in 4
-  do
-    LOOPLIMIT=5
-    touch Data/means
-    for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
-    do
-      java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state $algnum \
-        98726 2 3
-      java Simulate.Measurements
-    done
-    mv Data/means ${outdir}/rbac_intra/_stats.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.$algnum.CBF
-  done
-
-  # Authorization Recycling
-  for algnum in 2
-  do
-    LOOPLIMIT=5
-    touch Data/means
-    for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
-    do
-      java -Xms1500M -Xmx1500M Simulate.Simulate2 Data/rbac-state $algnum
-      java Simulate.Measurements
-    done
-      mv Data/means ${outdir}/rbac_intra/_stats.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.$algnum.CBF
-  done
+#  # Bloom Filters
+#  for algnum in 4
+#  do
+#    LOOPLIMIT=5
+#    touch Data/means
+#    for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+#    do
+#      java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state $algnum \
+#        98726 2 3
+#      java Simulate.Measurements
+#    done
+#    mv Data/means ${outdir}/rbac_intra/_stats.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.$algnum.CBF
+#  done
+#
+#  # Authorization Recycling
+#  for algnum in 2
+#  do
+#    LOOPLIMIT=5
+#    touch Data/means
+#    for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+#    do
+#      java -Xms1500M -Xmx1500M Simulate.Simulate2 Data/rbac-state $algnum
+#      java Simulate.Measurements
+#    done
+#      mv Data/means ${outdir}/rbac_intra/_stats.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.$algnum.CBF
+#  done
 done
 
 echo "Intra-session experiments: varying permissions"
@@ -204,32 +204,32 @@ do
     mv Data/means ${outdir}/rbac_intra/_stats.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.$algnum.CBF
   done
 
-  # Bloom Filters
-  for algnum in 4
-  do
-    LOOPLIMIT=5
-    touch Data/means
-    for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
-    do
-      java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state $algnum \
-        98726 2 3
-      java Simulate.Measurements
-    done
-    mv Data/means ${outdir}/rbac_intra/_stats.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.$algnum.CBF
-  done
-
-  # Authorization Recycling
-  for algnum in 2
-  do
-    LOOPLIMIT=5
-    touch Data/means
-    for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
-    do
-      java -Xms1500M -Xmx1500M Simulate.Simulate2 Data/rbac-state $algnum
-      java Simulate.Measurements
-    done
-      mv Data/means ${outdir}/rbac_intra/_stats.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.$algnum.CBF
-  done
+#  # Bloom Filters
+#  for algnum in 4
+#  do
+#    LOOPLIMIT=5
+#    touch Data/means
+#    for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+#    do
+#      java -Xms1500M -Xmx1500M Simulate.Simulate3 Data/rbac-state $algnum \
+#        98726 2 3
+#      java Simulate.Measurements
+#    done
+#    mv Data/means ${outdir}/rbac_intra/_stats.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.$algnum.CBF
+#  done
+#
+#  # Authorization Recycling
+#  for algnum in 2
+#  do
+#    LOOPLIMIT=5
+#    touch Data/means
+#    for ((a=0 ; a <= LOOPLIMIT; a=$(/usr/bin/wc -l $l Data/means | /usr/bin/awk '{printf("%d\n", $l)}')+1 ))
+#    do
+#      java -Xms1500M -Xmx1500M Simulate.Simulate2 Data/rbac-state $algnum
+#      java Simulate.Measurements
+#    done
+#      mv Data/means ${outdir}/rbac_intra/_stats.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.$algnum.CBF
+#  done
 done
 
 echo "all done"
