@@ -113,7 +113,7 @@ def get_results_from_CBF(filename, tag):
     sys.exit(2)
 
   f = open(filename)
-  arr = numpy.array([ float(line.strip()) for line in f ])
+  arr = numpy.array([ float(line.strip()) / 1000.0 for line in f ])
   results.append(numpy.mean(arr))
   results.append(numpy.std(arr))
   f.close()
@@ -146,9 +146,12 @@ set terminal postscript eps enhanced solid color lw 1 \"Times-Roman\" 18\n\
 set key outside right\n\
 set xlabel '" + xlabel + "' font \"Times-Roman,18\"\n\
 set ylabel '" + ylabel + "' font \"Times-Roman,18\"\n\
-set output \"" + outfile + ".eps\"\n\
+set output \"" + os.path.splitext(os.path.split(outfile)[1])[0] + ".eps\"\n\
 set title \"" + title + "\" font \"Times-Roman,20\"\n\
-set xrange [" + xmin + ":" + xmax + "] noreverse nowriteback\n"
+set xrange [" + xmin + ":" + xmax + "] noreverse nowriteback\n\
+set style line 1 lt rgb \"red\" lw 3 pt 6\n\
+set style line 2 lt rgb \"blue\" lw 3 pt 6\n\
+"
 
 # type can be:
 #   line
@@ -165,21 +168,26 @@ def create_plot(type, datasets, xmin, xmax, xlabel, ylabel, title, outfile):
     i = 1
     data = ""
     for dataset in datasets:
-      plottitle = " title \"" + dataset[0] + "\""
+      lp = "'-' title \"" + dataset[0] + "\" with linespoints ls " + str(i)
       if len(dataset[1]) > 2:
-        plottitle = plottitle + " with errorbars"
-      plotcmd = plotcmd + "'-'" + plottitle
+        lp = lp + ",'-' title \"" + dataset[0] + " (std)\""
+        lp = lp + " with errorbars ls " + str(i)
+      plotcmd = plotcmd + lp
       for d in dataset[1:]:
         data = data + " ".join(d) + "\n"
+      if len(dataset[1]) > 2:
+        data = data + "e\n"
+        for d in dataset[1:]:
+          data = data + " ".join(d) + "\n"
       if i < len(datasets):
         plotcmd = plotcmd + ","
         data = data + "e\n"
       i = i + 1
-
     plotcmd = plotcmd + "\n"
-    print header
-    print plotcmd
-    print data
+    gp = open(outfile, 'w')
+    reset(gp)
+    gp.write(header + plotcmd + data)
+    gp.close()
 
   else:
     assert False, "Unknown plot type: " + type
@@ -189,11 +197,11 @@ def create_plot(type, datasets, xmin, xmax, xlabel, ylabel, title, outfile):
 ##
 def extract_dataset(results, x, y, err):
   dataset = []
-  xmin = get_field(results[0], x)
+  xmin = float(get_field(results[0], x))
   xmax = xmin
   for r in results:
     data = []
-    rx = get_field(r,x)
+    rx = float(get_field(r,x))
     if rx < xmin:
       xmin = rx
     if rx > xmax:
@@ -204,7 +212,7 @@ def extract_dataset(results, x, y, err):
     dataset.append(data)
   return dataset, xmin, xmax
 
-def analyze_it(results, tag):
+def analyze_it(results, tag, output):
   if tag == 'rbac_inter':
     for algorithm in xrange(6):
       r = filter_results_by_field_value(results, 'algorithm', algorithm)
@@ -225,8 +233,9 @@ def analyze_it(results, tag):
       Core = ["Core"]
       Core.extend(cd)
       create_plot('line', [Stanford, Core], str(xmin), str(xmax),
-          "# Sessions", "Access check time (us)",
-          str(algorithm), "inter" + str(algorithm))
+          "# Sessions", "Access check time (us)", str(algorithm),
+          os.path.join(output, "inter" + str(algorithm) + ".p"))
+
 
   elif tag == 'rbac_intra':
     pass
@@ -286,7 +295,7 @@ def main():
     print("Analyzing: " + input + ":" + tag + " -> " + output)
     files = get_CBF_files(input, tag)
     results = get_results_from_CBF_files(files, tag)
-    analyze_it(results, tag)
+    analyze_it(results, tag, output)
 
 # the actual entry point.
 if __name__ == "__main__":
