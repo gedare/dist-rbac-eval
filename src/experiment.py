@@ -103,8 +103,3 @@ class InterSessionExperiment(Experiment):
               "_stats." + d + "." + n + "." + str(s) + "." + str(a) + ".CBF")
             super(InterSessionExperiment, self).run_instance(a, [], 5, filename)
 
-
-inter = InterSessionExperiment(os.getcwd(), 'dataset_KTZ', 'stats_KTZ')
-sessions = [x for x in range(2, 16)] # 2--15
-algorithms = [x for x in range(0, 4)] # 0--3
-inter.run_experiments(sessions, algorithms)
