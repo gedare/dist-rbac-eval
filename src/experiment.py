@@ -53,6 +53,8 @@ class Experiment(object):
     simcmd.append('-Xmx1500M')
     if int(algnum) == 2:
       simcmd.append('Simulate.Simulate2')
+      print("Skipping algorithm: " + algnum)
+      return
     else:
       simcmd.append('Simulate.Simulate3')
     simcmd.append(os.path.join(self.datadir, 'rbac-state'))
@@ -61,17 +63,10 @@ class Experiment(object):
     if optionalargs:
       simcmd.extend(optionalargs)
     
-    measurecmd = ['java', 'Simulate.Measurements']
-    livelock_limit = 100
-    success = False
-    for i in range(livelock_limit):
+    # Make multiple VM invocations until done.
+    while wc(means)[0] < loopcnt:
       simproc = subprocess.call(simcmd)
-      measureproc = subprocess.call(measurecmd)
-      if wc(means)[0] >= loopcnt:
-        success = True
-        break
-    if not success:
-      print "Livelock detected, continuing anyway"
+
     os.rename(means, os.path.join(self.outputdir, CBF_filename))
 
 class InterSessionExperiment(Experiment):
@@ -103,7 +98,7 @@ class InterSessionExperiment(Experiment):
           for a in algorithms:
             filename = os.path.join(self.outputdir,
               "_stats." + d + "." + n + "." + str(s) + "." + str(a) + ".CBF")
-            super(InterSessionExperiment, self).run_instance(a, [], 5, filename)
+            super(InterSessionExperiment, self).run_instance(a, [], 4, filename)
 
 class IntraSessionExperiment(Experiment):
   def __init__(self, base, input, output):
@@ -137,5 +132,5 @@ class IntraSessionExperiment(Experiment):
       for a in algorithms:
         filename = os.path.join(self.outputdir,
           "_stats." + d + "." + n + "." + R + "." + P + "." + str(a) + ".CBF")
-        super(IntraSessionExperiment, self).run_instance(a, [], 5, filename)
+        super(IntraSessionExperiment, self).run_instance(a, [], 4, filename)
 

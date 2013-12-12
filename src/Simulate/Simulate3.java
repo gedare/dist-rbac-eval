@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.lang.management.*;
@@ -31,20 +32,61 @@ import Structures.UserVertex;
 
 
 public class Simulate3 {
-	private static int NUM_ITERATIONS = 10;
+	private static final int MAX_ITERATIONS = 30;
+
+  private static boolean are_we_there_yet(boolean give_up_and_go_home)
+        throws IOException {
+		BufferedReader f = new BufferedReader(new FileReader("Data/timinginfo"));
+		String line;
+		ArrayList<Long> nums = new ArrayList<Long>();
+		while((line=f.readLine()) != null) {
+			nums.add(Long.parseLong(line));
+		}
+		Collections.reverse(nums);
+		int iter = 4;
+		ArrayList list = new ArrayList();
+		double covtmp = 0.02;
+		for(int i = 0; i < nums.size() - iter; i++) {
+			double mean = 0;
+			for(int j = i; j < i + iter; j++) {
+				mean = mean + nums.get(j);
+			}
+			mean = mean/iter;
+			double s = 0;
+			for(int j = i; j < i + iter; j++) {
+				s = s + (nums.get(j) - mean)*(nums.get(j) - mean);
+			}
+			s = Math.sqrt(s/(iter-1));
+			double cov = s/mean;
+			if(cov < covtmp || give_up_and_go_home) {
+        long sum = 0;
+        for(int j = i; j < i + iter; j++) {
+				  sum = sum + nums.get(j);
+				}
+				double mm = sum/iter;
+        // write out new mean value
+		    FileWriter fstream1 = new FileWriter("Data/means", true);
+        BufferedWriter out1 = new BufferedWriter(fstream1);
+       	out1.write(mm + "\n");
+		    out1.close();
+    		return true;
+			}
+		}
+    return false;
+	}
+
 	public static void main(String[] args) throws IOException {
 	//	java.lang.Compiler.disable();
-		long[] times = new long[NUM_ITERATIONS];
-		for(int i = 0; i < NUM_ITERATIONS; i++) {
+		long[] times = new long[MAX_ITERATIONS];
+		for(int i = 0; i < MAX_ITERATIONS; i++) {
 			times[i] = 0;
 		}
-		
-	    FileWriter fstream1 = new FileWriter("Data/timinginfo");
-        BufferedWriter out1 = new BufferedWriter(fstream1);
-
-        for(int iterations = 0; iterations < NUM_ITERATIONS; iterations++) {
-	         int numAccessChecks = 0;
-        	HashMap<Integer,Integer> sessions = new HashMap();
+    FileWriter fstream1 = new FileWriter("Data/timinginfo");
+    BufferedWriter out1 = new BufferedWriter(fstream1);
+		int iterations;
+    for(iterations = 0; iterations < MAX_ITERATIONS; iterations++) {
+      int numAccessChecks = 0;
+     	HashMap<Integer,Integer> sessions = new HashMap();
 
 			long initiation_time = System.nanoTime();
 
@@ -144,7 +186,7 @@ public class Simulate3 {
 						//	long startSystemTimeNano = getSystemTime( );
 						//	long startUserTimeNano   = getUserTime( );
 							
-							//for(int i = 0; i < NUM_ITERATIONS; i++) {
+							//for(int i = 0; i < MAX_ITERATIONS; i++) {
 								long time1 = System.nanoTime();
 								sdp.access_request(sessionid, permissionid);
 														//		long taskUserTimeNano    = getUserTime( ) - startUserTimeNano;
@@ -194,15 +236,21 @@ public class Simulate3 {
 					}
 				}
 			}	//end of while loop
-			long end_time = System.nanoTime();
-			long difference = end_time - initiation_time;
+
       times[iterations] = times[iterations] / numAccessChecks;
+			out1.write(times[iterations] + "\n");
 			f.close();
 			fReader.close();
-        }
-			for(int i = 0; i < NUM_ITERATIONS; i++) {
-				out1.write(times[i] + "\n");
-			}
+			reset();
+      if (are_we_there_yet(iterations == MAX_ITERATIONS-1)) {
+        break;
+      }
+    }
+    out1.close();
+    
+    //long end_time = System.nanoTime();
+		//long difference = end_time - initiation_time;
+
 		/*	System.out.println("Access Request Time:\t\t" + access_request_time);//time from access requests
 
 			System.out.println("Initiation Request Time:\t" + initiation_request_time);//time from requests initiation
@@ -210,19 +258,17 @@ public class Simulate3 {
 			System.out.println("Destroy Time:\t\t\t" + destroy_time);
 
 			System.out.println("Total Running Time:\t\t" + difference);*/
-//			reset();
+
 
 			/*
 			if(iterations == 0) {
 			    System.out.println("Num Access Checks: "+numAccessChecks);
 			}
 			*/
-		System.out.println("Done");
-		out1.close();
 	}
 
 	public static String errorMessage() {
-		String error = "Usage: java Simulate2 <RBAC Configuration file> <Algorithm ID>\n" +
+		String error = "Usage: java Simulate3 <RBAC Configuration file> <Algorithm ID>\n" +
 		"<Algorithm ID>:\n" +
 		"\t0: Rbac Graph\n" +
 		"\t1: Access Matrix\n" +
