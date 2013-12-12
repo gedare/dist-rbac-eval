@@ -18,7 +18,7 @@ public class Measurements {
 			nums.add(Long.parseLong(line));
 		}
 		Collections.reverse(nums);
-		int iter = 4;
+		int iter = 3;
 		ArrayList list = new ArrayList();
 		double covtmp = 0.02;
 		for(int i = 0; i < nums.size(); i++) {
