@@ -35,45 +35,49 @@ public class Simulate3 {
 	private static final int MAX_ITERATIONS = 30;
 
   private static boolean are_we_there_yet(boolean give_up_and_go_home)
-        throws IOException {
-		BufferedReader f = new BufferedReader(new FileReader("Data/timinginfo"));
-		String line;
-		ArrayList<Long> nums = new ArrayList<Long>();
-		while((line=f.readLine()) != null) {
-			nums.add(Long.parseLong(line));
-		}
-		Collections.reverse(nums);
-		int iter = 4;
-		ArrayList list = new ArrayList();
-		double covtmp = 0.02;
-		for(int i = 0; i < nums.size() - iter; i++) {
-			double mean = 0;
-			for(int j = i; j < i + iter; j++) {
-				mean = mean + nums.get(j);
-			}
-			mean = mean/iter;
-			double s = 0;
-			for(int j = i; j < i + iter; j++) {
-				s = s + (nums.get(j) - mean)*(nums.get(j) - mean);
-			}
-			s = Math.sqrt(s/(iter-1));
-			double cov = s/mean;
-			if(cov < covtmp || give_up_and_go_home) {
-        long sum = 0;
-        for(int j = i; j < i + iter; j++) {
-				  sum = sum + nums.get(j);
-				}
-				double mm = sum/iter;
-        // write out new mean value
-		    FileWriter fstream1 = new FileWriter("Data/means", true);
-        BufferedWriter out1 = new BufferedWriter(fstream1);
-       	out1.write(mm + "\n");
-		    out1.close();
-    		return true;
-			}
-		}
+      throws IOException {
+    BufferedReader f = new BufferedReader(new FileReader("Data/timinginfo"));
+    String line;
+    int count = 0;
+    ArrayList<Long> nums = new ArrayList<Long>();
+    while((line=f.readLine()) != null) {
+      nums.add(Long.parseLong(line));
+      count = count + 1;
+    }
+    Collections.reverse(nums);
+    int iter = 4;
+    if ( count < iter )
+      return false;
+    ArrayList list = new ArrayList();
+    double covtmp = 0.02;
+    double mean = 0;
+    for(int j = 0; j < iter; j++) {
+      mean = mean + nums.get(j);
+    }
+    mean = mean/iter;
+    double s = 0;
+    for(int j = 0; j < iter; j++) {
+      s = s + (nums.get(j) - mean)*(nums.get(j) - mean);
+    }
+    s = Math.sqrt(s/(iter-1));
+    double cov = s/mean;
+    if(cov < covtmp || give_up_and_go_home) {
+      long sum = 0;
+      for(int j = 0; j < iter; j++) {
+        sum = sum + nums.get(j);
+      }
+      double mm = sum/iter;
+      // write out new mean value
+      FileWriter fstream1 = new FileWriter("Data/means", true);
+      BufferedWriter out1 = new BufferedWriter(fstream1);
+      out1.write(mm + "\n");
+      out1.close();
+      return true;
+    } else {
+      System.out.println("cov: " + cov);
+    }
     return false;
-	}
+  }
 
 	public static void main(String[] args) throws IOException {
 	//	java.lang.Compiler.disable();
