@@ -44,10 +44,12 @@ public class Simulate3 {
       nums.add(Long.parseLong(line));
       count = count + 1;
     }
+    f.close();
     Collections.reverse(nums);
     int iter = 4;
-    if ( count < iter )
+    if ( count < iter ) {
       return false;
+    }
     ArrayList list = new ArrayList();
     double covtmp = 0.02;
     double mean = 0;
@@ -85,10 +87,10 @@ public class Simulate3 {
 		for(int i = 0; i < MAX_ITERATIONS; i++) {
 			times[i] = 0;
 		}
-    FileWriter fstream1 = new FileWriter("Data/timinginfo");
-    BufferedWriter out1 = new BufferedWriter(fstream1);
 		int iterations;
     for(iterations = 0; iterations < MAX_ITERATIONS; iterations++) {
+      FileWriter fstream1 = new FileWriter("Data/timinginfo", true);
+      BufferedWriter out1 = new BufferedWriter(fstream1);
       int numAccessChecks = 0;
      	HashMap<Integer,Integer> sessions = new HashMap();
 
@@ -245,12 +247,11 @@ public class Simulate3 {
 			out1.write(times[iterations] + "\n");
 			f.close();
 			fReader.close();
-			reset();
+      out1.close();
       if (are_we_there_yet(iterations == MAX_ITERATIONS-1)) {
         break;
       }
     }
-    out1.close();
     
     //long end_time = System.nanoTime();
 		//long difference = end_time - initiation_time;
