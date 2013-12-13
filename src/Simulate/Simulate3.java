@@ -31,53 +31,80 @@ import Structures.RoleVertex;
 import Structures.UserVertex;
 
 
+// TODO: Make this a proper object already, enough with the static methods!
 public class Simulate3 {
 	private static final int MAX_ITERATIONS = 30;
 
-  private static boolean are_we_there_yet(boolean give_up_and_go_home)
-      throws IOException {
-    BufferedReader f = new BufferedReader(new FileReader("Data/timinginfo"));
-    String line;
-    int count = 0;
-    ArrayList<Long> nums = new ArrayList<Long>();
-    while((line=f.readLine()) != null) {
-      nums.add(Long.parseLong(line));
-      count = count + 1;
-    }
-    f.close();
-    Collections.reverse(nums);
-    int iter = 4;
-    if ( count < iter ) {
-      return false;
-    }
-    ArrayList list = new ArrayList();
-    double covtmp = 0.02;
+  
+  private static double compute_mean(ArrayList<Long> nums, int start, int stop)
+  {
     double mean = 0;
-    for(int j = 0; j < iter; j++) {
+    for(int j = start; j < stop; j++) {
       mean = mean + nums.get(j);
     }
-    mean = mean/iter;
+    return mean/(stop-start);
+  }
+
+  private static double compute_cov(ArrayList<Long> nums, int start, int stop)
+  {
+    double mean = compute_mean(nums, start, stop);
     double s = 0;
-    for(int j = 0; j < iter; j++) {
+    for(int j = start; j < stop; j++) {
       s = s + (nums.get(j) - mean)*(nums.get(j) - mean);
     }
-    s = Math.sqrt(s/(iter-1));
-    double cov = s/mean;
-    if(cov < covtmp || give_up_and_go_home) {
-      long sum = 0;
-      for(int j = 0; j < iter; j++) {
-        sum = sum + nums.get(j);
+    s = Math.sqrt(s/(stop-start-1));
+    return s/mean;
+  }
+
+  private static boolean are_we_there_yet(int iteration)
+      throws IOException {
+    int iter = 4;
+    if ( iteration < iter )
+      return false;
+
+    ArrayList<Long> nums = new ArrayList<Long>();
+    for (int i = 0; i <= iteration; i++) {
+      BufferedReader f = new BufferedReader(new FileReader("Data/timinginfo" + iteration));
+      String line;
+      while((line=f.readLine()) != null) {
+        nums.add(Long.parseLong(line));
       }
-      double mm = sum/iter;
-      // write out new mean value
+      f.close();
+    }
+    Collections.reverse(nums);
+    
+    ArrayList list = new ArrayList();
+    double covtmp = 0.02;
+    double cov = compute_cov(nums, 0, iter);
+    if(cov < covtmp) {
+      double mm = compute_mean(nums, 0, iter);
       FileWriter fstream1 = new FileWriter("Data/means", true);
       BufferedWriter out1 = new BufferedWriter(fstream1);
       out1.write(mm + "\n");
       out1.close();
       return true;
     } else {
-      System.out.println("cov: " + cov);
+      //System.out.println("cov: " + cov);
     }
+
+    if( iteration == MAX_ITERATIONS - 1 ) {
+      double min_cov = cov;
+      int start = 0;
+      int stop = iter;
+      for (int i = 0; i < (iteration - iter); i++) {
+        cov = compute_cov(nums, i, i + iter);
+        if ( cov < min_cov ) {
+          min_cov = cov;
+          start = i;
+          stop = i + iter;
+        }
+      }
+      double mm = compute_mean(nums, start, stop);
+      FileWriter fstream1 = new FileWriter("Data/means", true);
+      BufferedWriter out1 = new BufferedWriter(fstream1);
+      out1.write(mm + "\n");
+      out1.close();
+   }
     return false;
   }
 
@@ -86,10 +113,14 @@ public class Simulate3 {
 		long[] times = new long[MAX_ITERATIONS];
 		for(int i = 0; i < MAX_ITERATIONS; i++) {
 			times[i] = 0;
+      FileWriter fstream1 = new FileWriter("Data/timinginfo" + i);
+      BufferedWriter out1 = new BufferedWriter(fstream1);
+      out1.write("");
+      out1.close();
 		}
 		int iterations;
     for(iterations = 0; iterations < MAX_ITERATIONS; iterations++) {
-      FileWriter fstream1 = new FileWriter("Data/timinginfo", true);
+      FileWriter fstream1 = new FileWriter("Data/timinginfo" + iterations, true);
       BufferedWriter out1 = new BufferedWriter(fstream1);
       int numAccessChecks = 0;
      	HashMap<Integer,Integer> sessions = new HashMap();
@@ -248,7 +279,7 @@ public class Simulate3 {
 			f.close();
 			fReader.close();
       out1.close();
-      if (are_we_there_yet(iterations == MAX_ITERATIONS-1)) {
+      if (are_we_there_yet(iterations)) {
         break;
       }
     }
