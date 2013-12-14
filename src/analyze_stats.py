@@ -113,7 +113,7 @@ def get_results_from_CBF(filename, tag):
     sys.exit(2)
 
   f = open(filename)
-  arr = numpy.array([ float(line.strip()) / 1000.0 for line in f ])
+  arr = numpy.array([float(line.strip().split(' ')[0]) / 1000.0 for line in f])
   results.append(numpy.mean(arr))
   results.append(numpy.std(arr))
   f.close()

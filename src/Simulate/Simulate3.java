@@ -57,7 +57,7 @@ public class Simulate3 {
     return s/mean;
   }
 
-  private static boolean are_we_there_yet(int iteration)
+  private static boolean are_we_there_yet(int iteration, double covtmp)
       throws IOException {
     int iter = 4;
     if ( iteration < iter )
@@ -66,17 +66,23 @@ public class Simulate3 {
     ArrayList list = new ArrayList();
     int start = iteration - iter;
     int stop = iteration+1;
-    double covtmp = 0.02;
     double cov = compute_cov(start, stop);
-    if(cov < covtmp || iteration == MAX_ITERATIONS - 1) {
+    if(cov < covtmp ) {
       double mm = compute_mean(start, stop);
       System.out.println("cov: " + cov + "\tmean: " + mm);
       FileWriter fstream1 = new FileWriter("Data/means", true);
       BufferedWriter out1 = new BufferedWriter(fstream1);
-      out1.write(mm + "\n");
+      out1.write(mm + " " + cov + "\n");
       out1.close();
       return true;
     } else {
+    }
+    
+    if (iteration == MAX_ITERATIONS - 1) {
+      for (int i = iter + 1; i <= iteration; i++) {
+        if (are_we_there_yet(i, covtmp + 0.01))
+          return true;
+      }
     }
 
     return false;
@@ -244,7 +250,7 @@ public class Simulate3 {
       times[iterations] = times[iterations] / numAccessChecks;
 			f.close();
 			fReader.close();
-      if (are_we_there_yet(iterations)) {
+      if (are_we_there_yet(iterations, 0.02)) {
         break;
       }
     }
