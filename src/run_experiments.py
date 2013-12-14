@@ -24,7 +24,7 @@ Usage: python run_experiments.py -[hb:e:]\n\
 def do_KTZsmall_inter(base, algorithms):
   inter = experiment.InterSessionExperiment(base, 'dataset_KTZsubset',
       'stats_KTZsmall')
-  sessions = [x for x in range(2, 5)] # 2--4
+  sessions = [x for x in range(3, 5)] # 2--4
   rh = [ (0, [5]), (1, [1]) ]
   inter.run_experiments(sessions, rh, algorithms)
 
@@ -43,7 +43,7 @@ def do_KTZsmall_intra(base, algorithms):
 def do_KTZsubset_inter(base, algorithms):
   inter = experiment.InterSessionExperiment(base, 'dataset_KTZsubset',
       'stats_KTZsubset')
-  sessions = [x for x in range(2, 9)] # 2--8
+  sessions = [x for x in range(3, 9)] # 2--8
   rh = [ (0, [5]), (1, [1]) ]
   inter.run_experiments(sessions, rh, algorithms)
 
@@ -61,7 +61,7 @@ def do_KTZsubset_intra(base, algorithms):
 
 def do_KTZ_inter(base, algorithms):
   inter = experiment.InterSessionExperiment(base, 'dataset_KTZ', 'stats_KTZ')
-  sessions = [x for x in range(2, 16)] # 2--15
+  sessions = [x for x in range(3, 16)] # 2--15
   rh = [ (0, [5]), (1, [1]) , (1, [1,2,3,4,5]) ]
   inter.run_experiments(sessions, rh, algorithms)
 

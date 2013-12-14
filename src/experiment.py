@@ -99,10 +99,8 @@ class InterSessionExperiment(Experiment):
               os.path.join(self.datadir, 'instructions'))
           shutil.copy(os.path.join(self.inputdir, rbac), self.datadir)
           for a in algorithms:
-            filename = ""
-            if s != sessions[0]:
-              filename = os.path.join(self.outputdir,
-                "_stats." + d + "." + n + "." + str(s) + "." + str(a) + ".CBF")
+            filename = os.path.join(self.outputdir,
+              "_stats." + d + "." + n + "." + str(s) + "." + str(a) + ".CBF")
             super(InterSessionExperiment, self).run_instance(a, [], 4, filename)
 
 class IntraSessionExperiment(Experiment):
