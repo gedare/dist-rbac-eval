@@ -67,7 +67,8 @@ class Experiment(object):
     while wc(means)[0] < loopcnt:
       simproc = subprocess.call(simcmd)
 
-    os.rename(means, os.path.join(self.outputdir, CBF_filename))
+    if CBF_filename:
+      os.rename(means, os.path.join(self.outputdir, CBF_filename))
 
 class InterSessionExperiment(Experiment):
   def __init__(self, base, input, output):
@@ -96,8 +97,10 @@ class InterSessionExperiment(Experiment):
               os.path.join(self.datadir, 'instructions'))
           shutil.copy(os.path.join(self.inputdir, rbac), self.datadir)
           for a in algorithms:
-            filename = os.path.join(self.outputdir,
-              "_stats." + d + "." + n + "." + str(s) + "." + str(a) + ".CBF")
+            filename = ""
+            if s != sessions[0]:
+              filename = os.path.join(self.outputdir,
+                "_stats." + d + "." + n + "." + str(s) + "." + str(a) + ".CBF")
             super(InterSessionExperiment, self).run_instance(a, [], 4, filename)
 
 class IntraSessionExperiment(Experiment):
