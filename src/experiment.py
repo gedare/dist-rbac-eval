@@ -69,6 +69,8 @@ class Experiment(object):
 
     if CBF_filename:
       os.rename(means, os.path.join(self.outputdir, CBF_filename))
+    else:
+      os.remove(means)
 
 class InterSessionExperiment(Experiment):
   def __init__(self, base, input, output):
