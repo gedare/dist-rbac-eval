@@ -58,11 +58,11 @@ public class SessionProfile {
 		int session_to_delete = 0; //session to be deleted in case there is too much of them
 		
 		int i = 0;
+	  Random generator = new Random();
 		while(i < number_of_sessions)
 		//for (int i = 0; i < number_of_sessions; i++)
 			{
 			//generate random user
-			Random generator = new Random();
 			int user_id = generator.nextInt(num_of_users);
 			
 			String current_id = users_ids[user_id]; //user that we want to initiate the session; as string type
@@ -178,7 +178,6 @@ public class SessionProfile {
 				}
 				case 1:{
 					//get a random role index
-					generator = new Random();
 					int ind = generator.nextInt(current_roles.length);
 					//add first role, and every other we compare with that one
 					//we only compare hierarchy level
@@ -214,7 +213,6 @@ public class SessionProfile {
 			if(nature_of_roles == 2){//if the nature of roles is 2, generate random number from 0 to (number of roles - 1), so we activate only SOME roles and not all of them!!!
 				//this condition is to make sure we do not end up generating random of ZERO!!!
 				if(list_of_roles.size() > 1){
-					generator = new Random();
 					num = generator.nextInt(list_of_roles.size() - 1);
 				}
 			}
@@ -281,11 +279,9 @@ public class SessionProfile {
 							buffWriter.flush();
 							buffWriter.write("a");
 							//generate random item id
-							generator = new Random();
 							int item = generator.nextInt(counter); 
 							//check so we do not access already deleted session
 							while(item < session_to_delete){
-								generator = new Random();
 								item = generator.nextInt(counter);
 							}
 							//writing item number in the file
@@ -319,11 +315,9 @@ public class SessionProfile {
 	
 							//int number_of_access = number_of_access_checks;//to keep track when to stop generating access checks
 							//generate random item id
-							generator = new Random();
 							int item = generator.nextInt(counter);
 							//check so we do not access already deleted session
 							while(item < session_to_delete){
-								generator = new Random();
 								item = generator.nextInt(counter);
 							}
 							list_of_roles = hashmap.get(item);

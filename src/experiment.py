@@ -51,12 +51,13 @@ class Experiment(object):
     simcmd.append('java')
     simcmd.append('-Xms1500M')
     simcmd.append('-Xmx1500M')
-    if int(algnum) == 2:
-      simcmd.append('Simulate.Simulate2')
-      print("Skipping algorithm: " + algnum)
-      return
-    else:
-      simcmd.append('Simulate.Simulate3')
+#    if int(algnum) == 2:
+#      simcmd.append('Simulate.Simulate2')
+#      print("Skipping algorithm: " + algnum)
+#      return
+#    else:
+#      simcmd.append('Simulate.Simulate3')
+    simcmd.append('Simulate.Simulate3')
     simcmd.append(os.path.join(self.datadir, 'rbac-state'))
     simcmd.append(str(algnum))
 
