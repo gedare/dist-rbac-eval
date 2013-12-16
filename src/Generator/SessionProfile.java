@@ -330,11 +330,11 @@ public class SessionProfile {
 							while(iter.hasNext()){
 								//get sub graph of a role
 								
-								//Vertex r = g.FindRole(((RoleVertex)iter.next()).getRoleID());
-								Vertex r = sub_graph.FindRole(((RoleVertex)iter.next()).getRoleID());
+								Vertex r = g.FindRole(((RoleVertex)iter.next()).getRoleID());
+								//Vertex r = sub_graph.FindRole(((RoleVertex)iter.next()).getRoleID());
 								ArrayList sub = new ArrayList();
-								//sub = g.getInducedGraph(sub, r);
-								sub = sub_graph.getInducedGraph(sub, r);
+								sub = g.getInducedGraph(sub, r);
+								//sub = sub_graph.getInducedGraph(sub, r);
 								//get permissions assigned to
 								RbacGraph role_sub_graph = new RbacGraph(sub);
 								int[] perm = role_sub_graph.get_permissions_IDs();
@@ -348,8 +348,8 @@ public class SessionProfile {
 							}
 							//go through allowed permissions and generate access request
 							//while(number_of_access > 0){
-							iter = permissions_allowed.iterator();
-							while(iter.hasNext()){
+							//iter = permissions_allowed.iterator();
+							//while(iter.hasNext()){
 								if(number_of_access > 0){//this condition prevents generating access request in the case we have a lot more permissions than actual requests we need to do
 									buffWriter.flush();
 									buffWriter.write("a");
@@ -357,7 +357,8 @@ public class SessionProfile {
 									//writing item number in the file
 									buffWriter.write(" " + item);
 									//int permission = Integer.parseInt((String) iter.next());
-									buffWriter.write(" " + iter.next());
+									//buffWriter.write(" " + iter.next());
+									buffWriter.write(" " + generator.nextInt(permissions_allowed.size()));
 									buffWriter.write(newline);//print out new line
 									//decrease number_of_access for the next iteration of while loop
 									number_of_access --;
@@ -366,7 +367,7 @@ public class SessionProfile {
 								else{
 									break;
 								}
-							}
+							//}
 							//break;	
 						}
 					number_of_access --;
