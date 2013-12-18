@@ -12,21 +12,22 @@ public class SDP_HWDSBitSet extends SDP {
 
   // A subset of the PDP's Sessions map.
   private HWDS hwds;
-  private HashMap<Integer,CountedBitSet> hashed_bitsets;
+  private int max_offset;
+  private static final int value_bits = 64;
 
 	public SDP_HWDSBitSet(PDP pdp) {
 		super(pdp);
     hwds = new SimulatedHWDS();
-    hashed_bitsets = new HashMap<Integer,CountedBitSet>();
+    max_offset = 0;
 	}
 
   @Override
 	public boolean access_request(int session_id, int permission_id) {
-    int tag = (int)hwds.search(session_id);
-    CountedBitSet cb = hashed_bitsets.get(tag);
-    if ( cb == null )
-      return false;
-    return cb.getBits().get(permission_id);
+    int offset = permission_id >> 6; // permission_id / 64
+    long value = hwds.search( (session_id << 16) | offset );
+    // FIXME: check for 'miss'
+    int bit_position = permission_id & (value_bits - 1);
+    return 0 != (value & (1 << bit_position));
 	}
 
 	@Override
@@ -36,15 +37,14 @@ public class SDP_HWDSBitSet extends SDP {
     if ( response != null ) {
       BitSet b = response.getBitSet();
       if ( b != null ) {
-        int tag = b.hashCode();
-        CountedBitSet cb = hashed_bitsets.get(tag);
-        if ( cb != null) {
-          cb.obtain();
-        } else {
-          cb = new CountedBitSet(b);
-          hashed_bitsets.put(tag, cb);
+        long values[] = b.toLongArray();
+        int offset = (b.length() + (value_bits-1)) / value_bits;
+        if ( offset > max_offset )
+          max_offset = offset;
+        for ( int i = 0; i < offset; i++ ) {
+          int key = (session.id << 16) | i;
+          hwds.enqueue(key, values[i]);
         }
-        hwds.enqueue(session.id, tag);
 		    return session.id;
       }
     }
@@ -53,14 +53,11 @@ public class SDP_HWDSBitSet extends SDP {
 
 	@Override
 	public void destroy_session(int session_id) {
-    int tag = (int)hwds.extract(session_id);
-    CountedBitSet cb = hashed_bitsets.get(tag);
-    if (cb != null) {
-      cb.release();
-      if (cb.getCount() == 0) {
-        hashed_bitsets.remove(tag);
-      }
-    }
+
+    // slightly wasteful, but correct
+    for ( int i = 0; i < max_offset; i++ )
+      hwds.extract((session_id<<32) | i);
+
 		this.pdp.delete(session_id);	
 	}
 

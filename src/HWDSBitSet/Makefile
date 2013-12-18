@@ -7,7 +7,7 @@ PSEUDO=/home/gedare/work/research/hwds/gem5/pseudo_insn
 
 CLASSPATH:=$(CLASSPATH):$(M5OP):$(PSEUDO)
 
-all: PDP_HWDSBitSet.class SDP_HWDSBitSet.class SDP_Response.class CountedBitSet.class
+all: PDP_HWDSBitSet.class SDP_HWDSBitSet.class SDP_Response.class
 
 %.class:%.java $(M5OP)/gem5OpJni.jar $(PSEUDO)/hwds.jar
 	javac -classpath $(CLASSPATH) -sourcepath $(SOURCEPATH) $<
