@@ -241,19 +241,24 @@ def analyze_it(results, tag, output):
     r = filter_results_by_field_value(results, 'permissions', '250')
     p = filter_results_by_field_value(results, 'roles', '100')
 
+    # the following should be in a loop...or something smarter.
     r0 = filter_results_by_field_value(r, 'algorithm', '0')
     r1 = filter_results_by_field_value(r, 'algorithm', '1')
+    r2 = filter_results_by_field_value(r, 'algorithm', '2')
     r3 = filter_results_by_field_value(r, 'algorithm', '3')
 
     p0 = filter_results_by_field_value(p, 'algorithm', '0')
     p1 = filter_results_by_field_value(p, 'algorithm', '1')
+    p2 = filter_results_by_field_value(p, 'algorithm', '2')
     p3 = filter_results_by_field_value(p, 'algorithm', '3')
 
     rd0, rxmin0, rxmax0 = extract_dataset(r0, 'roles', 'mean', 'std')
     rd1, rxmin1, rxmax1 = extract_dataset(r1, 'roles', 'mean', 'std')
+    rd2, rxmin2, rxmax2 = extract_dataset(r2, 'roles', 'mean', 'std')
     rd3, rxmin3, rxmax3 = extract_dataset(r3, 'roles', 'mean', 'std')
     pd0, pxmin0, pxmax0 = extract_dataset(p0, 'permissions', 'mean', 'std')
     pd1, pxmin1, pxmax1 = extract_dataset(p1, 'permissions', 'mean', 'std')
+    pd2, pxmin2, pxmax2 = extract_dataset(p2, 'permissions', 'mean', 'std')
     pd3, pxmin3, pxmax3 = extract_dataset(p3, 'permissions', 'mean', 'std')
 
     rxmin = min(rxmin0, rxmin1, rxmin3)
@@ -265,6 +270,8 @@ def analyze_it(results, tag, output):
     rDirected.extend(rd0)
     rAccessMatrix = ["Access Matrix"]
     rAccessMatrix.extend(rd1)
+    rAuthorizationRecycling = ["Authorization Recycling"]
+    rAuthorizationRecycling.extend(rd2)
     rCPOL = ["CPOL"]
     rCPOL.extend(rd3)
 
@@ -272,15 +279,21 @@ def analyze_it(results, tag, output):
     pDirected.extend(pd0)
     pAccessMatrix = ["Access Matrix"]
     pAccessMatrix.extend(pd1)
+    pAuthorizationRecycling = ["Authorization Recycling"]
+    pAuthorizationRecycling.extend(pd2)
     pCPOL = ["CPOL"]
     pCPOL.extend(pd3)
 
-    create_plot('line', [rDirected, rAccessMatrix, rCPOL],
+    create_plot('line', [rDirected, rAccessMatrix,
+      #rAuthorizationRecycling,
+      rCPOL],
           str(rxmin), str(rxmax),
           "# Roles", "Access check time (us)", "Intra-session Roles",
           os.path.join(output, "intra_roles.p"))
  
-    create_plot('line', [pDirected, pAccessMatrix, pCPOL],
+    create_plot('line', [pDirected, pAccessMatrix,
+      #pAuthorizationRecycling,
+      pCPOL],
           str(pxmin), str(pxmax), "# Permissions",
           "Access check time (us)", "Intra-session Permissions",
           os.path.join(output, "intra_perms.p"))
