@@ -12,9 +12,11 @@ import java.util.List;
 import java.util.Set;
 
 import PDP_SDP.PDP;
+import PDP_SDP.PDP_Response;
 import PDP_SDP.SDP_Data_Structure;
 import PDP_SDP.Session;
 import RbacGraph.RbacGraph;
+import Structures.Vertex;
 import Structures.RoleVertex;
 
 
@@ -46,6 +48,12 @@ public class PDP_Bloom extends PDP{
 
 	@Override
 	public SDP_Data_Structure request(Session s, String[] roles) {
+
+    PDP_Response P = (PDP_Response)super.request(s, roles);
+    if ( P == null )
+      return null;
+    ArrayList<RoleVertex> Roles = P.getRoles();
+
 		int[] allpermissions = ((RbacGraph)this.getG()).get_permissions_IDs();
 		int sessionid = s.id;
 		Set Up = new HashSet();
@@ -57,17 +65,17 @@ public class PDP_Bloom extends PDP{
 			Up.add(sessionid + " " + allpermissions[i]);
 		}
 		Set I = new HashSet();
-		for(int i = 0; i < roles.length; i++) {
-			RoleVertex r = ((RbacGraph)this.getG()).FindRole(roles[i]);
-			ArrayList arraylist = new ArrayList();
-			arraylist = ((RbacGraph)this.getG()).getInducedGraph(arraylist, r);
-			RbacGraph temp = new RbacGraph(arraylist);
-			//get all permissions' id from that sub graph
-			int[] permissions = temp.get_permissions_IDs();
-			for(int j = 0; j < permissions.length; j++) {
-				I.add(sessionid + " " + permissions[j]);
-			}
-		}
+    Iterator iterator = Roles.iterator();
+    while (iterator.hasNext()) {
+      Vertex currentvertex = (Vertex) iterator.next();
+      ArrayList<Vertex> roleSubgraph =
+        ((RbacGraph)g).getInducedGraph(new ArrayList<Vertex>(), currentvertex);
+      RbacGraph helpergraph = new RbacGraph(roleSubgraph);
+      int[] permissions = helpergraph.get_permissions_IDs();
+      for(int j = 0; j < permissions.length; j++) {
+        I.add(sessionid + " " + permissions[j]);
+      }
+    }
 		Set Up_I = new HashSet();
 		Up_I.addAll(Up);
 		Up_I.removeAll(I);

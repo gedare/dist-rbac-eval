@@ -2,10 +2,10 @@ MAIN_DIR=${DIST_RBAC_DIR}
 CLASSPATH=.:${MAIN_DIR}
 SOURCEPATH=${MAIN_DIR}
 
+all: PDP_MapBitSet.class SDP_MapBitSet.class SDP_Response.class
+
 %.class:%.java
 	javac -classpath ${CLASSPATH} -sourcepath ${SOURCEPATH} $<
-
-all: PDP.class PDP_Response.class SDP_Data_Structure.class SDP.class Session.class
 
 clean:
 	rm -rf *.class a.out core
