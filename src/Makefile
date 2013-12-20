@@ -19,6 +19,20 @@ all:
 	$(MAKE) all -C Simulate
 	$(MAKE) all -C Structures
 
+jar: all
+	jar cvf AccessMatrix.jar AccessMatrix/*.class
+	jar cvf BloomFilter.jar BloomFilter/*.class
+	jar cvf Cpol.jar Cpol/*.class
+	jar cvf Helper.jar Helper/*.class
+	jar cvf HWDS.jar HWDS/*.class
+	jar cvf HWDSBitSet.jar HWDSBitSet/*.class
+	jar cvf MapBitSet.jar MapBitSet/*.class
+	jar cvf PDP_SDP.jar PDP_SDP/*.class
+	jar cvf RbacGraph.jar RbacGraph/*.class
+	jar cvf Recycling.jar Recycling/*.class
+	jar cvf Simulate.jar Simulate/*.class
+	jar cvf Structures.jar Structures/*.class
+
 rungen:
 	java -cp ${CLASSPATH} Generator/Generator
 
