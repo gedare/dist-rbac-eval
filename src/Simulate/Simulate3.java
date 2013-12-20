@@ -75,7 +75,7 @@ public class Simulate3 {
     double cov = compute_cov(start, stop);
     if(cov < covtmp ) {
       double mm = compute_mean(start, stop);
-      System.out.println("cov: " + cov + "\tmean: " + mm);
+      System.out.println("cov: " + cov + "\tmean: " + mm + "\titeration: " + iteration);
       FileWriter fstream1 = new FileWriter("Data/means", true);
       BufferedWriter out1 = new BufferedWriter(fstream1);
       out1.write(mm + " " + cov + "\n");
@@ -271,6 +271,7 @@ public class Simulate3 {
       if (are_we_there_yet(iterations, 0.02)) {
         break;
       }
+      reset();
     }
     
     //long end_time = System.nanoTime();

@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 public class PermissionVertex extends Vertex{
 	private String PermissionID;
+	public static int staticID; //shadow
 
 	public String getPermissionID() {
 		return PermissionID;
