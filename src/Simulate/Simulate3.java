@@ -105,9 +105,6 @@ public class Simulate3 {
 		}
 		int iterations;
     gem5Op gem5 = new gem5Op();
-    for(iterations = 0; iterations < MAX_ITERATIONS; iterations++) {
-      int numAccessChecks = 0;
-     	HashMap<Integer,Integer> sessions = new HashMap();
 
 			long initiation_time = System.nanoTime();
 
@@ -130,19 +127,15 @@ public class Simulate3 {
 			switch(algorithm) {
 			case 0:
 				pdp = new PDP_RbacGraph();
-				sdp = new SDP_RbacGraph(pdp);
 				break;
 			case 1:
 				pdp = new PDP_ACM();
-				sdp = new SDP_ACM(pdp);
 				break;
 			case 2:
 				pdp = new PDP_Recycling();
-				sdp = new SDP_Recycling(pdp);
 				break;
 			case 3:
 				pdp = new PDP_Cpol();
-				sdp = new SDP_Cpol(pdp);
 				break;
 			case 4:
 				try {
@@ -150,7 +143,6 @@ public class Simulate3 {
 					int Elen = Integer.parseInt(args[3]);
 					int max_depth = Integer.parseInt(args[4]);
 					pdp = new PDP_Bloom(m, Elen, max_depth);
-					sdp = new SDP_Bloom(pdp);
 				}
 				catch(Exception e) {
 					System.out.println(errorMessage());
@@ -159,25 +151,54 @@ public class Simulate3 {
 				break;
       case 5:
         pdp = new PDP_MapBitSet();
-        sdp = new SDP_MapBitSet(pdp);
         break;
       case 6:
         pdp = new PDP_HWDSBitSet();
-        sdp = new SDP_HWDSBitSet(pdp);
         break;
       case 7:
         pdp = new PDP_HWDS();
-        sdp = new SDP_HWDS(pdp);
         break;
 			}
 
 			String filename = args[0];//construct file name
 			FileReader fReader = new FileReader(filename);
 
-			pdp.setSDP(sdp);
 			pdp.init(fReader);
 			//RBAC g = ((PDP_RbacGraph)pdp).getG();
 			//RBAC g = ((PDP_ACM)pdp).getG();
+			fReader.close();
+
+    for(iterations = 0; iterations < MAX_ITERATIONS; iterations++) {
+      int numAccessChecks = 0;
+     	HashMap<Integer,Integer> sessions = new HashMap();
+
+      switch(algorithm) {
+			case 0:
+				sdp = new SDP_RbacGraph(pdp);
+				break;
+			case 1:
+				sdp = new SDP_ACM(pdp);
+				break;
+			case 2:
+				sdp = new SDP_Recycling(pdp);
+				break;
+			case 3:
+				sdp = new SDP_Cpol(pdp);
+				break;
+			case 4:
+				sdp = new SDP_Bloom(pdp);
+				break;
+      case 5:
+        sdp = new SDP_MapBitSet(pdp);
+        break;
+      case 6:
+        sdp = new SDP_HWDSBitSet(pdp);
+        break;
+      case 7:
+        sdp = new SDP_HWDS(pdp);
+        break;
+			}
+			pdp.setSDP(sdp);
 
 			long initiation_request_time = 0;
 			long access_request_time = 0;
@@ -276,7 +297,6 @@ public class Simulate3 {
       times[iterations] = times[iterations] / numAccessChecks;
 
 			f.close();
-			fReader.close();
       if (are_we_there_yet(iterations, 0.02)) {
         break;
       }
