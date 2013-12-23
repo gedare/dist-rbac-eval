@@ -27,33 +27,18 @@ public class PDP_HWDS extends PDP {
 	}
 
 	@Override
-	public SDP_Data_Structure request(Session s, String[] roles) {
+	public SDP_Data_Structure request(Session s, String[] roles,
+      SDP_Data_Structure prepared) {
 
-    PDP_Response P = (PDP_Response)super.request(s, roles);
+    PDP_Response P = (PDP_Response) prepared;
     if ( P == null )
       return null;
     ArrayList<RoleVertex> Roles = P.getRoles();
     ArrayList<Vertex> userSubgraph = P.getUserGraph();
 
-    ArrayList<Integer> current_permissions = new ArrayList<Integer>();
+    ArrayList<Integer> current_permissions = P.getPermissions();
+      new ArrayList<Integer>();
 
-    Iterator iterator = Roles.iterator();
-    while (iterator.hasNext()) {
-      Vertex currentvertex = (Vertex) iterator.next();
-      ArrayList<Vertex> roleSubgraph =
-        ((RbacGraph)g).getInducedGraph(new ArrayList<Vertex>(), currentvertex);
-
-      // FIXME: the following could be computed directly on roleSubgraph,
-      // however this follows how other PDPs compute permissions during
-      // session creation.
-      RbacGraph helpergraph = new RbacGraph(roleSubgraph);
-      int[] permissions = helpergraph.get_permissions_IDs();
-      // Add all permissions to the current session's set
-      for ( int i = 0; i < permissions.length; i++ ) {
-        if(!current_permissions.contains(permissions[i]))
-          current_permissions.add(permissions[i]);
-      }
-    }
     Sessions.put(s.id, current_permissions);
 		return new SDP_Response(current_permissions);
 	}

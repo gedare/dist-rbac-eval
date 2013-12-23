@@ -2,6 +2,7 @@ package HWDS;
 
 import PDP_SDP.PDP;
 import PDP_SDP.SDP;
+import PDP_SDP.SDP_Data_Structure;
 import PDP_SDP.Session;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class SDP_HWDS extends SDP {
 
   @Override
 	public boolean access_request(int session_id, int permission_id) {
-    long value = hwds.search(session_id);
+    long value = hwds.search(session_id); // FIXME : multimap
     if ( value == permission_id ) {
       return true;
     }
@@ -30,9 +31,10 @@ public class SDP_HWDS extends SDP {
 	}
 
 	@Override
-	public int initiate_session_request(String user_id, String[] roles) {
+	public int initiate_session_request(String user_id, String[] roles,
+      SDP_Data_Structure P) {
 		Session session = new Session(user_id);
-		SDP_Response response = (SDP_Response)pdp.request(session, roles);
+		SDP_Response response = (SDP_Response)pdp.request(session, roles, P);
     if ( response != null ) {
       ArrayList<Integer> v = response.getValues();
       Iterator iterator = v.iterator();
