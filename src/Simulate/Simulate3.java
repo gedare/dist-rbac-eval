@@ -36,6 +36,7 @@ import Structures.PermissionVertex;
 import Structures.RoleVertex;
 import Structures.UserVertex;
 
+import jni.gem5Op;
 
 // TODO: Make this a proper object already, enough with the static methods!
 public class Simulate3 {
@@ -76,6 +77,7 @@ public class Simulate3 {
     if(cov < covtmp ) {
       double mm = compute_mean(start, stop);
       System.out.println("cov: " + cov + "\tmean: " + mm + "\titeration: " + iteration);
+      //System.out.println(java.util.Arrays.toString(times));
       FileWriter fstream1 = new FileWriter("Data/means", true);
       BufferedWriter out1 = new BufferedWriter(fstream1);
       out1.write(mm + " " + cov + "\n");
@@ -96,15 +98,17 @@ public class Simulate3 {
 
 	public static void main(String[] args) throws IOException {
 	//	java.lang.Compiler.disable();
+    System.loadLibrary("gem5OpJni");
 		for(int i = 0; i < MAX_ITERATIONS; i++) {
 			times[i] = 0;
 		}
 		int iterations;
+    gem5Op gem5 = new gem5Op();
     for(iterations = 0; iterations < MAX_ITERATIONS; iterations++) {
       int numAccessChecks = 0;
      	HashMap<Integer,Integer> sessions = new HashMap();
 
-			long initiation_time = System.nanoTime();
+			long initiation_time = gem5.rpns();
 
 			int algorithm = 0;
 
@@ -193,11 +197,11 @@ public class Simulate3 {
 					for(int i = 0; i < roles.length; i++) {
 						roles[i] = (String)temp.get(i);
 					}
-					long time1 = System.nanoTime();
+					long time1 = gem5.rpns();
 
 					int session = sdp.initiate_session_request(user, roles);
 
-					long time2 = System.nanoTime();
+					long time2 = gem5.rpns();
 					initiation_request_time = initiation_request_time + time2 - time1;
 
 					sessions.put(itemID, session);
@@ -215,13 +219,13 @@ public class Simulate3 {
 						//	long startUserTimeNano   = getUserTime( );
 							
 							//for(int i = 0; i < MAX_ITERATIONS; i++) {
-								long time1 = System.nanoTime();
+								long time1 = gem5.rpns();
 								sdp.access_request(sessionid, permissionid);
+								long time2 = gem5.rpns();
 														//		long taskUserTimeNano    = getUserTime( ) - startUserTimeNano;
 						//		long taskSystemTimeNano  = getSystemTime( ) - startSystemTimeNano;
 							 numAccessChecks++;
 							//	out1.write("\n\n" + "new result: " + new Benchmark(task).toStringFull());
-								long time2 = System.nanoTime();
 						/*		if(time2-time1>500000000*10) {
 									System.out.println("Threshold for " + algorithm + " is: " + (time2-time1));
 									System.exit(0);
@@ -252,11 +256,11 @@ public class Simulate3 {
 						else {
 							int sessionid = sessions.get(itemID);
 
-							long time1 = System.nanoTime();
+							long time1 = gem5.rpns();
 
 							sdp.destroy_session(sessionid);
 
-							long time2 = System.nanoTime();
+							long time2 = gem5.rpns();
 							destroy_time = destroy_time + time2 - time1;
 
 							sessions.remove(itemID);
@@ -265,7 +269,12 @@ public class Simulate3 {
 				}
 			}	//end of while loop
 
+      System.out.println("Times\t" +
+          initiation_request_time + "\t" +
+          times[iterations] + "\t" +
+          destroy_time);
       times[iterations] = times[iterations] / numAccessChecks;
+
 			f.close();
 			fReader.close();
       if (are_we_there_yet(iterations, 0.02)) {
@@ -274,12 +283,11 @@ public class Simulate3 {
       reset();
     }
     
-    //long end_time = System.nanoTime();
+    //long end_time = gem5.rpns();
 		//long difference = end_time - initiation_time;
 
 		/*	System.out.println("Access Request Time:\t\t" + access_request_time);//time from access requests
 
-			System.out.println("Initiation Request Time:\t" + initiation_request_time);//time from requests initiation
 
 			System.out.println("Destroy Time:\t\t\t" + destroy_time);
 
@@ -315,6 +323,5 @@ public class Simulate3 {
 		(new Cpol.Rule(null)).rule_id = 0;
 		System.gc();
 	}
-
 }
 

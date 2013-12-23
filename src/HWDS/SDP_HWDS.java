@@ -17,7 +17,7 @@ public class SDP_HWDS extends SDP {
 
 	public SDP_HWDS(PDP pdp) {
 		super(pdp);
-    hwds = new SimulatedHWDS();
+    hwds = new PseudoHWDS();
 	}
 
   @Override

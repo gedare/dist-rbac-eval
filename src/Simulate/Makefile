@@ -2,7 +2,10 @@ MAIN_DIR=${DIST_RBAC_DIR}
 CLASSPATH=.:${MAIN_DIR}
 SOURCEPATH=${MAIN_DIR}
 
-%.class:%.java
+M5OP=/home/gedare/work/gem5/gem5/util/m5
+CLASSPATH:=$(CLASSPATH):$(M5OP)
+
+%.class:%.java $(M5OP)/gem5OpJni.jar
 	javac -classpath ${CLASSPATH} -sourcepath ${SOURCEPATH} $<
 
 all: Simulate2.class Simulate.class Measurements.class Simulate3.class

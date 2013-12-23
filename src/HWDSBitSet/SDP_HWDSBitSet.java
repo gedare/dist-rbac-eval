@@ -17,7 +17,7 @@ public class SDP_HWDSBitSet extends SDP {
 
 	public SDP_HWDSBitSet(PDP pdp) {
 		super(pdp);
-    hwds = new SimulatedHWDS();
+    hwds = new PseudoHWDS();
     max_offset = 0;
 	}
 
