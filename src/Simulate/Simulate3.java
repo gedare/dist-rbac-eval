@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.lang.management.*;
 
@@ -174,7 +175,9 @@ public class Simulate3 {
 			BufferedReader f;
       f = new BufferedReader(new FileReader("Data/instructions"));
 			String line;
+      ArrayList<String> Instructions = new ArrayList<String>();
 			while((line = f.readLine()) != null) {
+        Instructions.add(line);
 				StringTokenizer token = new StringTokenizer(line, " ");
 				String instruction = token.nextToken();
 				if(instruction.equals("i")) {
@@ -232,9 +235,10 @@ public class Simulate3 {
 			long initiation_request_time = 0;
 			long access_request_time = 0;
 			long destroy_time = 0;
-			f = new BufferedReader(new FileReader("Data/instructions"));
-			while((line = f.readLine()) != null) {
-				StringTokenizer token = new StringTokenizer(line, " ");
+      Iterator iterator = Instructions.iterator();
+			while(iterator.hasNext()) {
+				line = (String) iterator.next();
+        StringTokenizer token = new StringTokenizer(line, " ");
 				String instruction = token.nextToken();
 				if(instruction.equals("i")) {
 					int itemID = Integer.parseInt(token.nextToken());
@@ -327,7 +331,6 @@ public class Simulate3 {
           destroy_time);
       times[iterations] = times[iterations] / numAccessChecks;
 
-			f.close();
       if (are_we_there_yet(iterations, 0.02)) {
         break;
       }
