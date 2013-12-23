@@ -27,6 +27,7 @@ import MapBitSet.SDP_MapBitSet;
 import MapBitSet.PDP_MapBitSet;
 import PDP_SDP.PDP;
 import PDP_SDP.SDP;
+import PDP_SDP.SDP_Data_Structure;
 import PDP_SDP.Session;
 import RbacGraph.PDP_RbacGraph;
 import RbacGraph.SDP_RbacGraph;
@@ -108,7 +109,7 @@ public class Simulate3 {
       int numAccessChecks = 0;
      	HashMap<Integer,Integer> sessions = new HashMap();
 
-			long initiation_time = gem5.rpns();
+			long initiation_time = System.nanoTime();
 
 			int algorithm = 0;
 
@@ -197,11 +198,10 @@ public class Simulate3 {
 					for(int i = 0; i < roles.length; i++) {
 						roles[i] = (String)temp.get(i);
 					}
-					long time1 = gem5.rpns();
-
-					int session = sdp.initiate_session_request(user, roles);
-
-					long time2 = gem5.rpns();
+					SDP_Data_Structure prepared = sdp.prepare_session(user, roles);
+					long time1 = System.nanoTime();
+					int session = sdp.initiate_session_request(user, roles, prepared);
+					long time2 = System.nanoTime();
 					initiation_request_time = initiation_request_time + time2 - time1;
 
 					sessions.put(itemID, session);
@@ -219,9 +219,9 @@ public class Simulate3 {
 						//	long startUserTimeNano   = getUserTime( );
 							
 							//for(int i = 0; i < MAX_ITERATIONS; i++) {
-								long time1 = gem5.rpns();
+								long time1 = System.nanoTime();
 								sdp.access_request(sessionid, permissionid);
-								long time2 = gem5.rpns();
+								long time2 = System.nanoTime();
 														//		long taskUserTimeNano    = getUserTime( ) - startUserTimeNano;
 						//		long taskSystemTimeNano  = getSystemTime( ) - startSystemTimeNano;
 							 numAccessChecks++;
@@ -256,11 +256,11 @@ public class Simulate3 {
 						else {
 							int sessionid = sessions.get(itemID);
 
-							long time1 = gem5.rpns();
+							long time1 = System.nanoTime();
 
 							sdp.destroy_session(sessionid);
 
-							long time2 = gem5.rpns();
+							long time2 = System.nanoTime();
 							destroy_time = destroy_time + time2 - time1;
 
 							sessions.remove(itemID);
@@ -283,7 +283,7 @@ public class Simulate3 {
       reset();
     }
     
-    //long end_time = gem5.rpns();
+    //long end_time = System.nanoTime();
 		//long difference = end_time - initiation_time;
 
 		/*	System.out.println("Access Request Time:\t\t" + access_request_time);//time from access requests

@@ -34,33 +34,21 @@ public class PDP_ACM extends PDP {
 		this.record = new ArrayList();
 	}
 	
-  public SDP_Data_Structure request(Session s, String[] roles) {
+  public SDP_Data_Structure request(Session s, String[] roles,
+      SDP_Data_Structure prepared) {
 
-    PDP_Response P = (PDP_Response)super.request(s, roles);
+    //PDP_Response P = (PDP_Response)super.request(s, roles);
+    PDP_Response P = (PDP_Response) prepared;
     if ( P == null )
       return null;
     ArrayList<RoleVertex> Roles = P.getRoles();
 
-    ArrayList current_permissions = new ArrayList();
-
-    Iterator iterator = Roles.iterator();
-    while (iterator.hasNext()){
-      Vertex currentvertex = (Vertex) iterator.next();
-      //for each role from Roles, get induced graph,
-      //so we can get all its permissions id
-      ArrayList alist = new ArrayList();
-      ArrayList<Vertex> helperlist =
-        ((RbacGraph)g).getInducedGraph(alist, currentvertex);
-      RbacGraph helpergraph = new RbacGraph(helperlist);
-      int[] permissions = helpergraph.get_permissions_IDs();
-      //go thru all permissions, if it is not contained in Permissions ADD it
-      //just makes sure no double permissions are there
-      for(int i = 0; i < permissions.length; i++){
-        if(!Permissions.contains(permissions[i]))
-          Permissions.add(permissions[i]);
-        if(!current_permissions.contains(permissions[i]))
-          current_permissions.add(permissions[i]);
-      }
+    ArrayList current_permissions = P.getPermissions();
+    Iterator iterator = current_permissions.iterator();
+    while ( iterator.hasNext() ) {
+      Integer p = (Integer) iterator.next();
+      if ( !Permissions.contains(p) )
+        Permissions.add(p);
     }
 
     record.add(new RecordData(s.id, current_permissions));

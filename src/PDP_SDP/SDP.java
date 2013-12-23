@@ -41,7 +41,12 @@ public abstract class SDP {
 		this.pdp = pdp;
 	}
 
+  public SDP_Data_Structure prepare_session(String user_id, String[] roles) {
+    return this.pdp.prepare(user_id, roles); 
+  };
+
 	public abstract void destroy_session(int session_id);
-	public abstract int initiate_session_request(String user_id, String[] roles);
+	public abstract int initiate_session_request(String user_id, String[] roles,
+      SDP_Data_Structure prepared);
 	public abstract boolean access_request(int session_id, int permission_id);
 }

@@ -3,6 +3,7 @@ package PDP_SDP;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import Helper.Parser;
 import RbacGraph.RbacGraph;
@@ -47,9 +48,12 @@ public abstract class PDP {
 
 	}
 	
-	public SDP_Data_Structure request(Session s, String[] roles)
+  // request() can be written to check if prepared != null and call prepare
+	public abstract SDP_Data_Structure request(Session s, String[] roles,
+      SDP_Data_Structure prepared);
+	public SDP_Data_Structure prepare(String user_id, String[] roles)
   {
-    UserVertex user = ((RbacGraph)g).FindUser(s.user_id);
+    UserVertex user = ((RbacGraph)g).FindUser(user_id);
     if (user == null ) {
       return null;
     }
@@ -67,7 +71,23 @@ public abstract class PDP {
       return null;
     }
 
-    return new PDP_Response(Roles, userSubgraph);
+    // for each role from Roles, get all the available permissions
+    ArrayList current_permissions = new ArrayList();
+    Iterator iterator = Roles.iterator();
+    while (iterator.hasNext()){
+      Vertex currentvertex = (Vertex) iterator.next();
+      ArrayList alist = new ArrayList();
+      ArrayList<Vertex> helperlist =
+        ((RbacGraph)g).getInducedGraph(alist, currentvertex);
+      RbacGraph helpergraph = new RbacGraph(helperlist);
+      int[] permissions = helpergraph.get_permissions_IDs();
+      for(int i = 0; i < permissions.length; i++){
+        if(!current_permissions.contains(permissions[i]))
+          current_permissions.add(permissions[i]);
+      }
+    }
+
+    return new PDP_Response(Roles, userSubgraph, current_permissions);
   }
 	public abstract SDP_Data_Structure delete(int session_id);
 	
