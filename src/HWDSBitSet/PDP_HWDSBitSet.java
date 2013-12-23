@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
@@ -27,48 +28,23 @@ public class PDP_HWDSBitSet extends PDP {
 	}
 
 	@Override
-	public SDP_Data_Structure request(Session s, String[] roles) {
+	public SDP_Data_Structure request(Session s, String[] roles,
+      SDP_Data_Structure prepared) {
 
-    PDP_Response P = (PDP_Response)super.request(s, roles);
+    PDP_Response P = (PDP_Response) prepared;
     if ( P == null )
       return null;
     ArrayList<RoleVertex> Roles = P.getRoles();
     ArrayList<Vertex> userSubgraph = P.getUserGraph();
 
-    // Construct set of permissions for requested roles in this session
-    /* FIXME:
-     * 1) Should be able to know the maximum number of permissions globally
-     * 2) The vertex IDs include roles and users so there are gaps. It would
-     *    be better if the permission IDs are dense.
-     */
-    Iterator iterator;
-    iterator = userSubgraph.iterator();
-    int max_permission = 0;
-    while (iterator.hasNext()) {
-      Vertex v = (Vertex) iterator.next();
-      if ( v instanceof PermissionVertex ) {
-        int p = ((PermissionVertex)v).getID();
-        if ( p > max_permission )
-          max_permission = p;
-      }
-    }
-    BitSet current_permissions = new BitSet(max_permission);
-    iterator = Roles.iterator();
-    while (iterator.hasNext()) {
-      Vertex currentvertex = (Vertex) iterator.next();
-      ArrayList<Vertex> roleSubgraph =
-        ((RbacGraph)g).getInducedGraph(new ArrayList<Vertex>(), currentvertex);
+    ArrayList permissions = P.getPermissions();
 
-      // FIXME: the following could be computed directly on roleSubgraph,
-      // however this follows how other PDPs compute permissions during
-      // session creation.
-      RbacGraph helpergraph = new RbacGraph(roleSubgraph);
-      int[] permissions = helpergraph.get_permissions_IDs();
-      // Add all permissions to the current session's set
-      for ( int i = 0; i < permissions.length; i++ ) {
-          current_permissions.set(permissions[i]);
-      }
-    }
+    // Construct set of permissions for requested roles in this session
+    Iterator iterator;
+    iterator = permissions.iterator();
+    int max_permission = (Integer)permissions.get(permissions.size()-1);
+    BitSet current_permissions = new BitSet(max_permission);
+
     Sessions.put(s.id, current_permissions);
 		return new SDP_Response(current_permissions);
 	}

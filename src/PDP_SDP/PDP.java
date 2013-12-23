@@ -3,6 +3,7 @@ package PDP_SDP;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import Helper.Parser;
@@ -86,6 +87,7 @@ public abstract class PDP {
           current_permissions.add(permissions[i]);
       }
     }
+    Collections.sort(current_permissions);
 
     return new PDP_Response(Roles, userSubgraph, current_permissions);
   }
