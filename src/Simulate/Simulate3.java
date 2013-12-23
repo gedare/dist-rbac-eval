@@ -168,6 +168,35 @@ public class Simulate3 {
 			//RBAC g = ((PDP_ACM)pdp).getG();
 			fReader.close();
 
+      // go through the instructions file one time to ... 
+      HashMap<ArrayList<String>, SDP_Data_Structure> Prepared_Sessions;
+      Prepared_Sessions = new HashMap();
+			BufferedReader f;
+      f = new BufferedReader(new FileReader("Data/instructions"));
+			String line;
+			while((line = f.readLine()) != null) {
+				StringTokenizer token = new StringTokenizer(line, " ");
+				String instruction = token.nextToken();
+				if(instruction.equals("i")) {
+					int itemID = Integer.parseInt(token.nextToken());
+					String user = token.nextToken();
+					ArrayList temp = new ArrayList();
+					while(token.hasMoreTokens()) {
+						temp.add(token.nextToken());
+					}
+					String [] roles = new String[temp.size()];
+					for(int i = 0; i < roles.length; i++) {
+						roles[i] = (String)temp.get(i);
+					}
+          temp.add(user);
+
+					SDP_Data_Structure prepared = pdp.prepare(user, roles);
+          Prepared_Sessions.put(temp, prepared);
+				}
+      }
+			f.close();
+
+
     for(iterations = 0; iterations < MAX_ITERATIONS; iterations++) {
       int numAccessChecks = 0;
      	HashMap<Integer,Integer> sessions = new HashMap();
@@ -203,8 +232,7 @@ public class Simulate3 {
 			long initiation_request_time = 0;
 			long access_request_time = 0;
 			long destroy_time = 0;
-			BufferedReader f = new BufferedReader(new FileReader("Data/instructions"));
-			String line;
+			f = new BufferedReader(new FileReader("Data/instructions"));
 			while((line = f.readLine()) != null) {
 				StringTokenizer token = new StringTokenizer(line, " ");
 				String instruction = token.nextToken();
@@ -219,7 +247,10 @@ public class Simulate3 {
 					for(int i = 0; i < roles.length; i++) {
 						roles[i] = (String)temp.get(i);
 					}
-					SDP_Data_Structure prepared = sdp.prepare_session(user, roles);
+          temp.add(user);
+
+          SDP_Data_Structure prepared = Prepared_Sessions.get(temp);
+
 					long time1 = System.nanoTime();
 					int session = sdp.initiate_session_request(user, roles, prepared);
 					long time2 = System.nanoTime();
