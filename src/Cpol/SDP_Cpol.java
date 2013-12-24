@@ -47,7 +47,8 @@ public class SDP_Cpol extends SDP {
 	
 	//this method as mentioned in Rule class is actually AddRule method from Cpol's original implementation
 	@Override
-	public int initiate_session_request(String user_id, String[] roles) {
+	public int initiate_session_request(String user_id, String[] roles,
+      SDP_Data_Structure P) {
 		//create empty AccessToken, later we will fill it up with permissions
 		AccessToken A = new AccessToken();
 		Rule R = new Rule(user_id);
@@ -64,7 +65,7 @@ public class SDP_Cpol extends SDP {
 		Session_Cpol S = new Session_Cpol(R);//creates new session
 		//what should we do!
 		//go to pdp with these []roles and check if that user is assigned to them
-		SDP_Data_Structure checker = this.pdp.request(S, roles);
+		SDP_Data_Structure checker = this.pdp.request(S, roles, P);
 		if(checker != null){
 			((CacheEntry)checker).setCondition(true);//set it is valid entry
 			this.g = checker;//should return only cache entry
