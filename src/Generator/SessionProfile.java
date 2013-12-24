@@ -177,6 +177,7 @@ public class SessionProfile {
 					break;
 				}
 				case 1:{
+/*
 					//get a random role index
 					int ind = generator.nextInt(current_roles.length);
 					//add first role, and every other we compare with that one
@@ -184,13 +185,14 @@ public class SessionProfile {
 					RoleVertex role = sub_graph.FindRole(current_roles[ind]);
 					list_of_roles.add(role);
 					int level = role.level;
+*/
 					for(int k = 0; k < current_roles.length; k++){
 						RoleVertex new_role = sub_graph.FindRole(current_roles[k]);
 						//add first role, and every other we compare with that one
 						//we only compare hierarchy level
-						if (new_role.getLevel()!=level){
+/*						if (new_role.getLevel()!=level) {  */
 							list_of_roles.add(new_role);
-							}
+/*							} */
 						}
 					break;
 					}
