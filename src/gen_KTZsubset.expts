@@ -84,11 +84,11 @@ U_Connectivity=1
 P_Connectivity=1
 
 # Varying Roles
-for R in 10 50 100 500 700 2000 #3000 6000 8000 10000
+for R in 500 750 2000 #3000 6000 8000 10000
 do
   P=250
   RperU=$R
-  RperP=$R
+  let RperP=$R/$P
 
   # Core RH
   Depth_of_RH=1
@@ -103,11 +103,11 @@ done
 echo "Done generating intra-session experiment configurations for varying roles"
 
 #Varying Permissions
-for P in 10 50 100 500 700 2000
+for P in 100 500 700 2000
 do
   R=100
   RperU=$R
-  RperP=$R
+  let RperP=$P/$R
 
   # Core RH
   Depth_of_RH=1
@@ -185,7 +185,7 @@ echo "Done generating inter-session experiment session profiles"
 # nature_of_access_checks = 
 
 # Varying Roles
-for R in 10 50 100 500 700 2000
+for R in 500 750 2000
 do
   P=250
 
@@ -209,7 +209,7 @@ do
 done
 
 #Varying Permissions
-for P in 10 50 100 500 700 2000
+for P in 100 500 700 2000
 do
   R=100
 

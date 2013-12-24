@@ -52,10 +52,10 @@ def do_KTZsubset_intra(base, algorithms):
       'stats_KTZsubset')
   RP = []
   P = 250
-  for R in [10,50,100,500,700,2000]:
+  for R in [500,750,2000]:
     RP.append((R,P))
   R = 100
-  for P in [10,50,100,500,700,2000]:
+  for P in [100,500,700,2000]:
     RP.append((R,P))
   intra.run_experiments(RP, algorithms)
 
