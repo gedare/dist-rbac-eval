@@ -21,12 +21,13 @@ public class SDP_RbacGraph extends SDP {
 		super(pdp);
 	}
 
-	public int initiate_session_request(String user_id, String[] roles) {
+	public int initiate_session_request(String user_id, String[] roles,
+      SDP_Data_Structure P) {
 		//assume login is approved
 		//create new empty session
 		Session s = new Session(user_id);
 		//sends user_id, ses_id, roles to PDP
-		SDP_Data_Structure checker = this.pdp.request(s, roles);
+		SDP_Data_Structure checker = this.pdp.request(s, roles, P);
 		if(checker != null) {
 			this.g = (RBAC) checker;//to make sure if we have denied session request it does not mess up our previous graph on SDP
 			/* only for testing purposes 

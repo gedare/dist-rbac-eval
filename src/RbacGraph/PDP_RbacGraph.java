@@ -22,9 +22,10 @@ public class PDP_RbacGraph extends PDP {
 		this.requested = new ArrayList();
 	}
 	
-	public SDP_Data_Structure request(Session s, String[] roles) {
+	public SDP_Data_Structure request(Session s, String[] roles,
+      SDP_Data_Structure prepared) {
 
-    PDP_Response P = (PDP_Response)super.request(s, roles);
+    PDP_Response P = (PDP_Response) prepared;
     if ( P == null )
       return null;
     ArrayList<RoleVertex> Roles = P.getRoles();

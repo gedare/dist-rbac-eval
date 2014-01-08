@@ -15,8 +15,8 @@ import java.lang.management.*;
 
 import AccessMatrix.PDP_ACM;
 import AccessMatrix.SDP_ACM;
-import BloomFilter.PDP_Bloom;
-import BloomFilter.SDP_Bloom;
+//import BloomFilter.PDP_Bloom;
+//import BloomFilter.SDP_Bloom;
 import Cpol.PDP_Cpol;
 import Cpol.SDP_Cpol;
 import Cpol.Session_Cpol;
@@ -24,16 +24,16 @@ import HWDS.SDP_HWDS;
 import HWDS.PDP_HWDS;
 import HWDSBitSet.SDP_HWDSBitSet;
 import HWDSBitSet.PDP_HWDSBitSet;
-import MapBitSet.SDP_MapBitSet;
-import MapBitSet.PDP_MapBitSet;
+//import MapBitSet.SDP_MapBitSet;
+//import MapBitSet.PDP_MapBitSet;
 import PDP_SDP.PDP;
 import PDP_SDP.SDP;
 import PDP_SDP.SDP_Data_Structure;
 import PDP_SDP.Session;
-import RbacGraph.PDP_RbacGraph;
-import RbacGraph.SDP_RbacGraph;
-import Recycling.PDP_Recycling;
-import Recycling.SDP_Recycling;
+//import RbacGraph.PDP_RbacGraph;
+//import RbacGraph.SDP_RbacGraph;
+//import Recycling.PDP_Recycling;
+//import Recycling.SDP_Recycling;
 import Structures.PermissionVertex;
 import Structures.RoleVertex;
 import Structures.UserVertex;
@@ -125,19 +125,21 @@ public class Simulate3 {
 			}
 			PDP pdp = null;
 			SDP sdp = null;
+      System.out.println("algorithm " + algorithm);
 			switch(algorithm) {
 			case 0:
-				pdp = new PDP_RbacGraph();
+//				pdp = new PDP_RbacGraph();
 				break;
 			case 1:
 				pdp = new PDP_ACM();
 				break;
 			case 2:
-				pdp = new PDP_Recycling();
+//				pdp = new PDP_Recycling();
 				break;
 			case 3:
 				pdp = new PDP_Cpol();
 				break;
+        /*
 			case 4:
 				try {
 					int m = Integer.parseInt(args[2]);
@@ -152,7 +154,7 @@ public class Simulate3 {
 				break;
       case 5:
         pdp = new PDP_MapBitSet();
-        break;
+        break;*/
       case 6:
         pdp = new PDP_HWDSBitSet();
         break;
@@ -206,22 +208,22 @@ public class Simulate3 {
 
       switch(algorithm) {
 			case 0:
-				sdp = new SDP_RbacGraph(pdp);
+//				sdp = new SDP_RbacGraph(pdp);
 				break;
 			case 1:
 				sdp = new SDP_ACM(pdp);
 				break;
 			case 2:
-				sdp = new SDP_Recycling(pdp);
+//				sdp = new SDP_Recycling(pdp);
 				break;
 			case 3:
 				sdp = new SDP_Cpol(pdp);
 				break;
 			case 4:
-				sdp = new SDP_Bloom(pdp);
+//				sdp = new SDP_Bloom(pdp);
 				break;
       case 5:
-        sdp = new SDP_MapBitSet(pdp);
+//        sdp = new SDP_MapBitSet(pdp);
         break;
       case 6:
         sdp = new SDP_HWDSBitSet(pdp);

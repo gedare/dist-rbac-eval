@@ -8,7 +8,7 @@ CLASSPATH:=$(CLASSPATH):$(M5OP)
 %.class:%.java $(M5OP)/gem5OpJni.jar
 	javac -classpath ${CLASSPATH} -sourcepath ${SOURCEPATH} $<
 
-all: Simulate2.class Simulate.class Measurements.class Simulate3.class
+all: Measurements.class Simulate3.class
 
 clean:
 	rm -rf *.class a.out core
