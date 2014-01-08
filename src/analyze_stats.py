@@ -55,8 +55,9 @@ set key outside right\n\
 # results to the "column" index for that mnemonic/field. So for example the
 # first column contains a high-level tag for the experiment (e.g. rbac_inter
 # or rbac_intra), so the key "tag" maps to 0 (since the columns are 0-indexed)
-index_by_name=dict(tag=0, depth_of_rh=1, nature_of_rh=2, roles=3, permissions=4,
-    sessions=5, algorithm=6, mean=7, std=8) #FIXME
+index_by_name=dict(tag=0, depth_of_rh=1, nature_of_rh=2, roles=3,
+    permissions=4, sessions=5, algorithm=6, atmean=7, atstd=8,
+    itmean=9, itstd=10, dtmean=11, dtstd=12 ) #FIXME
 
 # return the value in the field with given name for a single row of the results
 def get_field(result,name):
@@ -97,7 +98,7 @@ def get_results_from_CBF(filename, tag):
     results.append(metadata[2])
     results.append(metadata[3])
     results.append(metadata[4])
-    results.append("16") # FIXME: hard-coded for KTZ
+    results.append("8") # FIXME: hard-coded for KTZ
     results.append(metadata[5])
   elif tag == 'rbac_inter':
     results.append(metadata[1])
@@ -117,14 +118,44 @@ def get_results_from_CBF(filename, tag):
   results.append(numpy.mean(arr))
   results.append(numpy.std(arr))
   f.close()
-  assert len(index_by_name) == len(results)
+  return results
+
+def get_results_from_raw_txt(filename, tag):
+  results = []
+  basename, extension = os.path.splitext(filename)
+  rawtimefile = basename + ".txt"
+  if not os.path.exists(rawtimefile):
+    return []
+  f = open(rawtimefile)
+  data = [line.strip().split() for line in f]
+  if not data:
+    return [0.0, 0.0, 0.0, 0.0]
+  stop_index = int(data[-1][0])
+  start_index = stop_index - 5
+  times = data[start_index:stop_index]
+  init_times = [float(t[0])/1000.0 for t in times]
+  access_times = [float(t[1])/1000.0 for t in times]
+  destroy_times = [float(t[2])/1000.0 for t in times]
+
+  arr = numpy.array(init_times)
+  results.append(numpy.mean(arr))
+  results.append(numpy.std(arr))
+
+  #arr = numpy.array(access_times)
+
+  arr = numpy.array(destroy_times)
+  results.append(numpy.mean(arr))
+  results.append(numpy.std(arr))
+
   return results
 
 # construct a list of lists containing the results from all the files given
 def get_results_from_CBF_files(filenames, tag):
   results = []
   for f in filenames:
-    results.append(get_results_from_CBF(f, tag))
+    r = get_results_from_CBF(f, tag)
+    r.extend(get_results_from_raw_txt(f, tag))
+    results.append(r)
   return results
 
 # return a list containing input/tag/*.CBF
@@ -133,11 +164,8 @@ def get_CBF_files(input, tag):
   files = [
       os.path.join(tagpath, f) for f in os.listdir(tagpath)
       if os.path.isfile(os.path.join(tagpath, f))
+      and string.find(f,"CBF") != -1
   ]
-  # filter out any files that aren't CBF
-  for f in files:
-    if string.find(f, "CBF") == -1:
-      files.remove(f)
   return files
 
 def create_lineplots_header(xmin, xmax, xlabel, ylabel, title, outfile):
@@ -196,6 +224,8 @@ def create_plot(type, datasets, xmin, xmax, xlabel, ylabel, title, outfile):
 ##
 def extract_dataset(results, x, y, err):
   dataset = []
+  if not results:
+    return [], [], 0
   xmin = int(get_field(results[0], x))
   xmax = xmin
   for r in results:
@@ -213,29 +243,38 @@ def extract_dataset(results, x, y, err):
   return dataset, xmin, xmax
 
 def analyze_it(results, tag, output):
+
+  name_from_type = dict([("at","Access Check"),
+    ("it","Initialize Session"), ("dt","Destroy Session")])
+
   if tag == 'rbac_inter':
-    for algorithm in xrange(6):
+    for algorithm in xrange(8):
       r = filter_results_by_field_value(results, 'algorithm', algorithm)
       if len(r) == 0:
         continue
       s = filter_results_by_field_value(r, 'nature_of_rh', 0)
       h = filter_results_by_field_value(r, 'nature_of_rh', 1)
       c = filter_results_by_field_value(h, 'depth_of_rh', 1)
-      sd, sxmin, sxmax = extract_dataset(s, 'sessions', 'mean', 'std')
-      hd, hxmin, hxmax = extract_dataset(h, 'sessions', 'mean', 'std')
-      cd, cxmin, cxmax = extract_dataset(c, 'sessions', 'mean', 'std')
-      xmin = sxmin
-      xmax = sxmax
-      Stanford = ["Stanford"]
-      Stanford.extend(sd)
-      Hybrid = ["Hybrid"]
-      Hybrid.extend(hd)
-      Core = ["Core"]
-      Core.extend(cd)
-      create_plot('line', [Stanford, Core], str(xmin), str(xmax),
-          "# Sessions", "Access check time (us)", str(algorithm),
-          os.path.join(output, "inter" + str(algorithm) + ".p"))
 
+      for t in ["at", "it", "dt"]:
+        sd, sxmin, sxmax = extract_dataset(s, 'sessions', t+'mean', t+'std')
+        hd, hxmin, hxmax = extract_dataset(h, 'sessions', t+'mean', t+'std')
+        cd, cxmin, cxmax = extract_dataset(c, 'sessions', t+'mean', t+'std')
+        xmin = cxmin
+        xmax = cxmax
+        Stanford = ["Stanford"]
+        Stanford.extend(sd)
+        #Hybrid = ["Hybrid"]
+        #Hybrid.extend(hd)
+        Core = ["Core"]
+        Core.extend(cd)
+        create_plot('line', [
+        #Stanford,
+        Core],
+            str(xmin), str(xmax),
+            "# Sessions", name_from_type[t] + " Time (us)", str(algorithm),
+            os.path.join(output, "inter" + t + str(algorithm) + ".p"))
+  
 
   elif tag == 'rbac_intra':
     r = filter_results_by_field_value(results, 'permissions', '250')
@@ -246,57 +285,85 @@ def analyze_it(results, tag, output):
     r1 = filter_results_by_field_value(r, 'algorithm', '1')
     r2 = filter_results_by_field_value(r, 'algorithm', '2')
     r3 = filter_results_by_field_value(r, 'algorithm', '3')
+    r6 = filter_results_by_field_value(r, 'algorithm', '6')
+    r7 = filter_results_by_field_value(r, 'algorithm', '7')
 
     p0 = filter_results_by_field_value(p, 'algorithm', '0')
     p1 = filter_results_by_field_value(p, 'algorithm', '1')
     p2 = filter_results_by_field_value(p, 'algorithm', '2')
     p3 = filter_results_by_field_value(p, 'algorithm', '3')
+    p6 = filter_results_by_field_value(p, 'algorithm', '6')
+    p7 = filter_results_by_field_value(p, 'algorithm', '7')
 
-    rd0, rxmin0, rxmax0 = extract_dataset(r0, 'roles', 'mean', 'std')
-    rd1, rxmin1, rxmax1 = extract_dataset(r1, 'roles', 'mean', 'std')
-    rd2, rxmin2, rxmax2 = extract_dataset(r2, 'roles', 'mean', 'std')
-    rd3, rxmin3, rxmax3 = extract_dataset(r3, 'roles', 'mean', 'std')
-    pd0, pxmin0, pxmax0 = extract_dataset(p0, 'permissions', 'mean', 'std')
-    pd1, pxmin1, pxmax1 = extract_dataset(p1, 'permissions', 'mean', 'std')
-    pd2, pxmin2, pxmax2 = extract_dataset(p2, 'permissions', 'mean', 'std')
-    pd3, pxmin3, pxmax3 = extract_dataset(p3, 'permissions', 'mean', 'std')
-
-    rxmin = min(rxmin0, rxmin1, rxmin3)
-    rxmax = max(rxmax0, rxmax1, rxmax3)
-    pxmin = min(pxmin0, pxmin1, pxmin3)
-    pxmax = max(pxmax0, pxmax1, pxmax3)
-    
-    rDirected = ["Directed Graph"]
-    rDirected.extend(rd0)
-    rAccessMatrix = ["Access Matrix"]
-    rAccessMatrix.extend(rd1)
-    rAuthorizationRecycling = ["Authorization Recycling"]
-    rAuthorizationRecycling.extend(rd2)
-    rCPOL = ["CPOL"]
-    rCPOL.extend(rd3)
-
-    pDirected = ["Directed Graph"]
-    pDirected.extend(pd0)
-    pAccessMatrix = ["Access Matrix"]
-    pAccessMatrix.extend(pd1)
-    pAuthorizationRecycling = ["Authorization Recycling"]
-    pAuthorizationRecycling.extend(pd2)
-    pCPOL = ["CPOL"]
-    pCPOL.extend(pd3)
-
-    create_plot('line', [rDirected, rAccessMatrix,
-      #rAuthorizationRecycling,
-      rCPOL],
-          str(rxmin), str(rxmax),
-          "# Roles", "Access check time (us)", "Intra-session Roles",
-          os.path.join(output, "intra_roles.p"))
- 
-    create_plot('line', [pDirected, pAccessMatrix,
-      #pAuthorizationRecycling,
-      pCPOL],
-          str(pxmin), str(pxmax), "# Permissions",
-          "Access check time (us)", "Intra-session Permissions",
-          os.path.join(output, "intra_perms.p"))
+    for t in ["at", "it", "dt"]:
+      rd0, rxmin0, rxmax0 = extract_dataset(r0, 'roles', t+'mean', t+'std')
+      rd1, rxmin1, rxmax1 = extract_dataset(r1, 'roles', t+'mean', t+'std')
+      rd2, rxmin2, rxmax2 = extract_dataset(r2, 'roles', t+'mean', t+'std')
+      rd3, rxmin3, rxmax3 = extract_dataset(r3, 'roles', t+'mean', t+'std')
+      rd6, rxmin6, rxmax6 = extract_dataset(r6, 'roles', t+'mean', t+'std')
+      rd7, rxmin7, rxmax7 = extract_dataset(r7, 'roles', t+'mean', t+'std')
+      pd0, pxmin0, pxmax0 = extract_dataset(p0, 'permissions', t+'mean', t+'std')
+      pd1, pxmin1, pxmax1 = extract_dataset(p1, 'permissions', t+'mean', t+'std')
+      pd2, pxmin2, pxmax2 = extract_dataset(p2, 'permissions', t+'mean', t+'std')
+      pd3, pxmin3, pxmax3 = extract_dataset(p3, 'permissions', t+'mean', t+'std')
+      pd6, pxmin6, pxmax6 = extract_dataset(p6, 'permissions', t+'mean', t+'std')
+      pd7, pxmin7, pxmax7 = extract_dataset(p7, 'permissions', t+'mean', t+'std')
+      
+      rxmin = min(rxmin0, rxmin1, rxmin3, rxmin6, rxmin7)
+      rxmax = max(rxmax0, rxmax1, rxmax3, rxmax6, rxmax7)
+      pxmin = min(pxmin0, pxmin1, pxmin3, pxmin6, pxmin7)
+      pxmax = max(pxmax0, pxmax1, pxmax3, pxmax6, pxmax7)
+      
+      rDirected = ["Directed Graph"]
+      rDirected.extend(rd0)
+      rAccessMatrix = ["Access Matrix"]
+      rAccessMatrix.extend(rd1)
+      rAuthorizationRecycling = ["Authorization Recycling"]
+      rAuthorizationRecycling.extend(rd2)
+      rCPOL = ["CPOL"]
+      rCPOL.extend(rd3)
+      rHWDSBitSet = ["HWDS BitSet"]
+      rHWDSBitSet.extend(rd6)
+      rHWDS = ["HWDS Multimap"]
+      rHWDS.extend(rd7)
+  
+      pDirected = ["Directed Graph"]
+      pDirected.extend(pd0)
+      pAccessMatrix = ["Access Matrix"]
+      pAccessMatrix.extend(pd1)
+      pAuthorizationRecycling = ["Authorization Recycling"]
+      pAuthorizationRecycling.extend(pd2)
+      pCPOL = ["CPOL"]
+      pCPOL.extend(pd3)
+      pHWDSBitSet = ["HWDS BitSet"]
+      pHWDSBitSet.extend(pd6)
+      pHWDS = ["HWDS Multimap"]
+      pHWDS.extend(pd7)
+  
+      create_plot('line', [
+        #rDirected,
+        rAccessMatrix,
+        #rAuthorizationRecycling,
+        rCPOL,
+        rHWDSBitSet,
+        rHWDS],
+            str(rxmin), str(rxmax),
+            "# Roles",
+            name_from_type[t] + " Time (us)",
+            "Intra-session Roles",
+            os.path.join(output, "intra_roles_" + t + ".p"))
+   
+      create_plot('line', [
+        #pDirected,
+        pAccessMatrix,
+        #pAuthorizationRecycling,
+        pCPOL,
+        pHWDSBitSet,
+        pHWDS],
+            str(pxmin), str(pxmax), "# Permissions",
+            name_from_type[t] + " Time (us)",
+            "Intra-session Permissions",
+            os.path.join(output, "intra_perms_" + t + ".p"))
 
   else: # this shouldn't happen. 
     assert False, "Unknown tag: " + tag
