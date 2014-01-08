@@ -92,7 +92,7 @@ for R in 10 50 100 500 700 2000 3000 6000 8000 10000
 do
   P=250
   RperU=$R
-  RperP=$R
+  let RperP=$R/$P
 
   # Core RH
   Nature_of_RH=1
@@ -111,7 +111,7 @@ for P in 10 50 100 500 700 2000 3000 6000 8000 10000
 do
   R=100
   RperU=$R
-  RperP=$R
+  let RperP=$P/$R
 
   # Core RH
   Nature_of_RH=1
