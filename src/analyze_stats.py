@@ -247,122 +247,112 @@ def analyze_it(results, tag, output):
   name_from_type = dict([("at","Access Check"),
     ("it","Initialize Session"), ("dt","Destroy Session")])
 
-  if tag == 'rbac_inter':
-    for algorithm in xrange(8):
-      r = filter_results_by_field_value(results, 'algorithm', algorithm)
-      if len(r) == 0:
-        continue
-      s = filter_results_by_field_value(r, 'nature_of_rh', 0)
-      h = filter_results_by_field_value(r, 'nature_of_rh', 1)
-      c = filter_results_by_field_value(h, 'depth_of_rh', 1)
+  name_from_algorithm = dict([(0,"Directed Graph"),
+    (1,"Access Matrix"), (2,"Authorization Recycling"), (3, "CPOL"),
+    (4, "Bloom Filter"), (5, "Map BitSet"),
+    (6, "HWDS BitSet"), (7, "HWDS Multimap")])
 
+  if tag == 'rbac_inter':
+    r = [filter_results_by_field_value(results, 'algorithm', algorithm)
+        for algorithm in xrange(8)]
+    s = []
+    h = []
+    c = []
+    for x in xrange(8):
+      s.append(filter_results_by_field_value(r[x], 'nature_of_rh', 0))
+      h.append(filter_results_by_field_value(r[x], 'nature_of_rh', 1))
+      c.append(filter_results_by_field_value(h[x], 'depth_of_rh', 1))
+    for x in xrange(8):
+      if len(r[x]) == 0:
+          continue
       for t in ["at", "it", "dt"]:
-        sd, sxmin, sxmax = extract_dataset(s, 'sessions', t+'mean', t+'std')
-        hd, hxmin, hxmax = extract_dataset(h, 'sessions', t+'mean', t+'std')
-        cd, cxmin, cxmax = extract_dataset(c, 'sessions', t+'mean', t+'std')
-        xmin = cxmin
-        xmax = cxmax
-        Stanford = ["Stanford"]
-        Stanford.extend(sd)
-        #Hybrid = ["Hybrid"]
-        #Hybrid.extend(hd)
-        Core = ["Core"]
-        Core.extend(cd)
-        create_plot('line', [
-        #Stanford,
-        Core],
-            str(xmin), str(xmax),
-            "# Sessions", name_from_type[t] + " Time (us)", str(algorithm),
-            os.path.join(output, "inter" + t + str(algorithm) + ".p"))
-  
+        plot_data = []
+        minima = []
+        maxima = []
+        for l, d in [("Stanford", s[x]), ("Hybrid", h[x]), ("Core", c[x])]:
+          data, m, M = extract_dataset(d, 'sessions', t+'mean', t+'std')
+          if len(data) != 0:
+            labelled_data = [l]
+            labelled_data.extend(data)
+            plot_data.append(labelled_data)
+            minima.append(m)
+            maxima.append(M)
+        if len(plot_data) == 0:
+          continue
+        xmin = min(minima)
+        xmax = max(maxima)
+        create_plot('line', plot_data, str(xmin), str(xmax), "# Sessions",
+            name_from_type[t] + " Time (us)", name_from_algorithm[x],
+            os.path.join(output, "inter" + t + str(x) + ".p"))
+
+    for t in ["at", "it", "dt"]:
+      for l, d in [("Stanford", s), ("Hybrid", h), ("Core", c)]:
+        plot_data = []
+        minima = []
+        maxima = []
+        for x in xrange(8):
+          if len(r[x]) == 0:
+            continue
+          data, m, M = extract_dataset(d[x], 'sessions', t+'mean', t+'std')
+          if len(data) != 0:
+            labelled_data = [name_from_algorithm[x]]
+            labelled_data.extend(data)
+            plot_data.append(labelled_data)
+            minima.append(m)
+            maxima.append(M)
+        if len(plot_data) == 0:
+          continue
+        xmin = min(minima)
+        xmax = max(maxima)
+        create_plot('line', plot_data, str(xmin), str(xmax), "# Sessions",
+            name_from_type[t] + " Time (us)", l,
+            os.path.join(output, "inter" + t + l + ".p")) 
 
   elif tag == 'rbac_intra':
     r = filter_results_by_field_value(results, 'permissions', '250')
     p = filter_results_by_field_value(results, 'roles', '100')
 
-    # the following should be in a loop...or something smarter.
-    r0 = filter_results_by_field_value(r, 'algorithm', '0')
-    r1 = filter_results_by_field_value(r, 'algorithm', '1')
-    r2 = filter_results_by_field_value(r, 'algorithm', '2')
-    r3 = filter_results_by_field_value(r, 'algorithm', '3')
-    r6 = filter_results_by_field_value(r, 'algorithm', '6')
-    r7 = filter_results_by_field_value(r, 'algorithm', '7')
-
-    p0 = filter_results_by_field_value(p, 'algorithm', '0')
-    p1 = filter_results_by_field_value(p, 'algorithm', '1')
-    p2 = filter_results_by_field_value(p, 'algorithm', '2')
-    p3 = filter_results_by_field_value(p, 'algorithm', '3')
-    p6 = filter_results_by_field_value(p, 'algorithm', '6')
-    p7 = filter_results_by_field_value(p, 'algorithm', '7')
+    role_results = [filter_results_by_field_value(r, 'algorithm', x)
+        for x in xrange(8)]
+    perm_results = [filter_results_by_field_value(p, 'algorithm', x)
+        for x in xrange(8)]
 
     for t in ["at", "it", "dt"]:
-      rd0, rxmin0, rxmax0 = extract_dataset(r0, 'roles', t+'mean', t+'std')
-      rd1, rxmin1, rxmax1 = extract_dataset(r1, 'roles', t+'mean', t+'std')
-      rd2, rxmin2, rxmax2 = extract_dataset(r2, 'roles', t+'mean', t+'std')
-      rd3, rxmin3, rxmax3 = extract_dataset(r3, 'roles', t+'mean', t+'std')
-      rd6, rxmin6, rxmax6 = extract_dataset(r6, 'roles', t+'mean', t+'std')
-      rd7, rxmin7, rxmax7 = extract_dataset(r7, 'roles', t+'mean', t+'std')
-      pd0, pxmin0, pxmax0 = extract_dataset(p0, 'permissions', t+'mean', t+'std')
-      pd1, pxmin1, pxmax1 = extract_dataset(p1, 'permissions', t+'mean', t+'std')
-      pd2, pxmin2, pxmax2 = extract_dataset(p2, 'permissions', t+'mean', t+'std')
-      pd3, pxmin3, pxmax3 = extract_dataset(p3, 'permissions', t+'mean', t+'std')
-      pd6, pxmin6, pxmax6 = extract_dataset(p6, 'permissions', t+'mean', t+'std')
-      pd7, pxmin7, pxmax7 = extract_dataset(p7, 'permissions', t+'mean', t+'std')
+      rd = []
+      rxminima = []
+      rxmaxima = []
+      pd = []
+      pxminima = []
+      pxmaxima = []
+      for x in xrange(8):
+        a, b, c = extract_dataset(role_results[x], 'roles', t+'mean', t+'std')
+        if len(a) != 0:
+          labelled_data = [name_from_algorithm[x]]
+          labelled_data.extend(a)
+          rd.append(labelled_data)
+          rxminima.append(b)
+          rxmaxima.append(c)
+
+        a, b, c = extract_dataset(
+            perm_results[x], 'permissions', t+'mean', t+'std')
+        if len(a) != 0:
+          labelled_data = [name_from_algorithm[x]]
+          labelled_data.extend(a)
+          pd.append(labelled_data)
+          pxminima.append(b)
+          pxmaxima.append(c)
       
-      rxmin = min(rxmin0, rxmin1, rxmin3, rxmin6, rxmin7)
-      rxmax = max(rxmax0, rxmax1, rxmax3, rxmax6, rxmax7)
-      pxmin = min(pxmin0, pxmin1, pxmin3, pxmin6, pxmin7)
-      pxmax = max(pxmax0, pxmax1, pxmax3, pxmax6, pxmax7)
+      rxmin = min(rxminima)
+      rxmax = max(rxmaxima)
+      pxmin = min(pxminima)
+      pxmax = max(pxmaxima)
       
-      rDirected = ["Directed Graph"]
-      rDirected.extend(rd0)
-      rAccessMatrix = ["Access Matrix"]
-      rAccessMatrix.extend(rd1)
-      rAuthorizationRecycling = ["Authorization Recycling"]
-      rAuthorizationRecycling.extend(rd2)
-      rCPOL = ["CPOL"]
-      rCPOL.extend(rd3)
-      rHWDSBitSet = ["HWDS BitSet"]
-      rHWDSBitSet.extend(rd6)
-      rHWDS = ["HWDS Multimap"]
-      rHWDS.extend(rd7)
-  
-      pDirected = ["Directed Graph"]
-      pDirected.extend(pd0)
-      pAccessMatrix = ["Access Matrix"]
-      pAccessMatrix.extend(pd1)
-      pAuthorizationRecycling = ["Authorization Recycling"]
-      pAuthorizationRecycling.extend(pd2)
-      pCPOL = ["CPOL"]
-      pCPOL.extend(pd3)
-      pHWDSBitSet = ["HWDS BitSet"]
-      pHWDSBitSet.extend(pd6)
-      pHWDS = ["HWDS Multimap"]
-      pHWDS.extend(pd7)
-  
-      create_plot('line', [
-        #rDirected,
-        rAccessMatrix,
-        #rAuthorizationRecycling,
-        rCPOL,
-        rHWDSBitSet,
-        rHWDS],
-            str(rxmin), str(rxmax),
-            "# Roles",
-            name_from_type[t] + " Time (us)",
-            "Intra-session Roles",
+      create_plot('line', rd, str(rxmin), str(rxmax), "# Roles",
+            name_from_type[t] + " Time (us)", "Intra-session Roles",
             os.path.join(output, "intra_roles_" + t + ".p"))
    
-      create_plot('line', [
-        #pDirected,
-        pAccessMatrix,
-        #pAuthorizationRecycling,
-        pCPOL,
-        pHWDSBitSet,
-        pHWDS],
-            str(pxmin), str(pxmax), "# Permissions",
-            name_from_type[t] + " Time (us)",
-            "Intra-session Permissions",
+      create_plot('line', pd, str(pxmin), str(pxmax), "# Permissions",
+            name_from_type[t] + " Time (us)", "Intra-session Permissions",
             os.path.join(output, "intra_perms_" + t + ".p"))
 
   else: # this shouldn't happen. 
