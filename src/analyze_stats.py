@@ -235,11 +235,13 @@ def extract_dataset(results, x, y, err):
       xmin = rx
     if rx > xmax:
       xmax = rx
-    data.append(str(rx))
-    data.append(str(get_field(r, y)))
-    data.append(str(get_field(r, err)))
-    dataset.append(data)
-  dataset.sort(key=lambda xcoord: int(xcoord[0])) # sort by numerical value of x
+    if len(r) > index_by_name[y]:
+      data.append(str(rx))
+      data.append(str(get_field(r, y)))
+      data.append(str(get_field(r, err)))
+      dataset.append(data)
+  if dataset: # sort by numerical value of x if data exists
+    dataset.sort(key=lambda xcoord: int(xcoord[0]))
   return dataset, xmin, xmax
 
 def analyze_it(results, tag, output):
@@ -341,17 +343,18 @@ def analyze_it(results, tag, output):
           pd.append(labelled_data)
           pxminima.append(b)
           pxmaxima.append(c)
-      
-      rxmin = min(rxminima)
-      rxmax = max(rxmaxima)
-      pxmin = min(pxminima)
-      pxmax = max(pxmaxima)
-      
-      create_plot('line', rd, str(rxmin), str(rxmax), "# Roles",
+
+      if rd:
+        rxmin = min(rxminima)
+        rxmax = max(rxmaxima)
+        create_plot('line', rd, str(rxmin), str(rxmax), "# Roles",
             name_from_type[t] + " Time (us)", "Intra-session Roles",
             os.path.join(output, "intra_roles_" + t + ".p"))
    
-      create_plot('line', pd, str(pxmin), str(pxmax), "# Permissions",
+      if pd:
+        pxmin = min(pxminima)
+        pxmax = max(pxmaxima)
+        create_plot('line', pd, str(pxmin), str(pxmax), "# Permissions",
             name_from_type[t] + " Time (us)", "Intra-session Permissions",
             os.path.join(output, "intra_perms_" + t + ".p"))
 
