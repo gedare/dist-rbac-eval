@@ -21,7 +21,7 @@
 outdir=stats_HWDS_KTZsubset
 mkdir ${outdir}
 
-rm -f ${outdir}/*
+rm -r ${outdir}/*
 rm Data/means
 
 mkdir tmp
@@ -98,11 +98,11 @@ do
   Depth_of_RH=1
   insns=${indir}/rbac_inter/${Depth_of_RH}_${Nature_of_RH}/instructions_${sessions}.3
   rbac=${indir}/rbac_inter/${Depth_of_RH}_${Nature_of_RH}/rbac-state
-  run_experiment(${insns}, ${rbac})
+  run_experiment ${insns} ${rbac}
 
   f=${outdir}/rbac_inter/_term.${Depth_of_RH}.${Nature_of_RH}.$sessions.txt
   mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
-  process_output(${f})
+  process_output ${f}
 done
 
 echo "Finished inter-session experiments"
@@ -123,11 +123,11 @@ do
   P=250
   insn=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
   rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state
-  run_experiment(${insns}, ${rbac})
+  run_experiment ${insns} ${rbac}
 
   f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.txt
   mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
-  process_output(${f})
+  process_output ${f}
 done
 
 echo "Intra-session experiments: varying permissions"
@@ -137,11 +137,11 @@ for P in 100 500 700 #2000
 do
   R=100
   insns=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
-  rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state   run_experiment(${insns}, ${rbac})
+  rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state   run_experiment ${insns} ${rbac}
 
   f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.txt
   mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
-  process_output(${f})
+  process_output ${f}
 done
 
 echo "all done"
