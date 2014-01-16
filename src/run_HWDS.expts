@@ -1,0 +1,149 @@
+#!/bin/bash
+#./run_KTZ.expts
+# Used for generating measurements using Simulate/Simulate3 for various
+# algorithms as in the paper by Komlenovic et al.
+# See also gen_KTZ.expts
+
+# Algorithm is indicated by algnum
+#         0 is Directed Graph
+#         1 is Access Matrix
+#         2 is Authorization Recycling
+#         3 is CPOL
+#         4 is both Bloom and Cascade Bloom filter (as dictated by depth)
+#
+# Note: for authorization recycling, use Simulate/Simulate2 instead because
+#       the way authorization recycling does access enforcement is different
+#       as it goes to the PDP on-demand, and no a priori.
+#
+# Note: for the Bloom Filters Simulate3 accepts 3 additional undocumented args
+#
+
+outdir=stats_HWDS_KTZsubset
+mkdir ${outdir}
+
+rm -f ${outdir}/*
+rm Data/means
+
+mkdir tmp
+rm -r tmp/*
+mkdir tmp/Data
+
+indir=dataset_KTZsubset
+
+workdir=/home/gedare/work/gem5/builds/hwds
+
+echo "Starting inter-session experiments"
+
+run_experiment()
+{
+  cp $1 tmp/Data/instructions
+  cp $2 tmp/Data/rbac-state
+  tar -C tmp -cf Data.tar Data/
+  cd ${workdir}
+  build/X86/gem5.fast ../../gem5/configs/example/fs.py \
+  --checkpoint-dir=/home/gedare/work/gem5/builds/hwds/m5out/1core-Java-7 \
+  --script=/home/gedare/work/github/dist-rbac-eval/src/Data.tar \
+  -r 1 --caches --cpu-type timing
+  cd -
+}
+
+process_output()
+{
+  f=$1
+  dos2unix ${f}
+  grep -e algorithm -e cov -e fatal $f | while read a b c d e f; \
+      do \
+        if [ $a != '#' ]; then \
+          echo  -n "$b " ; \
+          if [ ! -z $c ]; then \
+            echo $d $f; \
+          fi; \
+        else echo "0 0 0" ; \
+        fi; \
+      done > ${f}_processed
+  cat ${f}_processed | while read alg cov mean iter; \
+  do \
+    filename=`echo $f | sed -e "s/_term/_stats/" -e "s/.txt/.${alg}.CBF/"` ; \
+    echo "${mean} ${cov}" > ${filename}; \
+  done
+
+  filestub=`echo $f | sed -e "s/_term/_stats/" -e "s/.txt//"`
+  cat $f |
+    while read token num; \
+    do \
+      if [ ${token} == "algorithm" ]; then \
+        filename=${filestub}.${num}.txt;
+        echo -n "" > ${filename}; \
+        while read times init access destroy x iter; \
+        do \
+          if [ ${times} == "Times" ]; then \
+            echo "${init} ${access} ${destroy}" >> ${filename}; \
+          elif [ ${times} == "cov:" ]; then \
+            echo "${iter}" >> ${filename}; \
+            break;
+          elif [ ${times} == "#" ]; then \
+            break; \
+          fi; \
+        done; \
+      fi; \
+    done
+}
+
+## inter experiments
+mkdir ${outdir}/rbac_inter
+for sessions in {2..8}
+do
+  # Core RH
+  Nature_of_RH=1
+  Depth_of_RH=1
+  insns=${indir}/rbac_inter/${Depth_of_RH}_${Nature_of_RH}/instructions_${sessions}.3
+  rbac=${indir}/rbac_inter/${Depth_of_RH}_${Nature_of_RH}/rbac-state
+  run_experiment(${insns}, ${rbac})
+
+  f=${outdir}/rbac_inter/_term.${Depth_of_RH}.${Nature_of_RH}.$sessions.txt
+  mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
+  process_output(${f})
+done
+
+echo "Finished inter-session experiments"
+echo "Starting intra-session experiments"
+
+## intra experiments
+mkdir ${outdir}/rbac_intra
+
+# these experiments all use the Core RH
+Depth_of_RH=1
+Nature_of_RH=1
+
+echo "Intra-session experiments: varying roles"
+
+# Varying Roles
+for R in 500 750 #2000
+do
+  P=250
+  insn=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
+  rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state
+  run_experiment(${insns}, ${rbac})
+
+  f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.txt
+  mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
+  process_output(${f})
+done
+
+echo "Intra-session experiments: varying permissions"
+
+# Varying Permissions
+for P in 100 500 700 #2000
+do
+  R=100
+  insns=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
+  rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state   run_experiment(${insns}, ${rbac})
+
+  f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.txt
+  mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
+  process_output(${f})
+done
+
+echo "all done"
+
+exit 0
