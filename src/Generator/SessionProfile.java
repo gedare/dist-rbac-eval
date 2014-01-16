@@ -317,7 +317,11 @@ public class SessionProfile {
 	
 							//int number_of_access = number_of_access_checks;//to keep track when to stop generating access checks
 							//generate random item id
+
+              // FIXME: strategy for session to activate?
+              // This is uniform random
 							int item = generator.nextInt(counter);
+
 							//check so we do not access already deleted session
 							while(item < session_to_delete){
 								item = generator.nextInt(counter);
@@ -360,6 +364,9 @@ public class SessionProfile {
 									buffWriter.write(" " + item);
 									//int permission = Integer.parseInt((String) iter.next());
 									//buffWriter.write(" " + iter.next());
+                  
+                  // FIXME: Strategy for permissions to access? This is
+                  // uniform random.
 									buffWriter.write(" " + generator.nextInt(permissions_allowed.size()));
 									buffWriter.write(newline);//print out new line
 									//decrease number_of_access for the next iteration of while loop
@@ -375,6 +382,74 @@ public class SessionProfile {
 					number_of_access --;
 					break;
 					}
+					case 2: {
+            double alpha = 0.5; // probability to repeat last access FIXME: paremetrize
+						int number_of_access = number_of_access_checks;
+            int item = -1;
+            int permission = -1;
+						while ( number_of_access > 0 ) {
+							//generate random item id
+
+              // FIXME: strategy for session to activate?
+              if (item < 0 || generator.nextDouble() > alpha) {
+                // This is uniform random
+                item = generator.nextInt(counter);
+
+                //check so we do not access already deleted session
+                while(item < session_to_delete){
+                  item = generator.nextInt(counter);
+                }
+                list_of_roles = hashmap.get(item);
+                //perform only allowed access checks
+                //go through the list of roles activated,
+                //and get all the permissions
+                Iterator iter = list_of_roles.iterator();
+                ArrayList permissions_allowed = new ArrayList();
+                while(iter.hasNext()){
+                  //get sub graph of a role
+
+                  Vertex r = g.FindRole(((RoleVertex)iter.next()).getRoleID());
+                  ArrayList sub = new ArrayList();
+                  sub = g.getInducedGraph(sub, r);
+                  RbacGraph role_sub_graph = new RbacGraph(sub);
+                  int[] perm = role_sub_graph.get_permissions_IDs();
+                  for(int index = 0; index < perm.length; index++){
+                    if(! permissions_allowed.contains(perm[index])) {
+                      permissions_allowed.add(perm[index]);
+                    }
+                  }
+                }
+                permission = generator.nextInt(permissions_allowed.size());
+              } // else {
+                // repeat the last access
+                // do nothing, as the item and permission are already stored.
+              // }
+
+							//go through allowed permissions and generate access request
+							if(number_of_access > 0){//this condition prevents generating access request in the case we have a lot more permissions than actual requests we need to do
+									buffWriter.flush();
+									buffWriter.write("a");
+										
+									//writing item number in the file
+									buffWriter.write(" " + item);
+									//int permission = Integer.parseInt((String) iter.next());
+									//buffWriter.write(" " + iter.next());
+                  
+                  // FIXME: Strategy for permissions to access? This is
+                  // uniform random.
+                  buffWriter.write(" " + permission);
+									buffWriter.write(newline);//print out new line
+									//decrease number_of_access for the next iteration of while loop
+									number_of_access --;
+								}
+								else{
+									break;
+								}
+						}
+  					number_of_access --;
+	  				break;
+					}
+
 				}			
 			}		
 			
