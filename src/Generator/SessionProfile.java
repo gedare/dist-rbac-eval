@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 
-
 import Helper.Parser;
 import RbacGraph.RbacGraph;
 import Structures.PermissionVertex;
@@ -383,22 +382,11 @@ public class SessionProfile {
 					break;
 					}
 					case 2: {
-            double alpha = 0.5; // probability to repeat last access FIXME: paremetrize
+            double alpha = 1.0; // skewness FIXME: paremetrize
 						int number_of_access = number_of_access_checks;
-            int item = -1;
-            int permission = -1;
-						while ( number_of_access > 0 ) {
-							//generate random item id
-
-              // FIXME: strategy for session to activate?
-              if (item < 0 || generator.nextDouble() > alpha) {
-                // This is uniform random
-                item = generator.nextInt(counter);
-
-                //check so we do not access already deleted session
-                while(item < session_to_delete){
-                  item = generator.nextInt(counter);
-                }
+            // precompute skewed zipf distributions for every session's permissions
+            ArrayList<ZipfGenerator> zipf = new ArrayList<ZipfGenerator>();
+            for ( int item = 0; item < counter; item++ ) {
                 list_of_roles = hashmap.get(item);
                 //perform only allowed access checks
                 //go through the list of roles activated,
@@ -419,11 +407,19 @@ public class SessionProfile {
                     }
                   }
                 }
-                permission = generator.nextInt(permissions_allowed.size());
-              } // else {
-                // repeat the last access
-                // do nothing, as the item and permission are already stored.
-              // }
+                zipf.add(item, new ZipfGenerator(permissions_allowed.size(),
+                    alpha));
+            }
+            while ( number_of_access > 0 ) {
+              // activate a uniform random session
+              int item = generator.nextInt(counter);
+
+              //check so we do not access already deleted session
+              while(item < session_to_delete){
+                item = generator.nextInt(counter);
+              }
+
+              int permission = zipf.get(item).next();
 
 							//go through allowed permissions and generate access request
 							if(number_of_access > 0){//this condition prevents generating access request in the case we have a lot more permissions than actual requests we need to do
