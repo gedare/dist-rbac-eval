@@ -42,7 +42,7 @@ class Experiment(object):
     self.datadir = os.path.join(self.basedir, 'Data')
     assert os.path.isdir(self.datadir)
 
-  def run_instance(self, algnum, optionalargs, loopcnt, CBF_filename):
+  def run_instance(self, algnum, optionalargs, loopcnt, CBF_filename, term_filename):
     means = os.path.join(self.datadir, 'means')
     if not os.path.exists(means):
       os.mknod(means)
@@ -66,7 +66,12 @@ class Experiment(object):
     
     # Make multiple VM invocations until done.
     while wc(means)[0] < loopcnt:
-      simproc = subprocess.call(simcmd)
+      if term_filename:
+        f = open(term_filename, "a")
+        simproc = subprocess.call(simcmd, stdout=f)
+        f.close()
+      else:
+        simproc = subprocess.call(simcmd)
 
     if CBF_filename:
       os.rename(means, os.path.join(self.outputdir, CBF_filename))
@@ -100,9 +105,12 @@ class InterSessionExperiment(Experiment):
               os.path.join(self.datadir, 'instructions'))
           shutil.copy(os.path.join(self.inputdir, rbac), self.datadir)
           for a in algorithms:
-            filename = os.path.join(self.outputdir,
+            stats_file = os.path.join(self.outputdir,
               "_stats." + d + "." + n + "." + str(s) + "." + str(a) + ".CBF")
-            super(InterSessionExperiment, self).run_instance(a, [], 4, filename)
+            term_file = os.path.join(self.outputdir,
+              "_term." + d + "." + n + "." + str(s) + "." + str(a) + ".txt")
+
+            super(InterSessionExperiment, self).run_instance(a, [], 4, stats_file, term_file)
 
 class IntraSessionExperiment(Experiment):
   def __init__(self, base, input, output):
@@ -134,7 +142,11 @@ class IntraSessionExperiment(Experiment):
           os.path.join(self.datadir, 'instructions'))
       shutil.copy(os.path.join(self.inputdir, rbac), self.datadir)
       for a in algorithms:
-        filename = os.path.join(self.outputdir,
+        filestub = os.path.join(self.outputdir,
+          "_stats." + d + "." + n + "." + R + "." + P + "." + str(a))
+        stats_file = os.path.join(self.outputdir,
           "_stats." + d + "." + n + "." + R + "." + P + "." + str(a) + ".CBF")
-        super(IntraSessionExperiment, self).run_instance(a, [], 4, filename)
+        term_file = os.path.join(self.outputdir,
+          "_term." + d + "." + n + "." + R + "." + P + "." + str(a) + ".txt")
+        super(IntraSessionExperiment, self).run_instance(a, [], 4, stats_file, term_file)
 
