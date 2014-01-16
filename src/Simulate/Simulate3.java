@@ -69,7 +69,7 @@ public class Simulate3 {
   private static boolean are_we_there_yet(int iteration, double covtmp)
       throws IOException {
     int iter = 4;
-    if ( iteration < iter )
+    if ( iteration < iter*2 ) // FIXME: hack to skip more of startup
       return false;
     
     ArrayList list = new ArrayList();
@@ -89,7 +89,7 @@ public class Simulate3 {
     }
     
     if (iteration == MAX_ITERATIONS - 1) {
-      for (int i = iter + 1; i <= iteration; i++) {
+      for (int i = iter*2 /*FIXME as above so below*/; i <= iteration; i++) {
         if (are_we_there_yet(i, covtmp + 0.01))
           return true;
       }
