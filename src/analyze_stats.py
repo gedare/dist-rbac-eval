@@ -127,12 +127,24 @@ def get_results_from_raw_txt(filename, tag):
   if not os.path.exists(rawtimefile):
     return []
   f = open(rawtimefile)
-  data = [line.strip().split() for line in f]
-  if not data:
+
+  data = []
+  times = []
+  for line in f:
+    l = line.strip().split()
+    if not l:
+      continue
+    if len(l) == 1:
+      stop_index = int(l[0])
+      start_index = stop_index - 5
+      times.extend(data[start_index:stop_index])
+      data = []
+    else:
+      data.append(l)
+
+  if not times:
     return [0.0, 0.0, 0.0, 0.0]
-  stop_index = int(data[-1][0])
-  start_index = stop_index - 5
-  times = data[start_index:stop_index]
+
   init_times = [float(t[0])/1000.0 for t in times]
   access_times = [float(t[1])/1000.0 for t in times]
   destroy_times = [float(t[2])/1000.0 for t in times]
