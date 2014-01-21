@@ -84,7 +84,7 @@ U_Connectivity=1
 P_Connectivity=1
 
 # Varying Roles
-for R in 500 750 2000 #3000 6000 8000 10000
+for R in 250 500 750 2000 #3000 6000 8000 10000
 do
   P=250
   RperU=$R
@@ -185,7 +185,7 @@ echo "Done generating inter-session experiment session profiles"
 # nature_of_access_checks = 
 
 # Varying Roles
-for R in 500 750 2000
+for R in 250 500 750 2000
 do
   P=250
 
