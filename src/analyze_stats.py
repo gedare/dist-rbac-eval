@@ -193,18 +193,30 @@ def get_CBF_files(input, tag):
   ]
   return files
 
-def create_lineplots_header(xmin, xmax, xlabel, ylabel, title, outfile):
+def create_header(xmin, xmax, xlabel, ylabel, title, outfile):
   return"\
 set terminal postscript eps enhanced solid color lw 1 \"Times-Roman\" 18\n\
 set key outside right\n\
+set output \"" + os.path.splitext(os.path.split(outfile)[1])[0] + ".eps\"\n\
 set xlabel '" + xlabel + "' font \"Times-Roman,18\"\n\
 set ylabel '" + ylabel + "' font \"Times-Roman,18\"\n\
-set output \"" + os.path.splitext(os.path.split(outfile)[1])[0] + ".eps\"\n\
 set title \"" + title + "\" font \"Times-Roman,20\"\n\
 set xrange [" + xmin + ":" + xmax + "] noreverse nowriteback\n\
 set style line 1 lt rgb \"red\" lw 3 pt 6\n\
 set style line 2 lt rgb \"blue\" lw 3 pt 6\n\
 "
+
+
+
+def create_lineplots_header(xmin, xmax, xlabel, ylabel, title, outfile):
+  return create_header(xmin, xmax, xlabel, ylabel, title, outfile)
+
+def create_boxplots_header(xmin, xmax, xlabel, ylabel, title, outfile):
+  return create_header(xmin, xmax, xlabel, ylabel, title, outfile) + "\
+set bars 2.0\n\
+set style fill empty\n\
+"
+
 
 # type can be:
 #   line
@@ -215,10 +227,11 @@ def create_plot(type, datasets, xmin, xmax, xlabel, ylabel, title, outfile):
 
   dataset_index = dict([("x", 0), ("mean",1), ("std",2),
     ("min",3), ("q1",4), ("med",5), ("q3",6), ("max",7)])
+  gp = open(outfile, 'w')
+  reset(gp)
 
-  if type == 'line':
+  if 'line' in type:
     header = create_lineplots_header(xmin, xmax, xlabel, ylabel, title, outfile)
-
     plotcmd = "plot "
     i = 1
     data = ""
@@ -237,13 +250,30 @@ def create_plot(type, datasets, xmin, xmax, xlabel, ylabel, title, outfile):
         data = data + "e\n"
       i = i + 1
     plotcmd = plotcmd + "\n"
-    gp = open(outfile, 'w')
-    reset(gp)
     gp.write(header + plotcmd + data)
-    gp.close()
 
-  else:
-    assert False, "Unknown plot type: " + type
+  if 'box' in type:
+    header = create_boxplots_header(str(int(xmin)/2), str(int(xmax)+int(xmin)), xlabel, ylabel, title, outfile)
+    plotcmd = "plot "
+    i = 1
+    data = ""
+    for dataset in datasets:
+      bp =  "'-' with candlesticks title \"" + dataset[0] + "\" lt " + str(i)
+      bp = bp + ",'-' notitle with candlesticks lt -1"
+      plotcmd = plotcmd + bp
+      for d in dataset[1:]:
+        data = data + d[dataset_index["x"]] + " " + d[dataset_index["q1"]] + " " + d[dataset_index["min"]] + " " + d[dataset_index["max"]] + " "+ d[dataset_index["q3"]] + "\n"
+      # now add data for median
+      data = data + "e\n"
+      for d in dataset[1:]:
+        data = data + d[dataset_index["x"]] + " " + d[dataset_index["med"]] + " " + d[dataset_index["med"]] + " " + d[dataset_index["med"]] + " " + d[dataset_index["med"]] + "\n"
+      if i < len(datasets):
+        plotcmd = plotcmd + ","
+        data = data + "e\n"
+      i = i + 1
+    plotcmd = plotcmd + "\n"
+    gp.write(header + plotcmd + data)
+  gp.close()
 
 ##
 # Analysis
@@ -299,7 +329,7 @@ def analyze_it(results, tag, output):
       if len(r[x]) == 0:
           continue
       for t in ["at", "it", "dt"]:
-        lineplot_data = []
+        plot_data = []
         boxplot_data = []
         minima = []
         maxima = []
@@ -309,20 +339,21 @@ def analyze_it(results, tag, output):
           if len(data) != 0:
             labelled_data = [l]
             labelled_data.extend(data)
-            lineplot_data.append(labelled_data)
+            plot_data.append(labelled_data)
             minima.append(m)
             maxima.append(M)
-        if len(lineplot_data) == 0:
+        if len(plot_data) == 0:
           continue
         xmin = min(minima)
         xmax = max(maxima)
-        create_plot('line', lineplot_data, str(xmin), str(xmax), "# Sessions",
+        for plottype in ['line', 'box']:
+          create_plot(plottype, plot_data, str(xmin), str(xmax), "# Sessions",
             name_from_type[t] + " Time (us)", name_from_algorithm[x],
-            os.path.join(output, "inter" + t + str(x) + ".p"))
+            os.path.join(output, "inter" + t + str(x) + "_" + plottype + ".p"))
 
     for t in ["at", "it", "dt"]:
       for l, d in [("Stanford", s), ("Hybrid", h), ("Core", c)]:
-        lineplot_data = []
+        plot_data = []
         minima = []
         maxima = []
         for x in xrange(8):
@@ -333,16 +364,17 @@ def analyze_it(results, tag, output):
           if len(data) != 0:
             labelled_data = [name_from_algorithm[x]]
             labelled_data.extend(data)
-            lineplot_data.append(labelled_data)
+            plot_data.append(labelled_data)
             minima.append(m)
             maxima.append(M)
-        if len(lineplot_data) == 0:
+        if len(plot_data) == 0:
           continue
         xmin = min(minima)
         xmax = max(maxima)
-        create_plot('line', lineplot_data, str(xmin), str(xmax), "# Sessions",
+        for plottype in ['line', 'box']:
+          create_plot(plottype, plot_data, str(xmin), str(xmax), "# Sessions",
             name_from_type[t] + " Time (us)", l,
-            os.path.join(output, "inter" + t + l + ".p")) 
+            os.path.join(output, "inter" + t + l + "_" + plottype + ".p")) 
 
   elif tag == 'rbac_intra':
     r = filter_results_by_field_value(results, 'permissions', '250')
@@ -383,16 +415,18 @@ def analyze_it(results, tag, output):
       if rd:
         rxmin = min(rxminima)
         rxmax = max(rxmaxima)
-        create_plot('line', rd, str(rxmin), str(rxmax), "# Roles",
+        for plottype in ['line', 'box']:
+          create_plot(plottype, rd, str(rxmin), str(rxmax), "# Roles",
             name_from_type[t] + " Time (us)", "Intra-session Roles",
-            os.path.join(output, "intra_roles_" + t + ".p"))
+            os.path.join(output, "intra_roles_" + t + "_" + plottype + ".p"))
    
       if pd:
         pxmin = min(pxminima)
         pxmax = max(pxmaxima)
-        create_plot('line', pd, str(pxmin), str(pxmax), "# Permissions",
+        for plottype in ['line', 'box']:
+          create_plot(plottype, pd, str(pxmin), str(pxmax), "# Permissions",
             name_from_type[t] + " Time (us)", "Intra-session Permissions",
-            os.path.join(output, "intra_perms_" + t + ".p"))
+            os.path.join(output, "intra_perms_" + t + "_" + plottype + ".p"))
 
   else: # this shouldn't happen. 
     assert False, "Unknown tag: " + tag
