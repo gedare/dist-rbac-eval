@@ -83,7 +83,7 @@ def get_results_from_CBF(filename, tag):
   results = []
   results.append(tag)
 
-  metadata = filename.split('.')
+  metadata = os.path.split(filename)[1].split('.')
 
   # the CBF file name encodes information about the run (if the run_XXX.expts
   # script is used. The file name is organized as follows:
