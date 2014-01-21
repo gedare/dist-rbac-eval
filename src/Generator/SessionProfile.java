@@ -386,6 +386,7 @@ public class SessionProfile {
 						int number_of_access = number_of_access_checks;
             // precompute skewed zipf distributions for every session's permissions
             ArrayList<ZipfGenerator> zipf = new ArrayList<ZipfGenerator>();
+            ArrayList<ArrayList> permissions = new ArrayList<ArrayList>();
             for ( int item = 0; item < counter; item++ ) {
                 list_of_roles = hashmap.get(item);
                 //perform only allowed access checks
@@ -409,6 +410,7 @@ public class SessionProfile {
                 }
                 zipf.add(item, new ZipfGenerator(permissions_allowed.size(),
                     alpha));
+                permissions.add(item, permissions_allowed);
             }
             while ( number_of_access > 0 ) {
               // activate a uniform random session
@@ -419,7 +421,8 @@ public class SessionProfile {
                 item = generator.nextInt(counter);
               }
 
-              int permission = zipf.get(item).next();
+              ArrayList<Integer> permissions_allowed = permissions.get(item);
+              int permission = permissions_allowed.get(zipf.get(item).next());
 
 							//go through allowed permissions and generate access request
 							if(number_of_access > 0){//this condition prevents generating access request in the case we have a lot more permissions than actual requests we need to do
