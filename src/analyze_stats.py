@@ -120,10 +120,10 @@ def get_results_from_CBF(filename, tag):
 
   f = open(filename)
   arr = numpy.array([float(line.strip().split(' ')[0]) / 1000.0 for line in f])
-  results.append(numpy.mean(arr)) # atmean
-  results.append(numpy.std(arr))  # atstd
-  for p in [0, 25, 50, 75, 100]:
-    results.append(scipy.stats.scoreatpercentile(arr, p)) # min, q1, med, q3, max
+  #results.append(numpy.mean(arr)) # atmean
+  #results.append(numpy.std(arr))  # atstd
+  #for p in [0, 25, 50, 75, 100]:
+  #  results.append(scipy.stats.scoreatpercentile(arr, p)) # min, q1, med, q3, max
   f.close()
   return results
 
@@ -142,7 +142,7 @@ def get_results_from_raw_txt(filename, tag):
     if not l:
       continue
     if len(l) == 1:
-      stop_index = int(l[0])
+      stop_index = int(l[0]) + 1
       start_index = stop_index - 5
       times.extend(data[start_index:stop_index])
       data = []
@@ -156,15 +156,19 @@ def get_results_from_raw_txt(filename, tag):
   access_times = [float(t[1])/1000.0 for t in times]
   destroy_times = [float(t[2])/1000.0 for t in times]
 
+  arr = numpy.array(access_times)
+  results.append(numpy.mean(arr))
+  results.append(numpy.std(arr))
+  for p in [0, 25, 50, 75, 100]:
+    results.append(scipy.stats.scoreatpercentile(arr, p)) # min, q1, med, q3, max
+
   arr = numpy.array(init_times)
   results.append(numpy.mean(arr))
   results.append(numpy.std(arr))
   for p in [0, 25, 50, 75, 100]:
     results.append(scipy.stats.scoreatpercentile(arr, p)) # min, q1, med, q3, max
 
-  #arr = numpy.array(access_times)
-  #for p in [0, 25, 50, 75, 100]:
-  #  results.append(numpy.percentile(arr, p)) # min, q1, med, q3, max
+
 
   arr = numpy.array(destroy_times)
   results.append(numpy.mean(arr))
