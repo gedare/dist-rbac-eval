@@ -12,6 +12,8 @@ import os
 import copy
 import string
 import numpy
+import scipy
+from scipy import stats
 
 def usage():
   print "\
@@ -56,8 +58,11 @@ set key outside right\n\
 # first column contains a high-level tag for the experiment (e.g. rbac_inter
 # or rbac_intra), so the key "tag" maps to 0 (since the columns are 0-indexed)
 index_by_name=dict(tag=0, depth_of_rh=1, nature_of_rh=2, roles=3,
-    permissions=4, sessions=5, algorithm=6, atmean=7, atstd=8,
-    itmean=9, itstd=10, dtmean=11, dtstd=12 ) #FIXME
+    permissions=4, sessions=5, algorithm=6,
+    atmean=7, atstd=8, atmin=9, atq1=10, atmed=11, atq3=12, atmax=13,
+    itmean=14, itstd=15, itmin=16, itq1=17, itmed=18, itq3=19, itmax=20,
+    dtmean=21, dtstd=22, dtmin=23, dtq1=24, dtmed=25, dtq3=26, dtmax=27
+    ) #FIXME
 
 # return the value in the field with given name for a single row of the results
 def get_field(result,name):
@@ -115,8 +120,10 @@ def get_results_from_CBF(filename, tag):
 
   f = open(filename)
   arr = numpy.array([float(line.strip().split(' ')[0]) / 1000.0 for line in f])
-  results.append(numpy.mean(arr))
-  results.append(numpy.std(arr))
+  results.append(numpy.mean(arr)) # atmean
+  results.append(numpy.std(arr))  # atstd
+  for p in [0, 25, 50, 75, 100]:
+    results.append(scipy.stats.scoreatpercentile(arr, p)) # min, q1, med, q3, max
   f.close()
   return results
 
@@ -152,12 +159,18 @@ def get_results_from_raw_txt(filename, tag):
   arr = numpy.array(init_times)
   results.append(numpy.mean(arr))
   results.append(numpy.std(arr))
+  for p in [0, 25, 50, 75, 100]:
+    results.append(scipy.stats.scoreatpercentile(arr, p)) # min, q1, med, q3, max
 
   #arr = numpy.array(access_times)
+  #for p in [0, 25, 50, 75, 100]:
+  #  results.append(numpy.percentile(arr, p)) # min, q1, med, q3, max
 
   arr = numpy.array(destroy_times)
   results.append(numpy.mean(arr))
   results.append(numpy.std(arr))
+  for p in [0, 25, 50, 75, 100]:
+    results.append(scipy.stats.scoreatpercentile(arr, p)) # min, q1, med, q3, max
 
   return results
 
@@ -197,10 +210,12 @@ set style line 2 lt rgb \"blue\" lw 3 pt 6\n\
 #   line
 # datasets is a list of lists that contain a name and data to plot.
 #   data is of the form:
-#     [xcoord, yvalue], or 
-#     [xcoord, yvalue, err], or 
-#     [xcoord, yvalue, +err, -err]
+#     [xcoord, mean, std, min, q1, med, q3, max]
 def create_plot(type, datasets, xmin, xmax, xlabel, ylabel, title, outfile):
+
+  dataset_index = dict([("x", 0), ("mean",1), ("std",2),
+    ("min",3), ("q1",4), ("med",5), ("q3",6), ("max",7)])
+
   if type == 'line':
     header = create_lineplots_header(xmin, xmax, xlabel, ylabel, title, outfile)
 
@@ -209,15 +224,14 @@ def create_plot(type, datasets, xmin, xmax, xlabel, ylabel, title, outfile):
     data = ""
     for dataset in datasets:
       lp = "'-' title \"" + dataset[0] + "\" with linespoints ls " + str(i)
-      if len(dataset[1]) > 2:
-        lp = lp + ",'-' notitle with errorbars ls " + str(i)
+      lp = lp + ",'-' notitle with errorbars ls " + str(i)
       plotcmd = plotcmd + lp
       for d in dataset[1:]:
-        data = data + " ".join(d) + "\n"
-      if len(dataset[1]) > 2:
-        data = data + "e\n"
-        for d in dataset[1:]:
-          data = data + " ".join(d) + "\n"
+        data = data + d[dataset_index["x"]] + " " + d[dataset_index["mean"]] + " " + d[dataset_index["std"]] + "\n"
+      # Repeat data for error lines
+      data = data + "e\n"
+      for d in dataset[1:]:
+        data = data + d[dataset_index["x"]] + " " + d[dataset_index["mean"]] + " " + d[dataset_index["std"]] + "\n"
       if i < len(datasets):
         plotcmd = plotcmd + ","
         data = data + "e\n"
@@ -234,7 +248,7 @@ def create_plot(type, datasets, xmin, xmax, xlabel, ylabel, title, outfile):
 ##
 # Analysis
 ##
-def extract_dataset(results, x, y, err):
+def extract_dataset(results, x, mean, std, min, q1, med, q3, max):
   dataset = []
   if not results:
     return [], [], 0
@@ -247,10 +261,15 @@ def extract_dataset(results, x, y, err):
       xmin = rx
     if rx > xmax:
       xmax = rx
-    if len(r) > index_by_name[y]:
+    if len(r) > index_by_name[mean]:
       data.append(str(rx))
-      data.append(str(get_field(r, y)))
-      data.append(str(get_field(r, err)))
+      data.append(str(get_field(r, mean)))
+      data.append(str(get_field(r, std)))
+      data.append(str(get_field(r, min)))
+      data.append(str(get_field(r, q1)))
+      data.append(str(get_field(r, med)))
+      data.append(str(get_field(r, q3)))
+      data.append(str(get_field(r, max)))
       dataset.append(data)
   if dataset: # sort by numerical value of x if data exists
     dataset.sort(key=lambda xcoord: int(xcoord[0]))
@@ -280,45 +299,48 @@ def analyze_it(results, tag, output):
       if len(r[x]) == 0:
           continue
       for t in ["at", "it", "dt"]:
-        plot_data = []
+        lineplot_data = []
+        boxplot_data = []
         minima = []
         maxima = []
         for l, d in [("Stanford", s[x]), ("Hybrid", h[x]), ("Core", c[x])]:
-          data, m, M = extract_dataset(d, 'sessions', t+'mean', t+'std')
+          data, m, M = extract_dataset(d, 'sessions', t+'mean', t+'std',
+              t+'min', t+'q1', t+'med', t+'q3', t+'max')
           if len(data) != 0:
             labelled_data = [l]
             labelled_data.extend(data)
-            plot_data.append(labelled_data)
+            lineplot_data.append(labelled_data)
             minima.append(m)
             maxima.append(M)
-        if len(plot_data) == 0:
+        if len(lineplot_data) == 0:
           continue
         xmin = min(minima)
         xmax = max(maxima)
-        create_plot('line', plot_data, str(xmin), str(xmax), "# Sessions",
+        create_plot('line', lineplot_data, str(xmin), str(xmax), "# Sessions",
             name_from_type[t] + " Time (us)", name_from_algorithm[x],
             os.path.join(output, "inter" + t + str(x) + ".p"))
 
     for t in ["at", "it", "dt"]:
       for l, d in [("Stanford", s), ("Hybrid", h), ("Core", c)]:
-        plot_data = []
+        lineplot_data = []
         minima = []
         maxima = []
         for x in xrange(8):
           if len(r[x]) == 0:
             continue
-          data, m, M = extract_dataset(d[x], 'sessions', t+'mean', t+'std')
+          data, m, M = extract_dataset(d[x], 'sessions', t+'mean', t+'std',
+              t+'min', t+'q1', t+'med', t+'q3', t+'max')
           if len(data) != 0:
             labelled_data = [name_from_algorithm[x]]
             labelled_data.extend(data)
-            plot_data.append(labelled_data)
+            lineplot_data.append(labelled_data)
             minima.append(m)
             maxima.append(M)
-        if len(plot_data) == 0:
+        if len(lineplot_data) == 0:
           continue
         xmin = min(minima)
         xmax = max(maxima)
-        create_plot('line', plot_data, str(xmin), str(xmax), "# Sessions",
+        create_plot('line', lineplot_data, str(xmin), str(xmax), "# Sessions",
             name_from_type[t] + " Time (us)", l,
             os.path.join(output, "inter" + t + l + ".p")) 
 
@@ -339,7 +361,8 @@ def analyze_it(results, tag, output):
       pxminima = []
       pxmaxima = []
       for x in xrange(8):
-        a, b, c = extract_dataset(role_results[x], 'roles', t+'mean', t+'std')
+        a, b, c = extract_dataset(role_results[x], 'roles', t+'mean', t+'std',
+              t+'min', t+'q1', t+'med', t+'q3', t+'max')
         if len(a) != 0:
           labelled_data = [name_from_algorithm[x]]
           labelled_data.extend(a)
@@ -348,7 +371,8 @@ def analyze_it(results, tag, output):
           rxmaxima.append(c)
 
         a, b, c = extract_dataset(
-            perm_results[x], 'permissions', t+'mean', t+'std')
+            perm_results[x], 'permissions', t+'mean', t+'std',
+            t+'min', t+'q1', t+'med', t+'q3', t+'max')
         if len(a) != 0:
           labelled_data = [name_from_algorithm[x]]
           labelled_data.extend(a)
