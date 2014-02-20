@@ -43,12 +43,6 @@ def grep(filename, pattern):
 def reset(gp):
   gp.write("reset\n")
 
-def create_lineplots_header():
-  return"\
-set terminal postscript eps enhanced solid color lw 1 \"Times-Roman\" 18\n\
-set key outside right\n\
-"
-
 ###
 # Results processing
 ###
@@ -78,6 +72,13 @@ def filter_results_by_field_value(results, field_name, value):
     if get_field(r, field_name) == str(value):
       reduce_results.append(r)
   return reduce_results
+
+def confidence_interval(data, confidence=0.95):
+  a = 1.0*numpy.array(data)
+  n = len(a)
+  m, se = numpy.mean(a), scipy.stats.sem(a)
+  h = se * scipy.stats.t._ppf((1+confidence)/2., n-1)
+  return h
 
 ##
 # CBF file processing
@@ -118,13 +119,33 @@ def get_results_from_CBF(filename, tag):
     usage()
     sys.exit(2)
 
-  f = open(filename)
-  arr = numpy.array([float(line.strip().split(' ')[0]) / 1000.0 for line in f])
-  #results.append(numpy.mean(arr)) # atmean
-  #results.append(numpy.std(arr))  # atstd
-  #for p in [0, 25, 50, 75, 100]:
-  #  results.append(scipy.stats.scoreatpercentile(arr, p)) # min, q1, med, q3, max
-  f.close()
+## Un/comment for getting access time from CBF output (averaged)
+  if False:
+    f = open(filename)
+    means = []
+    covs = []
+    for line in f:
+      m = float(line.strip().split(' ')[0]) / 1000.0
+      c = float(line.strip().split(' ')[1])
+      if c < 0.02:
+        means.append(float(line.strip().split(' ')[0]) / 1000.0)
+        covs.append(float(line.strip().split(' ')[1]))
+    if len(means) == 0:
+      results.append(0.0)
+      results.append(0.0)
+      results.append(0.0)
+      results.append(0.0)
+      results.append(0.0)
+      results.append(0.0)
+      results.append(0.0)
+    else:
+      arr = numpy.array(means)
+      results.append(numpy.mean(arr)) # atmean
+      #results.append(numpy.std(arr))  # atstd
+      results.append(confidence_interval(arr))
+      for p in [0, 25, 50, 75, 100]: # min, q1, med, q3, max
+        results.append(scipy.stats.scoreatpercentile(arr, p))
+    f.close()
   return results
 
 def get_results_from_raw_txt(filename, tag):
@@ -148,33 +169,78 @@ def get_results_from_raw_txt(filename, tag):
       data = []
     else:
       data.append(l)
-
+  if data:
+    stop_index = len(data)
+    start_index = stop_index - 5
+    if start_index < 0:
+      start_index = 0
+    times.extend(data[start_index:stop_index])
+    data = []
   if not times:
     return [0.0, 0.0, 0.0, 0.0]
 
   init_times = [float(t[0])/1000.0 for t in times]
-  access_times = [float(t[1])/1000.0 for t in times]
+  access_times = [(float(t[1])/1000.0)/(15.0 * 1000.0) for t in times]
+    #FIXME: num sessions * access_checks_per_session
   destroy_times = [float(t[2])/1000.0 for t in times]
 
+## Un/comment for computing access time from raw output (unaveraged)
   arr = numpy.array(access_times)
-  results.append(numpy.mean(arr))
-  results.append(numpy.std(arr))
-  for p in [0, 25, 50, 75, 100]:
-    results.append(scipy.stats.scoreatpercentile(arr, p)) # min, q1, med, q3, max
+  m = numpy.mean(arr)
+  ci = confidence_interval(arr)
+  if True:
+    results.append(m)
+    #results.append(numpy.std(arr))
+    results.append(ci)
+    for p in [0, 25, 50, 75, 100]: # min, q1, med, q3, max
+      results.append(scipy.stats.scoreatpercentile(arr, p))
 
   arr = numpy.array(init_times)
-  results.append(numpy.mean(arr))
-  results.append(numpy.std(arr))
+  quartiles = []
   for p in [0, 25, 50, 75, 100]:
-    results.append(scipy.stats.scoreatpercentile(arr, p)) # min, q1, med, q3, max
+    quartiles.append(scipy.stats.scoreatpercentile(arr, p)) # min, q1, med, q3, max
+  IQR = quartiles[3] - quartiles[1]
+  aug_times = []
+  for t in init_times:
+    if t < quartiles[1] - 1.5 * IQR:
+      pass
+    elif t > quartiles[3] + 1.5 * IQR:
+      pass
+    else:
+      aug_times.append(t)
 
-
+  arr = numpy.array(aug_times)
+  m = numpy.mean(arr)
+  ci = confidence_interval(arr)
+  results.append(m)
+  results.append(ci)
+  #results.append(numpy.std(arr))
+  results.extend(quartiles)
 
   arr = numpy.array(destroy_times)
-  results.append(numpy.mean(arr))
-  results.append(numpy.std(arr))
+  m = numpy.mean(arr)
+  ci = confidence_interval(arr)
+  quartiles = []
   for p in [0, 25, 50, 75, 100]:
-    results.append(scipy.stats.scoreatpercentile(arr, p)) # min, q1, med, q3, max
+    quartiles.append(scipy.stats.scoreatpercentile(arr, p))
+
+  IQR = quartiles[3] - quartiles[1]
+  aug_times = []
+  for t in destroy_times:
+    if t < quartiles[1] - 100 * IQR:
+      pass
+    elif t > quartiles[3] + 100 * IQR:
+      pass
+    else:
+      aug_times.append(t)
+
+  arr = numpy.array(aug_times)
+  m = numpy.mean(arr)
+  ci = confidence_interval(arr)
+  results.append(m)
+  #results.append(numpy.std(arr))
+  results.append(ci)
+  results.extend(quartiles)
 
   return results
 
@@ -199,15 +265,32 @@ def get_CBF_files(input, tag):
 
 def create_header(xmin, xmax, xlabel, ylabel, title, outfile):
   return"\
-set terminal postscript eps enhanced solid color lw 1 \"Times-Roman\" 18\n\
-set key outside right\n\
+set terminal postscript eps enhanced monochrome lw 1 \"Times-Roman\" 24\n\
+#unset key\n\
+#set key outside right\n\
+#set key inside left Left bottom reverse\n\
+set key inside right Left bottom reverse\n\
+#set key inside left Left top reverse\n\
+#set key inside left Left top reverse\n\
+#set offsets 0, 0, .5, 0\n\
+#set offsets 0, 0, 5, 0\n\
+#set offsets 0, 0, 100, 0\n\
+#set offsets 0, 0, 500, 0\n\
+#set offsets 0, 0, 1000, 0\n\
+set xtics rotate font  \"Times-Roman,24\"\n\
 set output \"" + os.path.splitext(os.path.split(outfile)[1])[0] + ".eps\"\n\
-set xlabel '" + xlabel + "' font \"Times-Roman,18\"\n\
-set ylabel '" + ylabel + "' font \"Times-Roman,18\"\n\
-set title \"" + title + "\" font \"Times-Roman,20\"\n\
+set xlabel '" + xlabel + "' font \"Times-Roman,30\"\n\
+set ylabel '" + ylabel + "' font \"Times-Roman,30\"\n\
+#set title \"" + title + "\" font \"Times-Roman,30\"\n\
 set xrange [" + xmin + ":" + xmax + "] noreverse nowriteback\n\
-set style line 1 lt rgb \"red\" lw 3 pt 6\n\
-set style line 2 lt rgb \"blue\" lw 3 pt 6\n\
+set yrange [0:*]\n\
+set style line 99 lt 1 lw 1 pt 0\n\
+set style line 1 lt 7 lw 1 pt 2 ps 2.0\n\
+set style line 2 lt 4 lw 1 pt 4 ps 2.0\n\
+set style line 3 lt 1 lw 1 pt 5 ps 2.0\n\
+#set style line 1 lt 1 lc rgb \"gray80\" lw 1 pt 1\n\
+#set style line 2 lt 2 lc rgb \"gray50\" lw 1 pt 2\n\
+#set style line 3 lt 3 lc rgb \"black\" lw 1 pt 3\n\
 "
 
 
@@ -216,9 +299,11 @@ def create_lineplots_header(xmin, xmax, xlabel, ylabel, title, outfile):
   return create_header(xmin, xmax, xlabel, ylabel, title, outfile)
 
 def create_boxplots_header(xmin, xmax, xlabel, ylabel, title, outfile):
+  xmin = "0.0"
+  xmax = str(int(xmax)+100)
   return create_header(xmin, xmax, xlabel, ylabel, title, outfile) + "\
 set bars 2.0\n\
-set style fill empty\n\
+set style fill pattern 1\n\
 "
 
 
@@ -240,15 +325,17 @@ def create_plot(type, datasets, xmin, xmax, xlabel, ylabel, title, outfile):
     i = 1
     data = ""
     for dataset in datasets:
-      lp = "'-' title \"" + dataset[0] + "\" with linespoints ls " + str(i)
-      lp = lp + ",'-' notitle with errorbars ls " + str(i)
+      lp = "'-' using 1:2:xticlabels(1) title \"" + dataset[0] + "\" with linespoints ls " + str(i)
+      lp = lp + ",'-' notitle with errorbars ls 99"
       plotcmd = plotcmd + lp
       for d in dataset[1:]:
-        data = data + d[dataset_index["x"]] + " " + d[dataset_index["mean"]] + " " + d[dataset_index["std"]] + "\n"
+        if d[dataset_index["mean"]] != '0.0':
+          data = data + d[dataset_index["x"]] + " " + d[dataset_index["mean"]] + " " + d[dataset_index["std"]] + "\n"
       # Repeat data for error lines
       data = data + "e\n"
       for d in dataset[1:]:
-        data = data + d[dataset_index["x"]] + " " + d[dataset_index["mean"]] + " " + d[dataset_index["std"]] + "\n"
+        if d[dataset_index["mean"]] != 0.0:
+          data = data + d[dataset_index["x"]] + " " + d[dataset_index["mean"]] + " " + d[dataset_index["std"]] + "\n"
       if i < len(datasets):
         plotcmd = plotcmd + ","
         data = data + "e\n"
@@ -257,13 +344,14 @@ def create_plot(type, datasets, xmin, xmax, xlabel, ylabel, title, outfile):
     gp.write(header + plotcmd + data)
 
   if 'box' in type:
-    header = create_boxplots_header(str(int(xmin)/2), str(int(xmax)+int(xmin)), xlabel, ylabel, title, outfile)
+    header = create_boxplots_header(str(int(xmin)-1), str(int(xmax)+1), xlabel, ylabel, title, outfile)
     plotcmd = "plot "
     i = 1
     data = ""
     for dataset in datasets:
-      bp =  "'-' with candlesticks title \"" + dataset[0] + "\" lt " + str(i)
-      bp = bp + ",'-' notitle with candlesticks lt -1"
+      bp =  "'-' with candlesticks title \"" + dataset[0] + "\" ls 99 fs pattern " + str(i+1)
+      bp = bp + ",'-' notitle with candlesticks lt 1 lw 3"
+      bp = bp + ",'-' notitle with line ls 99"
       plotcmd = plotcmd + bp
       for d in dataset[1:]:
         data = data + d[dataset_index["x"]] + " " + d[dataset_index["q1"]] + " " + d[dataset_index["min"]] + " " + d[dataset_index["max"]] + " "+ d[dataset_index["q3"]] + "\n"
@@ -271,6 +359,10 @@ def create_plot(type, datasets, xmin, xmax, xlabel, ylabel, title, outfile):
       data = data + "e\n"
       for d in dataset[1:]:
         data = data + d[dataset_index["x"]] + " " + d[dataset_index["med"]] + " " + d[dataset_index["med"]] + " " + d[dataset_index["med"]] + " " + d[dataset_index["med"]] + "\n"
+      # now add data for connector
+      data = data + "e\n"
+      for d in dataset[1:]:
+        data = data + d[dataset_index["x"]] + " " + d[dataset_index["med"]] + "\n"
       if i < len(datasets):
         plotcmd = plotcmd + ","
         data = data + "e\n"
@@ -295,7 +387,7 @@ def extract_dataset(results, x, mean, std, min, q1, med, q3, max):
       xmin = rx
     if rx > xmax:
       xmax = rx
-    if len(r) > index_by_name[mean]:
+    if len(r) > index_by_name[max]:
       data.append(str(rx))
       data.append(str(get_field(r, mean)))
       data.append(str(get_field(r, std)))
@@ -309,27 +401,34 @@ def extract_dataset(results, x, mean, std, min, q1, med, q3, max):
     dataset.sort(key=lambda xcoord: int(xcoord[0]))
   return dataset, xmin, xmax
 
+name_from_algorithm = dict([(0,"Directed Graph"),
+    (1,"Access Matrix"), (2,"Authorization Recycling"), (3, "CPOL"),
+    (4, "Bloom Filter"), (5, "Map BitSet"),
+    (6, "HWDS BitSet"), (7, "HWDS Direct")])
+
+
+def print_inter_stuff(a, x, t, extra):
+  data = [] 
+  for A in a:
+    data.append((float(A[1]) / float(A[0]), float(A[2])))
+  print extra, t, name_from_algorithm[x], data 
+
 def analyze_it(results, tag, output):
 
   name_from_type = dict([("at","Access Check"),
     ("it","Initialize Session"), ("dt","Destroy Session")])
 
-  name_from_algorithm = dict([(0,"Directed Graph"),
-    (1,"Access Matrix"), (2,"Authorization Recycling"), (3, "CPOL"),
-    (4, "Bloom Filter"), (5, "Map BitSet"),
-    (6, "HWDS BitSet"), (7, "HWDS Multimap")])
-
   if tag == 'rbac_inter':
     r = [filter_results_by_field_value(results, 'algorithm', algorithm)
-        for algorithm in xrange(8)]
+        for algorithm in xrange(7)]
     s = []
     h = []
     c = []
-    for x in xrange(8):
+    for x in xrange(7):
       s.append(filter_results_by_field_value(r[x], 'nature_of_rh', 0))
       h.append(filter_results_by_field_value(r[x], 'nature_of_rh', 1))
       c.append(filter_results_by_field_value(h[x], 'depth_of_rh', 1))
-    for x in xrange(8):
+    for x in xrange(7):
       if len(r[x]) == 0:
           continue
       for t in ["at", "it", "dt"]:
@@ -360,12 +459,13 @@ def analyze_it(results, tag, output):
         plot_data = []
         minima = []
         maxima = []
-        for x in xrange(8):
+        for x in xrange(7):
           if len(r[x]) == 0:
             continue
           data, m, M = extract_dataset(d[x], 'sessions', t+'mean', t+'std',
               t+'min', t+'q1', t+'med', t+'q3', t+'max')
           if len(data) != 0:
+            #print_inter_stuff(data, x, t, l)
             labelled_data = [name_from_algorithm[x]]
             labelled_data.extend(data)
             plot_data.append(labelled_data)
@@ -385,9 +485,9 @@ def analyze_it(results, tag, output):
     p = filter_results_by_field_value(results, 'roles', '100')
 
     role_results = [filter_results_by_field_value(r, 'algorithm', x)
-        for x in xrange(8)]
+        for x in xrange(7)]
     perm_results = [filter_results_by_field_value(p, 'algorithm', x)
-        for x in xrange(8)]
+        for x in xrange(7)]
 
     for t in ["at", "it", "dt"]:
       rd = []
@@ -396,7 +496,7 @@ def analyze_it(results, tag, output):
       pd = []
       pxminima = []
       pxmaxima = []
-      for x in xrange(8):
+      for x in xrange(7):
         a, b, c = extract_dataset(role_results[x], 'roles', t+'mean', t+'std',
               t+'min', t+'q1', t+'med', t+'q3', t+'max')
         if len(a) != 0:
@@ -406,6 +506,7 @@ def analyze_it(results, tag, output):
           rxminima.append(b)
           rxmaxima.append(c)
 
+      for x in xrange(7):
         a, b, c = extract_dataset(
             perm_results[x], 'permissions', t+'mean', t+'std',
             t+'min', t+'q1', t+'med', t+'q3', t+'max')

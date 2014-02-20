@@ -69,10 +69,10 @@ def do_KTZ_intra(base, algorithms):
   intra = experiment.IntraSessionExperiment(base, 'dataset_KTZ', 'stats_KTZ')
   RP = []
   P = 250
-  for R in [500,700,2000,3000,6000,8000,10000]:
+  for R in [500,700,2000,3000,6000,8000,10000]: 
     RP.append((R,P))
   R = 100
-  for P in [100,500,700,2000,3000,6000,8000,10000]:
+  for P in [100,500,700,2000,3000,6000]: # Truncated
     RP.append((R,P))
   intra.run_experiments(RP, algorithms)
 
