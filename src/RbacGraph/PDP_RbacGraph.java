@@ -33,8 +33,6 @@ public class PDP_RbacGraph extends PDP {
 		RbacGraph graph_response = new RbacGraph(this.requested);
 		String ses_id = Integer.toString(s.id);
 
-    /* FIXME: Why not just get the induced subgraph of the requested roles
-     * and add a user vertex to connect to each of them? */
     Iterator iterator = Roles.iterator();
     while (iterator.hasNext()) {
       RoleVertex currentvertex = (RoleVertex) iterator.next();
@@ -81,8 +79,8 @@ public class PDP_RbacGraph extends PDP {
 					a = temp.getInducedGraph(a, v);
 					Iterator it = a.iterator();
 					//go thru induced graph's vertices and if not already in helper1, add them
-					while(iterator.hasNext()){
-						Vertex b = (Vertex) iterator.next();
+					while(it.hasNext()){
+						Vertex b = (Vertex) it.next();
 						if(!helper1.vertices.contains(b)) helper1.vertices.add(b);
 					}
 				}
