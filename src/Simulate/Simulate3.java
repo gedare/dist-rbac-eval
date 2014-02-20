@@ -30,8 +30,8 @@ import PDP_SDP.PDP;
 import PDP_SDP.SDP;
 import PDP_SDP.SDP_Data_Structure;
 import PDP_SDP.Session;
-//import RbacGraph.PDP_RbacGraph;
-//import RbacGraph.SDP_RbacGraph;
+import RbacGraph.PDP_RbacGraph;
+import RbacGraph.SDP_RbacGraph;
 //import Recycling.PDP_Recycling;
 //import Recycling.SDP_Recycling;
 import Structures.PermissionVertex;
@@ -69,7 +69,7 @@ public class Simulate3 {
   private static boolean are_we_there_yet(int iteration, double covtmp)
       throws IOException {
     int iter = 4;
-    if ( iteration < iter*3 ) // FIXME: hack to skip more of startup
+    if ( iteration < iter*5 ) // FIXME: hack to skip more of startup
       return false;
     
     ArrayList list = new ArrayList();
@@ -128,7 +128,7 @@ public class Simulate3 {
       System.out.println("algorithm " + algorithm);
 			switch(algorithm) {
 			case 0:
-//				pdp = new PDP_RbacGraph();
+				pdp = new PDP_RbacGraph();
 				break;
 			case 1:
 				pdp = new PDP_ACM();
@@ -208,7 +208,7 @@ public class Simulate3 {
 
       switch(algorithm) {
 			case 0:
-//				sdp = new SDP_RbacGraph(pdp);
+				sdp = new SDP_RbacGraph(pdp);
 				break;
 			case 1:
 				sdp = new SDP_ACM(pdp);
