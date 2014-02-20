@@ -40,10 +40,13 @@ public class PDP_HWDSBitSet extends PDP {
     ArrayList permissions = P.getPermissions();
 
     // Construct set of permissions for requested roles in this session
-    Iterator iterator;
-    iterator = permissions.iterator();
+    Iterator iterator = permissions.iterator();
     int max_permission = (Integer)permissions.get(permissions.size()-1);
     BitSet current_permissions = new BitSet(max_permission);
+    while (iterator.hasNext()) {
+      Integer p = (Integer) iterator.next();
+      current_permissions.set(p);
+    }
 
     Sessions.put(s.id, current_permissions);
 		return new SDP_Response(current_permissions);
