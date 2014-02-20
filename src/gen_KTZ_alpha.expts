@@ -1,0 +1,9 @@
+#!/bin/bash
+for x in 0.0 0.25 0.5 0.75 1.0
+do
+  sed -i -e "s/alpha = .*;/alpha = ${x};/" Generator/SessionProfile.java
+  make
+  ./gen_KTZ.expts
+  rm -r dataset_KTZ_${x}_1000checks
+  mv dataset_KTZ dataset_KTZ_${x}_1000checks
+done

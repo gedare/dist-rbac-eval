@@ -1,0 +1,16 @@
+#!/bin/bash
+#./run_KTZ_alpha.expts
+
+for X in 0.0 0.25 0.5 0.75 1.0
+do
+  x=${X}_1000checks
+  echo "Doing alpha=${x}"
+  cp -r dataset_KTZ_${x} dataset_KTZ
+  python run_experiments.py -e KTZ_inter,KTZ_intra -a 1,3
+  rm -r stats_KTZ_${x}
+  mv stats_KTZ stats_KTZ_${x}
+  rm -r dataset_KTZ
+done
+echo "all done"
+
+exit 0

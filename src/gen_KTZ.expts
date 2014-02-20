@@ -151,7 +151,7 @@ do
   sessions_per_access_check=$sessions
   roles_per_session=3
   nature_of_roles=1
-  let access_checks=5*$sessions
+  let access_checks=1000*$sessions
   nature_of_access_checks=2
   java Generator.SessionProfile \
     ${outdir}/rbac_inter/${Depth_of_RH}_${Nature_of_RH}/rbac-state \
@@ -201,7 +201,7 @@ do
   sessions_per_access_check=15
   roles_per_session=${R}
   nature_of_roles=1
-  let access_checks=5*$sessions
+  let access_checks=1000*$sessions
   nature_of_access_checks=2
   java Generator.SessionProfile \
       ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state \
@@ -225,7 +225,7 @@ do
   sessions_per_access_check=15
   roles_per_session=${R}
   nature_of_roles=1
-  let access_checks=5*$sessions
+  let access_checks=1000*$sessions
   nature_of_access_checks=2
   java Generator.SessionProfile \
       ${outdir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state \

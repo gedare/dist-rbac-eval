@@ -1,0 +1,100 @@
+#!/bin/bash
+#./run_KTZ.expts
+# Used for generating measurements using Simulate/Simulate3 for various
+# algorithms as in the paper by Komlenovic et al.
+# See also gen_KTZ.expts
+
+# Algorithm is indicated by algnum
+#         0 is Directed Graph
+#         1 is Access Matrix
+#         2 is Authorization Recycling
+#         3 is CPOL
+#         4 is both Bloom and Cascade Bloom filter (as dictated by depth)
+#
+# Note: for authorization recycling, use Simulate/Simulate2 instead because
+#       the way authorization recycling does access enforcement is different
+#       as it goes to the PDP on-demand, and no a priori.
+#
+# Note: for the Bloom Filters Simulate3 accepts 3 additional undocumented args
+#
+
+outdir=stats_HWDS_KTZ
+mkdir ${outdir}
+
+rm -f ${outdir}/*
+rm Data/means
+
+indir=dataset_KTZ
+
+workdir=/home/gedare/work/gem5/builds/hwds
+
+echo "Starting inter-session experiments"
+
+## inter experiments
+mkdir ${outdir}/rbac_inter
+for sessions in {2..15}
+do
+  # Core RH
+  Nature_of_RH=1
+  Depth_of_RH=1
+  cp ${indir}/rbac_inter/${Depth_of_RH}_${Nature_of_RH}/instructions_${sessions}.3 Data/instructions
+  cp ${indir}/rbac_inter/${Depth_of_RH}_${Nature_of_RH}/rbac-state Data/
+  tar -cf Data.tar Data/
+  cd ${workdir}
+  build/X86/gem5.fast ../../gem5/configs/example/fs.py \
+  --checkpoint-dir=/home/gedare/work/gem5/builds/hwds/m5out/1core-Java-7 \
+  --script=/home/gedare/work/github/dist-rbac-eval/src/Data.tar \
+  -r 1 --caches --cpu-type timing
+  cd -
+  mv ${workdir}/m5out/system.pc.com_1.terminal ${outdir}/rbac_inter/_term.${Depth_of_RH}.${Nature_of_RH}.$sessions.CBF
+done
+
+echo "Finished inter-session experiments"
+echo "Starting intra-session experiments"
+
+## intra experiments
+mkdir ${outdir}/rbac_intra
+
+# these experiments all use the Core RH
+Depth_of_RH=1
+Nature_of_RH=1
+
+echo "Intra-session experiments: varying permissions"
+
+# Varying Permissions
+for P in 10 50 100 500 700 2000 3000 6000 8000 10000
+do
+  R=100
+  cp ${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3 Data/instructions
+  cp ${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state Data/
+  tar -cf Data.tar Data/
+  cd ${workdir}
+  build/X86/gem5.fast ../../gem5/configs/example/fs.py \
+  --checkpoint-dir=/home/gedare/work/gem5/builds/hwds/m5out/1core-Java-7 \
+  --script=/home/gedare/work/github/dist-rbac-eval/src/Data.tar \
+  -r 1 --caches --cpu-type timing
+  cd -
+  mv ${workdir}/m5out/system.pc.com_1.terminal ${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.CBF
+done
+
+echo "Intra-session experiments: varying roles"
+
+# Varying Roles
+for R in 10 50 100 500 700 2000 3000 6000 8000 10000
+do
+  P=250
+  cp ${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3 Data/instructions
+  cp ${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state Data/
+  tar -cf Data.tar Data/
+  cd ${workdir}
+  build/X86/gem5.fast ../../gem5/configs/example/fs.py \
+  --checkpoint-dir=/home/gedare/work/gem5/builds/hwds/m5out/1core-Java-7 \
+  --script=/home/gedare/work/github/dist-rbac-eval/src/Data.tar \
+  -r 1 --caches --cpu-type timing
+  cd -
+  mv ${workdir}/m5out/system.pc.com_1.terminal ${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.CBF
+done
+
+echo "all done"
+
+exit 0
