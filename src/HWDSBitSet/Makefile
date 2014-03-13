@@ -9,7 +9,7 @@ CLASSPATH:=$(CLASSPATH):$(M5OP):$(PSEUDO)
 
 all: PDP_HWDSBitSet.class SDP_HWDSBitSet.class SDP_Response.class
 
-%.class:%.java $(M5OP)/gem5OpJni.jar $(PSEUDO)/hwds.jar
+%.class:%.java
 	javac -classpath $(CLASSPATH) -sourcepath $(SOURCEPATH) $<
 
 clean:

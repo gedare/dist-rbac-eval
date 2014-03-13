@@ -18,26 +18,25 @@
 # Note: for the Bloom Filters Simulate3 accepts 3 additional undocumented args
 #
 
-mkdir tmp
-mkdir tmp/Data
-
 workdir=/home/gedare/work/gem5/builds/hwds
 
-run_experiment()
+new_run_experiment()
 {
-  cp $1 tmp/Data/instructions
-  cp $2 tmp/Data/rbac-state
-  cp $3 tmp/doit.sh
-  tar -C tmp -cf Data.tar Data/ doit.sh
+  mount /mnt/sacmat14
+  cp $1 /mnt/sacmat14/Data/instructions
+  cp $2 /mnt/sacmat14/Data/rbac-state
+  umount /mnt/sacmat14
+  runscript=gem5_runscript_${3}.sh
   cd ${workdir}
-  build/X86/gem5.fast ../../gem5/configs/example/fs.py \
-  --checkpoint-dir=/home/gedare/work/gem5/builds/hwds/m5out/1core-Java-7 \
-  --script=/home/gedare/work/github/dist-rbac-eval/src/Data.tar \
-  -r 1 --caches --cpu-type timing
+  build/X86/gem5.fast /home/gedare/work/gem5/gem5/configs/example/fs.py \
+    --kernel=/home/gedare/work/linux/linux-2.6.28.4-gem5/vmlinux-2.6.28.4-8 \
+    --disk-image=/dist/m5/system/disks/linux-x86-sacmat14.img \
+    --script=/home/gedare/work/github/dist-rbac-eval/src/${runscript} \
+    --fast-forward=10000000000 --cpu-type timing --caches
   cd -
 }
 
-process_output()
+new_process_output()
 {
   f=$1
   dos2unix ${f}
@@ -53,16 +52,15 @@ process_output()
       done > ${f}_processed
   cat ${f}_processed | while read alg cov mean iter; \
   do \
-    filename=`echo $f | sed -e "s/_term/_stats/" -e "s/.txt/.${alg}.CBF/"` ; \
-    echo "${mean} ${cov}" >> ${filename}; \
+    filename=`echo $f | sed -e "s/_term/_stats/" -e "s/.txt/.CBF/"` ; \
+    echo "${mean} ${cov} ${alg}" >> ${filename}; \
   done
 
-  filestub=`echo $f | sed -e "s/_term/_stats/" -e "s/.txt//"`
+  filename=`echo $f | sed -e "s/_term/_stats/" -e "s/.txt//"`
   cat $f |
     while read token num; \
     do \
       if [ ${token} == "algorithm" ]; then \
-        filename=${filestub}.${num}.txt;
         touch ${filename}; \
         while read times init access destroy x iter; \
         do \
@@ -79,59 +77,8 @@ process_output()
     done
 }
 
-for ALPHA in 0.0
-do
-  x=1000
-  alpha=${ALPHA}_${x}checks
-
-  echo "Starting intra-session experiments, alpha=${alpha}"
-
-  outdir=stats_HWDS_KTZ_${alpha}
-  mkdir ${outdir}
-  indir=dataset_KTZ_${alpha}
-
-  ## intra experiments
-  mkdir ${outdir}/rbac_intra
-
-  # these experiments all use the Core RH
-  Depth_of_RH=1
-  Nature_of_RH=1
-
-  echo "Intra-session experiments: varying roles"
-
-  # Varying Roles
-  for R in 500 700
-  do
-    P=250
-    insns=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
-    rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state
-  
-        run_experiment ${insns} ${rbac} doit_noAM.sh
-  
-        f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.txt
-        mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
-        process_output ${f}
-  done
-  
-  echo "Intra-session experiments: varying permissions"
-
-  # Varying Permissions
-  for P in 100 500 700 #2000
-  do
-    R=100
-    insns=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
-    rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state
-        run_experiment ${insns} ${rbac} doit_noAM.sh
-  
-        f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.txt
-        mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
-        process_output ${f}
-  done
-  echo "Finished intra-session experiments, alpha=${alpha}"
-done
-
-
-for ALPHA in 1.0
+## Inter-session experiments
+for ALPHA in 0.0 #1.0
 do
   x=1000
   alpha=${ALPHA}_${x}checks
@@ -151,18 +98,21 @@ do
     Depth_of_RH=1
     insns=${indir}/rbac_inter/${Depth_of_RH}_${Nature_of_RH}/instructions_${sessions}.3
     rbac=${indir}/rbac_inter/${Depth_of_RH}_${Nature_of_RH}/rbac-state
-    run_experiment ${insns} ${rbac} doit.sh
 
-    f=${outdir}/rbac_inter/_term.${Depth_of_RH}.${Nature_of_RH}.$sessions.txt
-    mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
-    process_output ${f}
+    for algorithm in 1 3 6
+    do
+      new_run_experiment ${insns} ${rbac} ${algorithm}
+      f=${outdir}/rbac_inter/_term.${Depth_of_RH}.${Nature_of_RH}.${sessions}.${algorithm}.txt
+      mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
+      new_process_output ${f}
+    done
   done
   
   echo "Finished inter-session experiments, alpha=${alpha}"
 done
 
-
-for ALPHA in 1.0
+## Intra-session experiments (shorter)
+for ALPHA in 0.0 #1.0
 do
   x=1000
   alpha=${ALPHA}_${x}checks
@@ -188,12 +138,14 @@ do
     P=250
     insns=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
     rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state
-  
-        run_experiment ${insns} ${rbac} doit_noAM.sh
-  
-        f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.txt
-        mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
-        process_output ${f}
+
+    for algorithm in 3 6
+    do
+      new_run_experiment ${insns} ${rbac} ${algorithm}
+      f=${outdir}/rbac_inter/_term.${Depth_of_RH}.${Nature_of_RH}.${sessions}.${algorithm}.txt
+      mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
+      new_process_output ${f}
+    done
   done
   
   echo "Intra-session experiments: varying permissions"
@@ -204,17 +156,20 @@ do
     R=100
     insns=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
     rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state
-        run_experiment ${insns} ${rbac} doit_noAM.sh
-  
-        f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.txt
-        mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
-        process_output ${f}
+
+    for algorithm in 3 6
+    do
+      new_run_experiment ${insns} ${rbac} ${algorithm}
+      f=${outdir}/rbac_inter/_term.${Depth_of_RH}.${Nature_of_RH}.${sessions}.${algorithm}.txt
+      mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
+      new_process_output ${f}
+    done
   done
   echo "Finished intra-session experiments, alpha=${alpha}"
 done
 
-
-for ALPHA in 0.0 1.0
+## Intra-session experiments (long)
+for ALPHA in 0.0 #1.0
 do
   x=1000
   alpha=${ALPHA}_${x}checks
@@ -240,11 +195,13 @@ do
     insns=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
     rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state
   
-        run_experiment ${insns} ${rbac} doit_noAM.sh
-  
-        f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.txt
-        mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
-        process_output ${f}
+    for algorithm in 3 6
+    do
+      new_run_experiment ${insns} ${rbac} ${algorithm}
+      f=${outdir}/rbac_inter/_term.${Depth_of_RH}.${Nature_of_RH}.${sessions}.${algorithm}.txt
+      mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
+      new_process_output ${f}
+    done
   done
   
   # Varying Permissions
@@ -253,43 +210,16 @@ do
     R=100
     insns=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
     rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state
-        run_experiment ${insns} ${rbac} doit_noAM.sh
-  
-        f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.txt
-        mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
-        process_output ${f}
+
+    for algorithm in 3 6
+    do
+      new_run_experiment ${insns} ${rbac} ${algorithm}
+      f=${outdir}/rbac_inter/_term.${Depth_of_RH}.${Nature_of_RH}.${sessions}.${algorithm}.txt
+      mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
+      new_process_output ${f}
+    done
   done
   echo "Finished intra-session experiments, alpha=${alpha}"
-done
-
-for ALPHA in 0.0
-do
-  x=1000
-  alpha=${ALPHA}_${x}checks
-
-  echo "Starting inter-session experiments, alpha=${alpha}"
-
-  outdir=stats_HWDS_KTZ_${alpha}
-  mkdir ${outdir}
-  indir=dataset_KTZ_${alpha}
-
-  ## inter experiments
-  mkdir ${outdir}/rbac_inter
-  for sessions in {2..15}
-  do
-    # Core RH
-    Nature_of_RH=1
-    Depth_of_RH=1
-    insns=${indir}/rbac_inter/${Depth_of_RH}_${Nature_of_RH}/instructions_${sessions}.3
-    rbac=${indir}/rbac_inter/${Depth_of_RH}_${Nature_of_RH}/rbac-state
-    run_experiment ${insns} ${rbac} doit.sh
-
-    f=${outdir}/rbac_inter/_term.${Depth_of_RH}.${Nature_of_RH}.$sessions.txt
-    mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
-    process_output ${f}
-  done
-  
-  echo "Finished inter-session experiments, alpha=${alpha}"
 done
 
 

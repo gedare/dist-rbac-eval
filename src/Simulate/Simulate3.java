@@ -38,7 +38,7 @@ import Structures.PermissionVertex;
 import Structures.RoleVertex;
 import Structures.UserVertex;
 
-//import jni.gem5Op;
+import jni.gem5Op;
 
 // TODO: Make this a proper object already, enough with the static methods!
 public class Simulate3 {
@@ -100,12 +100,13 @@ public class Simulate3 {
 
 	public static void main(String[] args) throws IOException {
 	//	java.lang.Compiler.disable();
-    //System.loadLibrary("gem5OpJni");
 		for(int i = 0; i < MAX_ITERATIONS; i++) {
 			times[i] = 0;
 		}
 		int iterations;
-    //gem5Op gem5 = new gem5Op();
+
+    System.loadLibrary("gem5OpJni");
+    gem5Op gem5 = new gem5Op();
 
 			long initiation_time = System.nanoTime();
 
@@ -201,6 +202,7 @@ public class Simulate3 {
       }
 			f.close();
 
+    gem5.switchcpu();
 
     for(iterations = 0; iterations < MAX_ITERATIONS; iterations++) {
       int numAccessChecks = 0;

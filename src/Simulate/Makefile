@@ -5,7 +5,7 @@ SOURCEPATH=${MAIN_DIR}
 M5OP=/home/gedare/work/gem5/gem5/util/m5
 CLASSPATH:=$(CLASSPATH):$(M5OP)
 
-%.class:%.java $(M5OP)/gem5OpJni.jar
+%.class:%.java
 	javac -classpath ${CLASSPATH} -sourcepath ${SOURCEPATH} $<
 
 all: Measurements.class Simulate3.class
