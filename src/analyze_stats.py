@@ -151,7 +151,7 @@ def get_results_from_CBF(filename, tag):
 def get_results_from_raw_txt(filename, tag):
   results = []
   basename, extension = os.path.splitext(filename)
-  rawtimefile = basename + ".txt"
+  rawtimefile = basename
   if not os.path.exists(rawtimefile):
     return []
   f = open(rawtimefile)
