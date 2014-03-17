@@ -32,7 +32,7 @@ new_run_experiment()
     --kernel=/home/gedare/work/linux/linux-2.6.28.4-gem5/vmlinux-2.6.28.4-8 \
     --disk-image=/dist/m5/system/disks/linux-x86-sacmat14.img \
     --script=/home/gedare/work/github/dist-rbac-eval/src/${runscript} \
-    --fast-forward=10000000000 --cpu-type timing --caches
+    --fast-forward=1000000000 --maxinsts=1000000000 --cpu-type timing --caches
   cd -
 }
 
@@ -142,7 +142,7 @@ do
     for algorithm in 3 6
     do
       new_run_experiment ${insns} ${rbac} ${algorithm}
-      f=${outdir}/rbac_inter/_term.${Depth_of_RH}.${Nature_of_RH}.${sessions}.${algorithm}.txt
+      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}_${P}.${algorithm}.txt
       mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
       new_process_output ${f}
     done
@@ -160,7 +160,7 @@ do
     for algorithm in 3 6
     do
       new_run_experiment ${insns} ${rbac} ${algorithm}
-      f=${outdir}/rbac_inter/_term.${Depth_of_RH}.${Nature_of_RH}.${sessions}.${algorithm}.txt
+      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}_${P}.${algorithm}.txt
       mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
       new_process_output ${f}
     done
@@ -198,7 +198,7 @@ do
     for algorithm in 3 6
     do
       new_run_experiment ${insns} ${rbac} ${algorithm}
-      f=${outdir}/rbac_inter/_term.${Depth_of_RH}.${Nature_of_RH}.${sessions}.${algorithm}.txt
+      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}_${P}.${algorithm}.txt
       mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
       new_process_output ${f}
     done
@@ -214,7 +214,7 @@ do
     for algorithm in 3 6
     do
       new_run_experiment ${insns} ${rbac} ${algorithm}
-      f=${outdir}/rbac_inter/_term.${Depth_of_RH}.${Nature_of_RH}.${sessions}.${algorithm}.txt
+      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}_${P}.${algorithm}.txt
       mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
       new_process_output ${f}
     done
