@@ -142,7 +142,7 @@ do
     for algorithm in 3 6
     do
       new_run_experiment ${insns} ${rbac} ${algorithm}
-      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}_${P}.${algorithm}.txt
+      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.${algorithm}.txt
       mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
       new_process_output ${f}
     done
@@ -160,7 +160,7 @@ do
     for algorithm in 3 6
     do
       new_run_experiment ${insns} ${rbac} ${algorithm}
-      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}_${P}.${algorithm}.txt
+      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.${algorithm}.txt
       mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
       new_process_output ${f}
     done
@@ -198,7 +198,7 @@ do
     for algorithm in 3 6
     do
       new_run_experiment ${insns} ${rbac} ${algorithm}
-      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}_${P}.${algorithm}.txt
+      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.${algorithm}.txt
       mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
       new_process_output ${f}
     done
@@ -214,7 +214,7 @@ do
     for algorithm in 3 6
     do
       new_run_experiment ${insns} ${rbac} ${algorithm}
-      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}_${P}.${algorithm}.txt
+      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.${algorithm}.txt
       mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
       new_process_output ${f}
     done

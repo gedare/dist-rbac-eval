@@ -589,6 +589,7 @@ def main():
     print("Analyzing: " + input + ":" + tag + " -> " + output)
     files = get_CBF_files(input, tag)
     results = get_results_from_CBF_files(files, tag)
+    print results
     analyze_it(results, tag, output)
 
 # the actual entry point.
