@@ -202,9 +202,10 @@ public class Simulate3 {
       }
 			f.close();
 
-    gem5.switchcpu();
-
     for(iterations = 0; iterations < MAX_ITERATIONS; iterations++) {
+      if ( iterations == 12 ) // FIXME: make sure it's enough to warmup cache
+        gem5.switchcpu();
+
       int numAccessChecks = 0;
      	HashMap<Integer,Integer> sessions = new HashMap();
 
