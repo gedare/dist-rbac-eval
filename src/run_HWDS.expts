@@ -32,7 +32,7 @@ new_run_experiment()
     --kernel=/home/gedare/work/linux/linux-2.6.28.4-gem5/vmlinux-2.6.28.4-8 \
     --disk-image=/dist/m5/system/disks/linux-x86-sacmat14.img \
     --script=/home/gedare/work/github/dist-rbac-eval/src/${runscript} \
-    --fast-forward=1000000000 --maxinsts=1000000000 --cpu-type timing --caches
+    --fast-forward=100000000000 --maxinsts=100000000000 --cpu-type timing --caches
   cd -
 }
 
@@ -78,10 +78,10 @@ new_process_output()
 }
 
 ## Inter-session experiments
-for ALPHA in 0.0 #1.0
+for ALPHA in 1.0 0.0
 do
   x=1000
-  alpha=${ALPHA}_${x}checks
+  alpha=${ALPHA}_${x}checks_60sessions
 
   echo "Starting inter-session experiments, alpha=${alpha}"
 
@@ -91,7 +91,7 @@ do
 
   ## inter experiments
   mkdir ${outdir}/rbac_inter
-  for sessions in {2..15}
+  for sessions in 10 20 30 40 50 60 
   do
     # Core RH
     Nature_of_RH=1
@@ -110,9 +110,10 @@ do
   
   echo "Finished inter-session experiments, alpha=${alpha}"
 done
+exit 1
 
 ## Intra-session experiments (shorter)
-for ALPHA in 0.0 #1.0
+for ALPHA in 1.0 #0.0
 do
   x=1000
   alpha=${ALPHA}_${x}checks
@@ -133,21 +134,21 @@ do
   echo "Intra-session experiments: varying roles"
 
   # Varying Roles
-  for R in 500 700
-  do
-    P=250
-    insns=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
-    rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state
-
-    for algorithm in 3 6
-    do
-      new_run_experiment ${insns} ${rbac} ${algorithm}
-      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.${algorithm}.txt
-      mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
-      new_process_output ${f}
-    done
-  done
-  
+#  for R in 500 700
+#  do
+#    P=250
+#    insns=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
+#    rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state
+#
+#    for algorithm in 3 6
+#    do
+#      new_run_experiment ${insns} ${rbac} ${algorithm}
+#      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.${algorithm}.txt
+#      mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
+#      new_process_output ${f}
+#    done
+#  done
+#  
   echo "Intra-session experiments: varying permissions"
 
   # Varying Permissions
@@ -169,7 +170,7 @@ do
 done
 
 ## Intra-session experiments (long)
-for ALPHA in 0.0 #1.0
+for ALPHA in 1.0 #0.0
 do
   x=1000
   alpha=${ALPHA}_${x}checks
@@ -189,20 +190,20 @@ do
   echo "Intra-session experiments: varying roles"
 
   # Varying Roles
-  for R in 2000
-  do
-    P=250
-    insns=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
-    rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state
-  
-    for algorithm in 3 6
-    do
-      new_run_experiment ${insns} ${rbac} ${algorithm}
-      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.${algorithm}.txt
-      mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
-      new_process_output ${f}
-    done
-  done
+#  for R in 2000
+#  do
+#    P=250
+#    insns=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/instructions.3
+#    rbac=${indir}/rbac_intra/${Depth_of_RH}_${Nature_of_RH}_${R}_${P}/rbac-state
+#  
+#    for algorithm in 3 6
+#    do
+#      new_run_experiment ${insns} ${rbac} ${algorithm}
+#      f=${outdir}/rbac_intra/_term.${Depth_of_RH}.${Nature_of_RH}.${R}.${P}.${algorithm}.txt
+#      mv ${workdir}/m5out/system.pc.com_1.terminal ${f}
+#      new_process_output ${f}
+#    done
+#  done
   
   # Varying Permissions
   for P in 2000

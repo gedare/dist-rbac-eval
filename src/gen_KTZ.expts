@@ -143,7 +143,7 @@ echo "Done generating intra-session experiment configurations for varying permis
 echo "Generating inter-session experiment session profiles"
 
 # Sessions are from 2 through 15
-for sessions in {2..15}
+for sessions in {2..60}
 do
   # Stanford RH
   Depth_of_RH=5
@@ -165,7 +165,8 @@ do
 
   # Hybrid RH (Note: Core=Hybrid with Depth_of_RH of 1)
   Nature_of_RH=1
-  for Depth_of_RH in {1..5}
+  #for Depth_of_RH in {1..5}
+  for Depth_of_RH in 1
   do
   java Generator.SessionProfile \
     ${outdir}/rbac_inter/${Depth_of_RH}_${Nature_of_RH}/rbac-state \

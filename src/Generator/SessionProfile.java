@@ -382,7 +382,7 @@ public class SessionProfile {
 					break;
 					}
 					case 2: {
-            double alpha = 1.0; // skewness FIXME: paremetrize
+            double alpha = 0.0; // skewness FIXME: paremetrize
 						int number_of_access = number_of_access_checks;
             // precompute skewed zipf distributions for every session's permissions
             ArrayList<ZipfGenerator> zipf = new ArrayList<ZipfGenerator>();

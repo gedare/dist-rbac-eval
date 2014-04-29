@@ -104,7 +104,7 @@ def get_results_from_CBF(filename, tag):
     results.append(metadata[2])
     results.append(metadata[3])
     results.append(metadata[4])
-    results.append("8") # FIXME: hard-coded for KTZ
+    results.append("15") # FIXME: hard-coded for KTZ
     results.append(metadata[5])
   elif tag == 'rbac_inter':
     results.append(metadata[1])
@@ -265,24 +265,25 @@ def get_CBF_files(input, tag):
 
 def create_header(xmin, xmax, xlabel, ylabel, title, outfile):
   return"\
-set terminal postscript eps enhanced monochrome lw 1 \"Times-Roman\" 24\n\
+#set terminal postscript eps enhanced monochrome lw 1 \"Times-Roman\" 24\n\
+set terminal postscript eps enhanced monochrome lw 3 \"Times-Roman\" 30\n\
 #unset key\n\
 #set key outside right\n\
 #set key inside left Left bottom reverse\n\
-set key inside right Left bottom reverse\n\
-#set key inside left Left top reverse\n\
-#set key inside left Left top reverse\n\
+#set key inside right Left bottom reverse\n\
+set key inside left Left top reverse\n\
 #set offsets 0, 0, .5, 0\n\
 #set offsets 0, 0, 5, 0\n\
 #set offsets 0, 0, 100, 0\n\
 #set offsets 0, 0, 500, 0\n\
 #set offsets 0, 0, 1000, 0\n\
-set xtics rotate font  \"Times-Roman,24\"\n\
+#set xtics rotate font  \"Times-Roman,24\"\n\
 set output \"" + os.path.splitext(os.path.split(outfile)[1])[0] + ".eps\"\n\
 set xlabel '" + xlabel + "' font \"Times-Roman,30\"\n\
 set ylabel '" + ylabel + "' font \"Times-Roman,30\"\n\
 #set title \"" + title + "\" font \"Times-Roman,30\"\n\
 set xrange [" + xmin + ":" + xmax + "] noreverse nowriteback\n\
+#set xrange [0:" + str(int(xmax)+100) + "] noreverse nowriteback\n\
 set yrange [0:*]\n\
 set style line 99 lt 1 lw 1 pt 0\n\
 set style line 1 lt 7 lw 1 pt 2 ps 2.0\n\
@@ -589,7 +590,6 @@ def main():
     print("Analyzing: " + input + ":" + tag + " -> " + output)
     files = get_CBF_files(input, tag)
     results = get_results_from_CBF_files(files, tag)
-    print results
     analyze_it(results, tag, output)
 
 # the actual entry point.
