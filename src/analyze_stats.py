@@ -266,7 +266,10 @@ def get_CBF_files(input, tag):
 def create_header(xmin, xmax, xlabel, ylabel, title, outfile):
   return"\
 #set terminal postscript eps enhanced monochrome lw 1 \"Times-Roman\" 24\n\
-set terminal postscript eps enhanced monochrome lw 3 \"Times-Roman\" 30\n\
+#set terminal postscript eps enhanced monochrome lw 3 \"Times-Roman\" 30\n\
+#set output \"" + os.path.splitext(os.path.split(outfile)[1])[0] + ".eps\"\n\
+set terminal png enhanced font \"/usr/share/fonts/liberation/LiberationSerif-Regular.ttf\" 24 xffffff x000000 x404040 xff0000 x000000 x000000 x0000ff x000000 x000000 x00ff00\n\
+set output \"" + os.path.splitext(os.path.split(outfile)[1])[0] + ".png\"\n\
 #unset key\n\
 #set key outside right\n\
 #set key inside left Left bottom reverse\n\
@@ -278,17 +281,21 @@ set key inside left Left top reverse\n\
 #set offsets 0, 0, 500, 0\n\
 #set offsets 0, 0, 1000, 0\n\
 #set xtics rotate font  \"Times-Roman,24\"\n\
-set output \"" + os.path.splitext(os.path.split(outfile)[1])[0] + ".eps\"\n\
-set xlabel '" + xlabel + "' font \"Times-Roman,30\"\n\
-set ylabel '" + ylabel + "' font \"Times-Roman,30\"\n\
+#set xlabel '" + xlabel + "' font \"Times-Roman,30\"\n\
+#set ylabel '" + ylabel + "' font \"Times-Roman,30\"\n\
+#set xlabel '" + xlabel + "' font \"/usr/share/fonts/liberation/LiberationSerif-Regular.ttf,30\"\n\
+#set ylabel '" + ylabel + "' font \"/usr/share/fonts/liberation/LiberationSerif-Regular.ttf,30\"\n\
 #set title \"" + title + "\" font \"Times-Roman,30\"\n\
 set xrange [" + xmin + ":" + xmax + "] noreverse nowriteback\n\
 #set xrange [0:" + str(int(xmax)+100) + "] noreverse nowriteback\n\
 set yrange [0:*]\n\
 set style line 99 lt 1 lw 1 pt 0\n\
-set style line 1 lt 7 lw 1 pt 2 ps 2.0\n\
-set style line 2 lt 4 lw 1 pt 4 ps 2.0\n\
-set style line 3 lt 1 lw 1 pt 5 ps 2.0\n\
+set style line 1 lt 7 lw 2 pt 2 ps 2.0\n\
+set style line 2 lt 4 lw 2 pt 4 ps 2.0\n\
+set style line 3 lt 1 lw 2 pt 5 ps 2.0\n\
+#set style line 1 lt 7 lw 1 pt 2 ps 2.0\n\
+#set style line 2 lt 4 lw 1 pt 4 ps 2.0\n\
+#set style line 3 lt 1 lw 1 pt 5 ps 2.0\n\
 #set style line 1 lt 1 lc rgb \"gray80\" lw 1 pt 1\n\
 #set style line 2 lt 2 lc rgb \"gray50\" lw 1 pt 2\n\
 #set style line 3 lt 3 lc rgb \"black\" lw 1 pt 3\n\
