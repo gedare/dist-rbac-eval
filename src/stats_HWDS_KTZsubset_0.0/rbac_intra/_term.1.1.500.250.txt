@@ -1,0 +1,76 @@
+tar: Data/instructions: time stamp 2014-01-22 08:00:30 is 65001614.991373989 s in the future
+tar: Data/rbac-state: time stamp 2014-01-22 08:00:30 is 65001614.990727361 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519874.99051129 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Exception in thread "main" java.lang.NullPointerException
+	at AccessMatrix.SDP_ACM.access_request(SDP_ACM.java:54)
+	at Simulate.Simulate3.main(Simulate3.java:281)
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	19016064	466183	1339770
+Times	234933	363703	7258089
+Times	234813	366700	1229347
+Times	235665	362824	1214296
+Times	242553	370360	1216043
+Times	256071	361275	1215943
+Times	242871	370521	1216278
+Times	242849	362334	1230384
+Times	255480	361740	1219296
+Times	243153	361275	1219228
+Times	242973	361798	1218615
+Times	244753	361275	1221307
+Times	241981	361818	1218957
+cov: 7.916335717129848E-4	mean: 9038.8	iteration: 12
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	3363146	523415	220585
+Times	81539	439862	63748
+Times	81705	439036	65102
+Times	82130	438110	63373
+Times	86266	443554	65807
+Times	86349	444081	65998
+Times	85964	443712	66003
+Times	85964	444185	66003
+Times	86075	444195	75859
+Times	85962	443591	66363
+Times	97736	443516	66077
+Times	86195	443955	66003
+Times	85964	444040	66299
+cov: 6.72618762308091E-4	mean: 11095.8	iteration: 12
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	3275085	536293	314154
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f77f7dd46b1, pid=994, tid=1085049168
+#
+# JRE version: OpenJDK Runtime Environment (7.0_45-b15) (build 1.7.0_45-mockbuild_2013_12_10_15_14-b00)
+# Java VM: OpenJDK 64-Bit Server VM (24.45-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.so+0x7966b1]  JVM_RaiseSignal+0x15f9c1
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /tmp/jvm-994/hs_error.log
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+#
+./doit.sh: line 6:   994 Aborted                 java -classpath ${CLASSPATH}:hwds.jar:gem5OpJni.jar:AccessMatrix.jar:Cpol.jar:Helper.jar:HWDSBitSet.jar:HWDS.jar:PDP_SDP.jar:RbacGraph.jar:Structures.jar -Xms256M -Xmx256M -Djava.library.path=. Simulate.Simulaserial8250: too much work for irq4
+te3 Data/rbac-state 7

@@ -1,0 +1,62 @@
+tar: Data/instructions: time stamp 2014-02-11 13:47:57 is 66750423.592516626 s in the future
+tar: Data/rbac-state: time stamp 2014-02-11 13:47:57 is 66750423.591844232 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519836.591628623 s in the future
+tar: doit.sh: time stamp 2014-02-11 13:47:57 is 66750423.591300408 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007fbd57d80a20, pid=964, tid=1082489168
+#
+# JRE version: OpenJDK Runtime Environment (7.0_45-b15) (build 1.7.0_45-mockbuild_2013_12_10_15_14-b00)
+# Java VM: OpenJDK 64-Bit Server VM (24.45-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.so+0x3cda20]  dlerror+0x3cda20
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /tmp/jvm-964/hs_error.log
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+#
+./doit.sh: line 4:   964 Aborted                 java -classpath ${CLASSPATH}:hwds.jar:gem5OpJni.jar:AccessMatrix.jar:Cpol.jar:Helper.jar:HWDSBitSet.jar:HWDS.jar:PDP_SDP.jar:RbacGraph.jar:Structures.jar -Xms256M -Xmx256M -Djava.library.path=. Simulate.Simulaserial8250: too much work for irq4
+te3 Data/rbac-state 3
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	81769097	284351781	812202
+Times	21335924	24050440	625111
+Times	67319308	45935284	624179
+Times	2069213	62031654	623768
+Times	1875702	106432239	616197
+Times	1862513	62453579	12635931
+Times	1877849	22379554	616051
+Times	1863503	34411916	615880
+Times	1874778	34401056	617202
+Times	1865717	74418509	616063
+Times	1912354	46441096	16635980
+Times	1862265	62416144	615762
+Times	1864971	34484009	616204
+Times	1875229	22406637	615979
+Times	1863652	38444625	615839
+Times	1868180	34415417	616286
+Times	1862929	34477050	614521
+Times	1876443	118457653	615034
+Times	1876770	34404464	615243
+Times	1933012	21497148	12710842
+Times	1864490	9467621	599703
+Times	1888311	9445712	600837
+Times	1873869	25458522	601707
+Times	1869022	21455323	601503
+Times	1876419	29475390	599463
+Times	1864022	9459626	608245
+Times	1876585	29504397	598510
+Times	1876434	9470114	597840
+Times	1876918	21489736	597949
+Times	1863516	21484982	597942
+cov: 0.36019275192689826	mean: 1537.6	iteration: 26

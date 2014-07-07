@@ -1,0 +1,44 @@
+tar: Data/timinginfo: time stamp 2013-12-20 18:50:55 is 62187904.579484062 s in the future
+tar: Data/instructions: time stamp 2014-01-03 11:02:26 is 63369395.578918998 s in the future
+tar: Data/rbac-state: time stamp 2014-01-03 11:02:26 is 63369395.578586907 s in the future
+tar: Data: time stamp 2013-12-26 03:26:56 is 62650865.57837435 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	37164710	221969	721481
+Times	64337970	164887	26413566
+Times	15705559	164887	452778
+Times	16644968	165719	403990
+Times	15541267	165922	385696
+Times	35636797	167618	388504
+cov: 0.006737306354008142	mean: 5526.4	iteration: 5
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	27708726	1310991	1102720
+Times	2522168	1075586	1038464
+Times	2459537	1068491	1009302
+Times	2473038	1058523	1007955
+Times	2451261	1069766	1020592
+Times	2450307	1073927	1004873
+cov: 0.006230025810014081	mean: 35641.4	iteration: 5
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	8064655	410929	271510
+Times	434806	330360	148154
+Times	434744	331472	148197
+Times	434740	330360	148087
+Times	441777	328999	153744
+Times	454462	328051	153876
+cov: 0.004050891983111485	mean: 10994.8	iteration: 5
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	7905326	338031	827855
+Times	874322	295893	691210
+Times	842862	295632	683466
+Times	855561	295638	671330
+Times	841823	296284	648107
+Times	840582	296251	648182
+cov: 0.0010932492368146396	mean: 9864.4	iteration: 5

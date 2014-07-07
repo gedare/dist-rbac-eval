@@ -1,0 +1,70 @@
+tar: Data/instructions: time stamp 2014-03-05 20:28:52 is 68675278.593228134 s in the future
+tar: Data/rbac-state: time stamp 2014-03-05 20:28:52 is 68675278.592614107 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519836.592377825 s in the future
+tar: doit.sh: time stamp 2014-03-05 20:28:52 is 68675278.592052129 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	245015537	69052539	774465
+Times	27533599	31333104	644724
+Times	43984209	15495754	645989
+Times	40456644	23525671	651802
+Times	16933373	28226666	684656
+Times	4550891	7711816	541246
+Times	4216494	7448412	584879
+Times	4216742	7434626	540665
+Times	4251816	7450454	536558
+Times	4241478	7456433	536217
+Times	4236613	7467030	536942
+Times	4252571	7437228	536146
+Times	4260924	7472499	549556
+Times	4286299	7453581	536754
+Times	4268107	7446911	536290
+Times	4290726	7445090	536742
+Times	4324873	7455589	536811
+Times	4298894	7470371	536253
+Times	4298916	7507873	548637
+Times	4299177	7444886	536253
+Times	4304474	7461185	536473
+cov: 0.0036102447563196973	mean: 532.8	iteration: 20
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	33907687	290829693	2576512
+Times	5127203	47816976	14471036
+Times	5097772	59401984	14458105
+Times	5122042	79488390	2443136
+Times	5088646	40044327	2452842
+Times	5088930	80023226	2437556
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f8fe3ca5f92, pid=974, tid=1084459344
+#
+# JRE version: OpenJDK Runtime Environment (7.0_45-b15) (build 1.7.0_45-mockbuild_2013_12_10_15_14-b00)
+# Java VM: OpenJDK 64-Bit Server VM (24.45-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.so+0x826f92]  JVM_handle_linux_signal+0x6b9e2
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /tmp/jvm-974/hs_error.log
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+#
+./doit.sh: line 4:   974 Aborted                 java -classpath ${CLASSPATH}:hwds.jar:gem5OpJni.jar:AccessMatrix.jar:Cpol.jar:Helper.jar:HWDSBitSet.jar:HWDS.jar:PDP_SDP.jar:RbacGraph.jar:Structures.jar -Xms256M -Xmx256M -Djava.library.path=. Simulate.Simulaserial8250: too much work for irq4
+te3 Data/rbac-state 3
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+Exception in thread "main" java.lang.NoClassDefFoundError: hwds/HWDS
+	at Simulate.Simulate3.main(Simulate3.java:229)
+Caused by: java.lang.ClassNotFoundException: hwds.HWDS
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 1 more

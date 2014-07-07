@@ -1,0 +1,102 @@
+tar: Data/instructions: time stamp 2014-02-01 05:07:48 is 65855252.991342105 s in the future
+tar: Data/rbac-state: time stamp 2014-02-01 05:07:48 is 65855252.990731192 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519874.990515318 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: -1
+	at AccessMatrix.RbacMatrix.IsPair(RbacMatrix.java:78)
+	at AccessMatrix.SDP_ACM.access_request(SDP_ACM.java:54)
+	at Simulate.Simulate3.main(Simulate3.java:281)
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	29283127	10656668	1383735
+Times	524752	18719156	1295157
+Times	516240	23707234	1289886
+Times	514788	10190640	1287534
+Times	511652	10853625	1283077
+Times	516653	67161777	1287452
+Times	512889	59205965	1270549
+Times	495943	4758037	1271648
+Times	499873	4598786	1284622
+Times	495708	4640617	1271300
+Times	497165	8425458	1250990
+Times	496490	30472517	1248904
+Times	496531	3465300	17300757
+Times	496372	1445561	1267018
+Times	496370	1354591	1266079
+Times	496253	1369414	1287758
+Times	496594	1370352	1266990
+Times	496747	1368436	1267037
+Times	496432	1356419	1269163
+cov: 0.0054951460009121725	mean: 1704.2	iteration: 18
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	23332657	9751627	227628
+Times	128789	9699302	89874
+Times	131585	16727156	76169
+Times	130882	9501784	76390
+Times	131584	10066200	79145
+Times	136471	58253861	75786
+Times	128543	9388829	65874
+Times	124237	9308707	66805
+Times	122789	9327652	66622
+Times	122789	9308058	66622
+Times	122822	9316580	66646
+Times	123091	9309809	66879
+Times	122858	24930650	87000
+Times	122191	1083166	87755
+Times	122192	1090355	86644
+Times	122442	17105978	88144
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f2b8ac3763f, pid=984, tid=1097578832
+#
+# JRE version: OpenJDK Runtime Environment (7.0_45-b15) (build 1.7.0_45-mockbuild_2013_12_10_15_14-b00)
+# Java VM: OpenJDK 64-Bit Server VM (24.45-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.so+0x3cd63f]  dlerror+0x3cd63f
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /tmp/jvm-984/hs_error.log
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+#
+./doit.sh: line 5:   984 Aborted                 java -classpath ${CLASSPATH}:hwds.jar:gem5OpJni.jar:AccessMatrix.jar:Cpol.jar:Helper.jar:HWDSBitSet.jar:HWDS.jar:PDP_SDP.jar:RbacGraph.jar:Structures.jar -Xms256M -Xmx256M -Djava.library.path=. Simulate.Simulaserial8250: too much work for irq4
+te3 Data/rbac-state 6
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	15117429	57270728	334020
+Times	125144	9165109	163796
+Times	127029	9158527	159302
+Times	126400	9093440	158998
+Times	127871	9388701	165423
+Times	130463	25576483	160411
+Times	125248	24985700	153631
+Times	122668	8368362	156957
+Times	122633	8311010	151094
+Times	122712	8330933	151098
+Times	122746	8332752	160583
+Times	122626	16355185	157495
+Times	122700	22612967	163954
+Times	119190	933747	112636
+Times	119184	922510	112627
+Times	119501	926724	113528
+Times	120159	924374	113219
+Times	120160	935929	113336
+cov: 0.006202362707840944	mean: 1160.4	iteration: 17

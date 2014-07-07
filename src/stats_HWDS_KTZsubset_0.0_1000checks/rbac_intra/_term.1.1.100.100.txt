@@ -1,0 +1,113 @@
+tar: Data/instructions: time stamp 2014-01-30 16:48:35 is 65724499.990669256 s in the future
+tar: Data/rbac-state: time stamp 2014-01-30 16:48:35 is 65724499.989960118 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519874.989721515 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f865532cf9f, pid=964, tid=1100065104
+#
+# JRE version: OpenJDK Runtime Environment (7.0_45-b15) (build 1.7.0_45-mockbuild_2013_12_10_15_14-b00)
+# Java VM: OpenJDK 64-Bit Server VM (24.45-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.so+0x826f9f]  JVM_handle_linux_signal+0x6b9ef
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /tmp/jvm-964/hs_error.log
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+#
+./doit.sh: line 3:   964 Aborted                 java -classpath ${CLASSPATH}:hwds.jar:gem5OpJni.jar:AccessMatrix.jar:Cpol.jar:Helper.jar:HWDSBitSet.jar:HWDS.jar:PDP_SDP.jar:RbacGraph.jar:Structures.jar -Xms256M -Xmx256M -Djava.library.path=. Simulate.Simulaserial8250: too much work for irq4
+te3 Data/rbac-state 1
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	16804668	157874177	1458275
+Times	4642191	95553940	1317681
+Times	4036902	25886514	1318146
+Times	4094002	13881089	1317590
+Times	4081503	37936360	1326956
+Times	4052937	37893871	1324423
+Times	4083240	25905561	1323975
+Times	4083095	33895080	1323953
+Times	4078673	25897796	13353714
+Times	4084520	13874217	1323522
+Times	4136811	14224705	13349434
+Times	12220358	37927920	1324620
+Times	4228934	25991640	1336556
+Times	4164784	13905102	1324269
+Times	4166840	13954280	1324429
+Times	4168310	14065264	1321998
+Times	4186386	13859429	13353815
+Times	4182808	25854526	17347673
+Times	4179371	13832384	13350815
+Times	4184676	25870453	17351035
+Times	4183614	13822321	1336197
+Times	4235654	13845109	1323289
+Times	4173728	14411068	1321405
+Times	4168953	25823757	1324040
+Times	4183594	13843420	1326056
+Times	4183692	13896282	13357639
+Times	4182379	26477248	1447790
+Times	4300706	11011409	1367949
+Times	4243917	10962519	1370772
+Times	4242709	10944206	1356650
+cov: 0.32931778155407493	mean: 2044.0	iteration: 16
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	7730204	111187732	345738
+Times	623841	59953858	231636
+Times	624666	54234544	231005
+Times	628018	10176809	230810
+Times	644526	34291072	229299
+Times	639902	10189095	228613
+Times	640013	10198566	238308
+Times	638532	22206383	238859
+Times	638932	22198726	228389
+Times	640268	10222747	229266
+Times	679069	10200106	228252
+Times	634689	42220369	228475
+Times	632643	22191772	228405
+Times	629047	22215202	228392
+Times	630235	14252486	228061
+Times	630638	10192965	229116
+Times	630587	22211902	227927
+Times	634425	5728697	304876
+Times	698998	5100125	218500
+Times	620338	5113693	218108
+Times	617281	5080163	218770
+Times	617280	5098038	218456
+Times	619379	5099712	218616
+cov: 0.0022201154825323313	mean: 637.0	iteration: 22
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	10181346	125759548	911920
+Times	3248377	58413338	469379
+Times	2070710	37447326	469475
+Times	2074687	13436462	469087
+Times	2086194	13463433	468705
+Times	2086204	25443987	469157
+Times	2086425	13429548	468892
+Times	2097336	25445773	469102
+Times	2088467	13458050	469180
+Times	2086188	13468892	468807
+Times	2096663	13403502	12493000
+Times	2144358	29449585	468939
+Times	2196295	53456219	468166
+Times	2160334	29433415	468537
+Times	2161417	13430762	468151
+Times	2152276	8743508	548136
+Times	2246351	4697941	453599
+Times	2187382	4742055	453217
+Times	2166735	4692256	453069
+Times	2162527	4696749	453250
+Times	2148544	4696862	452122
+cov: 0.004061700029368262	mean: 587.8	iteration: 20

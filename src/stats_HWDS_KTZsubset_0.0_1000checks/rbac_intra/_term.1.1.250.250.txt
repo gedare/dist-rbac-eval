@@ -1,0 +1,104 @@
+tar: Data/instructions: time stamp 2014-01-30 06:36:18 is 65687762.990811464 s in the future
+tar: Data/rbac-state: time stamp 2014-01-30 06:36:18 is 65687762.99016265 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519874.989947326 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Exception in thread "main" java.lang.NullPointerException
+	at AccessMatrix.SDP_ACM.access_request(SDP_ACM.java:54)
+	at Simulate.Simulate3.main(Simulate3.java:281)
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	6780146	140089254	1385164
+Times	243906	54084172	1256159
+Times	239444	10088111	5284639
+Times	237712	10097639	1232557
+Times	242319	38671782	1227340
+Times	242291	10662302	1230285
+Times	244180	10622166	1245482
+Times	243256	22639138	1228860
+Times	243290	10639862	1229482
+Times	243312	10657477	1227000
+Times	243180	38695234	1230729
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f2223075f92, pid=974, tid=1098144080
+#
+# JRE version: OpenJDK Runtime Environment (7.0_45-b15) (build 1.7.0_45-mockbuild_2013_12_10_15_14-b00)
+# Java VM: OpenJDK 64-Bit Server VM (24.45-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.so+0x826f92]  JVM_handle_linux_signal+0x6b9e2
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /tmp/jvm-974/hs_error.log
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+#
+./doit.sh: line 4:   974 Aborted                 java -classpath ${CLASSPATH}:hwds.jar:gem5OpJni.jar:AccessMatrix.jar:Cpol.jar:Helper.jar:HWDSBitSet.jar:HWDS.jar:PDP_SDP.jar:RbacGraph.jar:Structures.jar -Xms256M -Xmx256M -Djava.library.path=. Simulate.Simulaserial8250: too much work for irq4
+te3 Data/rbac-state 3
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	3020169	131241333	197287
+Times	78823	72485909	74953
+Times	73445	9625155	74916
+Times	72619	9551207	74900
+Times	74093	9300547	72539
+Times	74723	9302722	72808
+Times	74392	9278719	72552
+Times	74402	21303032	72769
+Times	74401	9297273	72769
+Times	74402	21296105	72583
+Times	74809	9296191	72726
+Times	74402	25298076	72714
+Times	74467	21322561	72657
+Times	74453	21302508	72577
+Times	74455	9280282	72522
+Times	74770	21292973	73021
+Times	74153	25313956	124238
+Times	144545	4796768	47889
+Times	66840	4808264	47187
+Times	66840	4873970	47614
+Times	66620	4787958	46692
+Times	66398	4795260	47098
+cov: 0.007475783451179052	mean: 601.2	iteration: 21
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	3126952	164196277	305294
+Times	86513	60829091	100567
+Times	84204	22577249	100915
+Times	83539	22604062	100654
+Times	82230	10992780	100568
+Times	83129	23031593	100927
+Times	82225	22957675	100834
+Times	82227	22983127	100872
+Times	82223	10996863	100927
+Times	82218	10993828	100585
+Times	82780	22961583	100664
+Times	82263	34982467	100932
+Times	82260	10951308	100834
+Times	82268	10993120	100867
+Times	82267	22985773	100486
+Times	82215	26984453	101227
+Times	82306	9330825	164298
+Times	151381	4728434	86873
+Times	75116	4735670	85490
+Times	75107	4744999	86861
+Times	74961	4726635	85576
+Times	74958	4746476	86893
+cov: 0.0022678174213993808	mean: 591.6	iteration: 21

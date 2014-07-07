@@ -1,0 +1,6 @@
+
+to create the post-boot checkpoint:
+build/X86/gem5.fast /home/gedare/work/gem5/builds/../gem5/configs/example/fs.py --checkpoint-dir=/home/gedare/work/gem5/builds/../builds/hwds/m5out/1core-Java-7 --kernel=/home/gedare/work/linux/linux-2.6.28.4-gem5/vmlinux-2.6.28.4-8 --disk-image=/dist/m5/system/disks/linux-x86-sacmat14.img -n 1 --script=/home/gedare/work/github/dist-rbac-eval/src/setup_gem5.sh
+build/X86/gem5.fast /home/gedare/work/gem5/builds/../gem5/configs/example/fs.py --checkpoint-dir=/home/gedare/work/gem5/builds/../builds/hwds/m5out/1core-Java-7 --script=/home/gedare/work/github/dist-rbac-eval/src/Data.tar -r 1
+
+

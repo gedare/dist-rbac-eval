@@ -1,0 +1,48 @@
+tar: Data/timinginfo: time stamp 2013-12-20 18:50:55 is 62187904.579484062 s in the future
+tar: Data/instructions: time stamp 2014-01-03 12:08:18 is 63373347.578918947 s in the future
+tar: Data/rbac-state: time stamp 2014-01-03 12:08:18 is 63373347.578586856 s in the future
+tar: Data: time stamp 2013-12-26 03:26:56 is 62650865.578374299 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	42156482	246223	748533
+Times	72244741	195018	440025
+Times	23045948	197099	382970
+Times	18941266	197169	390453
+Times	42691085	8221105	400516
+Times	7916867	177192	394814
+Times	7914798	178610	395983
+Times	9742615	179609	393575
+Times	7570147	178539	385076
+Times	35779857	179144	386359
+cov: 0.005085612099690762	mean: 5103.0	iteration: 9
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	56722657	1818894	1324917
+Times	3272814	1556850	1218015
+Times	3238237	1593727	1216404
+Times	3242934	1579894	1234643
+Times	3210980	1528388	1211648
+Times	3197889	1542843	1210057
+cov: 0.01706484004392935	mean: 44580.8	iteration: 5
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	8148966	477633	297837
+Times	534108	405247	171324
+Times	532863	406335	176027
+Times	532793	406060	175607
+Times	536343	412615	179527
+Times	554135	412726	179527
+cov: 0.009178104978976248	mean: 11673.8	iteration: 5
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	8137724	420808	953694
+Times	1038656	382017	812631
+Times	1020070	378174	827074
+Times	1019546	378318	3558944
+Times	1039564	375430	778265
+Times	1039532	375157	825579
+cov: 0.007342278443975479	mean: 10794.2	iteration: 5

@@ -1,0 +1,113 @@
+tar: Data/instructions: time stamp 2014-01-29 17:03:43 is 65639007.990978739 s in the future
+tar: Data/rbac-state: time stamp 2014-01-29 17:03:43 is 65639007.990393442 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519874.990131405 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	68922252	28695181	591193
+Times	17926317	36500379	394430
+Times	25564502	17378054	308104
+Times	7208694	29179128	307867
+Times	8910498	9171627	279769
+Times	4866540	9177714	279210
+Times	4792885	25184939	278430
+Times	4792805	9179316	12305312
+Times	4836568	9169463	279827
+Times	4814075	9175158	279742
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f865532cf92, pid=964, tid=1102534992
+#
+# JRE version: OpenJDK Runtime Environment (7.0_45-b15) (build 1.7.0_45-mockbuild_2013_12_10_15_14-b00)
+# Java VM: OpenJDK 64-Bit Server VM (24.45-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.so+0x826f92]  JVM_handle_linux_signal+0x6b9e2
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /tmp/jvm-964/hs_error.log
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+#
+./doit.sh: line 3:   964 Aborted                 java -classpath ${CLASSPATH}:hwds.jar:gem5OpJni.jar:AccessMatrix.jar:Cpol.jar:Helper.jar:HWDSBitSet.jar:HWDS.jar:PDP_SDP.jar:RbacGraph.jar:Structures.jar -Xms256M -Xmx256M -Djava.library.path=. Simulate.Simulaserial8250: too much work for irq4
+te3 Data/rbac-state 1
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	38733823	222695474	1142749
+Times	2491696	127248149	1018235
+Times	2188112	25310993	1035731
+Times	2184676	37312517	1019729
+Times	2181592	12928468	1015866
+Times	2183350	24962498	1014972
+Times	2181613	12934907	1013681
+Times	2183288	12962677	1015512
+Times	2180881	12973982	1015831
+Times	2194429	24932046	1029497
+Times	2203110	12968496	1016132
+Times	2181305	12926405	1015216
+Times	2181218	40933016	1015218
+Times	2196215	24969297	1028290
+Times	2233176	25009233	1014023
+Times	2180600	13159184	1013544
+Times	2182200	12921217	1015770
+Times	2196922	12929185	1015646
+Times	2181941	12973172	1030182
+Times	2182299	24940093	1064222
+Times	2196878	12968133	1013808
+Times	2194356	12993440	1015158
+Times	2180530	25133901	1022888
+Times	2182096	24948052	1030247
+Times	2196685	24956438	1016043
+Times	2182266	24956676	13047754
+Times	2182343	24942686	1029115
+cov: 0.0032011950308790285	mean: 4164.2	iteration: 26
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	19556375	80786771	275751
+Times	416420	72124050	166269
+Times	414638	11284231	166318
+Times	412284	7245220	166344
+Times	403792	7450411	166273
+Times	403563	7422428	166133
+Times	403777	19403005	165908
+Times	403786	7478815	166273
+Times	403822	7418725	166273
+Times	407239	7473230	166101
+Times	403582	7400305	166872
+Times	402541	7431406	166234
+Times	406859	19437790	166021
+Times	402459	19425292	165907
+Times	419059	19414519	165944
+Times	416515	19435856	166958
+Times	402436	19407860	166273
+cov: 7.045078009757402E-4	mean: 3236.8	iteration: 16
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	7667844	94772387	847485
+Times	803120	68423019	383649
+Times	616022	7543913	383650
+Times	614337	19506584	383650
+Times	611236	7392286	397603
+Times	611280	7312608	28408619
+Times	611309	19383805	385071
+Times	611315	19355366	396076
+Times	611274	7341362	385204
+Times	613204	19579482	385345
+Times	611853	7324442	397548
+Times	611688	7330320	385441
+Times	611689	7383347	12412338
+Times	611689	19389933	385088
+Times	611672	19352271	386896
+Times	611708	7323153	12413307
+Times	611054	7330905	385677
+Times	611060	7309034	385736
+Times	611068	7358649	397876
+Times	611054	7319262	385648
+cov: 0.0025511814387938134	mean: 1220.8	iteration: 19

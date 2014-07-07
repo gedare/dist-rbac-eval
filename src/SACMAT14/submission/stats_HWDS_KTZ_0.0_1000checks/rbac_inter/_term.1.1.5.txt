@@ -1,0 +1,81 @@
+tar: Data/instructions: time stamp 2014-03-04 16:46:45 is 68575551.59402302 s in the future
+tar: Data/rbac-state: time stamp 2014-03-04 16:46:45 is 68575551.593413474 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519836.593197827 s in the future
+tar: doit.sh: time stamp 2014-03-04 16:46:45 is 68575551.592872167 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	81446269	35485714	581812
+Times	15799950	47957276	355084
+Times	23495437	6414370	273200
+Times	18296986	8258431	273095
+Times	3134130	6427867	273103
+Times	3343977	18442251	278417
+Times	3275560	6418275	278508
+Times	3261576	18437545	277641
+Times	3274400	6425436	277239
+Times	3261596	22420552	278805
+Times	3278484	6464074	278703
+Times	3276156	6411366	287517
+Times	3261067	6437614	278577
+Times	3283187	6431193	278703
+Times	3320410	6419005	278454
+Times	3323571	14427491	26720088
+Times	3345467	6409927	311763
+Times	3307332	6422668	277604
+Times	3348528	6418730	278823
+Times	3334257	22435685	278543
+Times	3334587	42449887	278899
+Times	1776587	6415364	243541
+Times	829990	6420586	213029
+Times	812219	22436386	211910
+Times	812260	14448020	212193
+Times	836972	6431299	217146
+Times	814944	18410427	216837
+Times	814953	6436331	217465
+Times	814900	14438062	217918
+Times	814896	6449984	218107
+cov: 0.44564419025875607	mean: 2406.2	iteration: 28
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	30184269	190306524	966354
+Times	2085080	160478468	859605
+Times	1873354	9342342	864274
+Times	1850190	21250711	864080
+Times	1855222	9266391	859857
+Times	1855126	21277284	859631
+Times	1855256	9226964	857511
+Times	1855232	9258876	856917
+Times	1855201	33266481	856823
+Times	1854811	21229132	858942
+Times	1870252	9185878	860262
+Times	1856868	9255203	859096
+Times	1860109	21460087	859278
+Times	1870175	9227956	858795
+Times	1854905	9215717	858324
+Times	1855611	9191679	860020
+Times	1854848	21233202	856468
+Times	1854857	21228484	856473
+Times	1854817	29261869	16344914
+Times	1834100	33323802	849565
+Times	1834189	9268629	849186
+Times	1850604	25276523	849526
+Times	1837033	45159531	852446
+Times	1849100	9233691	848793
+Times	1835113	9204664	848405
+Times	1834798	9243243	850661
+Times	1836204	9250140	850441
+Times	1834973	9253598	849978
+cov: 0.0022456618316360976	mean: 1846.8	iteration: 27
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+Exception in thread "main" java.lang.NoClassDefFoundError: hwds/HWDS
+	at Simulate.Simulate3.main(Simulate3.java:229)
+Caused by: java.lang.ClassNotFoundException: hwds.HWDS
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 1 more

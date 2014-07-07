@@ -1,0 +1,106 @@
+tar: Data/instructions: time stamp 2014-02-04 13:19:37 is 66143961.991414683 s in the future
+tar: Data/rbac-state: time stamp 2014-02-04 13:19:37 is 66143961.990819425 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519874.990602989 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	26210769	1090305	378037
+Times	3177931	1064940	217709
+Times	3177559	1063254	216632
+Times	3265077	1064684	228877
+Times	3335606	1027286	228325
+Times	3390959	1036278	230165
+Times	3361857	1046431	241891
+Times	3351187	1044543	232649
+Times	2119323	942321	232234
+Times	2119681	957487	231316
+Times	2102704	951138	243325
+Times	2172415	8976561	233037
+Times	1905218	980084	157172
+Times	1940265	995354	136141
+Times	1490718	951635	134598
+Times	1488380	955416	136028
+Times	1490742	1020013	134513
+Times	1491710	1000064	134592
+Times	1490744	999793	133065
+Times	1506228	971604	132870
+Times	1490893	991050	135934
+cov: 0.017557876857918712	mean: 4982.2	iteration: 20
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	41709590	6250702	432861
+Times	800469	5836919	328809
+Times	800226	5844603	328551
+Times	801130	5859934	329000
+Times	796570	6001056	327944
+Times	799866	6001620	328130
+Times	798945	5985051	329000
+Times	798888	6102515	329322
+Times	799919	6041388	328031
+Times	799749	5957150	327737
+Times	799764	6014081	326761
+Times	813907	6027744	326563
+Times	799673	6039390	328548
+cov: 0.005753922645462358	mean: 30079.0	iteration: 12
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	19744325	2442564	169755
+Times	129728	2401070	33566
+Times	127995	2375830	33149
+Times	128469	2389354	33112
+Times	123525	2338616	33229
+Times	123569	2351678	33184
+Times	116083	2332744	33315
+Times	116080	2346262	33717
+Times	116964	2344422	34014
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x000000003dccccd0, pid=984, tid=1081928016
+#
+# JRE version: OpenJDK Runtime Environment (7.0_45-b15) (build 1.7.0_45-mockbuild_2013_12_10_15_14-b00)
+# Java VM: OpenJDK 64-Bit Server VM (24.45-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  0x000000003dccccd0
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /tmp/jvm-984/hs_error.log
+Compiled method (c2)    1962   21             java.lang.Object::<init> (1 bytes)
+ total in heap  [0x00007f29b0036350,0x00007f29b0036560] = 528
+ relocation     [0x00007f29b0036470,0x00007f29b0036480] = 16
+ main code      [0x00007f29b0036480,0x00007f29b00364e0] = 96
+ stub code      [0x00007f29b00364e0,0x00007f29b00364f8] = 24
+ oops           [0x00007f29b00364f8,0x00007f29b0036500] = 8
+ scopes data    [0x00007f29b0036500,0x00007f29b0036510] = 16
+ scopes pcs     [0x00007f29b0036510,0x00007f29b0036540] = 48
+ dependencies   [0x00007f29b0036540,0x00007f29b0036548] = 8
+ handler table  [0x00007f29b0036548,0x00007f29b0036560] = 24
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+#
+./doit.sh: line 5:   984 Aborted                 java -classpath ${CLASSPATH}:hwds.jar:gem5OpJni.jar:AccessMatrix.jar:Cpol.jar:Helper.jar:HWDSBitSet.jar:HWDS.jar:PDP_SDP.jar:RbacGraph.jar:Structures.jar -Xms256M -Xmx256M -Djava.library.path=. Simulate.Simulaserial8250: too much work for irq4
+te3 Data/rbac-state 6
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	19440323	2137231	362020
+Times	279261	2122001	209964
+Times	260179	2097335	202682
+Times	260178	2085138	202512
+Times	264921	2089212	202405
+Times	265137	2090646	202795
+Times	256443	2093007	202782
+Times	256369	2098640	203441
+Times	256960	10139719	203653
+Times	256747	2098226	203135
+Times	258289	2097641	203083
+Times	256692	2099024	203140
+Times	257397	2118464	205316
+Times	271882	2073895	205330
+cov: 0.0075430877703246205	mean: 10487.0	iteration: 13

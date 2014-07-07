@@ -1,0 +1,207 @@
+BIOS EBDA/lowmem at: 00000000/00000000
+Linux version 2.6.28.4 (gedare@localhost.localdomain) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-3) (GCC) ) #11 SMP Sat Sep 28 13:49:12 EDT 2013
+Command line: earlyprintk=ttyS0 console=ttyS0 lpj=7999923 root=/dev/hda1
+KERNEL supported cpus:
+  Intel GenuineIntel
+  AMD AuthenticAMD
+  Centaur CentaurHauls
+CPU: vendor_id 'M5 Simulator' unknown, using generic init.
+CPU: Your system may be unstable.
+BIOS-provided physical RAM map:
+ BIOS-e820: 0000000000000000 - 000000000009fc00 (usable)
+ BIOS-e820: 000000000009fc00 - 0000000000100000 (reserved)
+ BIOS-e820: 0000000000100000 - 0000000020000000 (usable)
+ BIOS-e820: 00000000ffff0000 - 0000000100000000 (reserved)
+console [earlyser0] enabled
+DMI 2.5 present.
+last_pfn = 0x20000 max_arch_pfn = 0x3ffffffff
+------------[ cut here ]------------
+WARNING: at arch/x86/kernel/cpu/mtrr/main.c:1604 mtrr_trim_uncached_memory+0x332/0x336()
+WARNING: strange, CPU MTRRs all blank?
+Modules linked in:
+Pid: 0, comm: swapper Not tainted 2.6.28.4 #11
+Call Trace:
+ [<ffffffff80239590>] warn_slowpath+0xc0/0x100
+ [<ffffffff803a1f48>] vsnprintf+0x258/0x6a0
+ [<ffffffff80252e2d>] up+0xd/0x40
+ [<ffffffff80239d80>] release_console_sem+0x1b0/0x200
+ [<ffffffff8021a990>] post_set+0x20/0x40
+ [<ffffffff8084bd8f>] mtrr_trim_uncached_memory+0x332/0x336
+ [<ffffffff80611f1d>] printk+0x40/0x45
+ [<ffffffff80847f57>] setup_arch+0x381/0x5c3
+ [<ffffffff8084198b>] start_kernel+0x6e/0x321
+ [<ffffffff80841407>] x86_64_start_kernel+0xd9/0xdf
+---[ end trace 4eaa2a86a8e2da22 ]---
+init_memory_mapping: 0000000000000000-0000000020000000
+last_map_addr: 20000000 end: 20000000
+(4 early reservations) ==> bootmem [0000000000 - 0020000000]
+  #0 [0000000000 - 0000001000]   BIOS data page ==> [0000000000 - 0000001000]
+  #1 [0000006000 - 0000008000]       TRAMPOLINE ==> [0000006000 - 0000008000]
+  #2 [0000200000 - 0000917528]    TEXT DATA BSS ==> [0000200000 - 0000917528]
+  #3 [000009f000 - 0000100000]    BIOS reserved ==> [000009f000 - 0000100000]
+found SMP MP-table at [ffff8800000f0050] 000f0050
+Zone PFN ranges:
+  DMA      0x00000000 -> 0x00001000
+  DMA32    0x00001000 -> 0x00100000
+  Normal   0x00100000 -> 0x00100000
+Movable zone start PFN for each node
+early_node_map[2] active PFN ranges
+    0: 0x00000000 -> 0x0000009f
+    0: 0x00000100 -> 0x00020000
+Intel MultiProcessor Specification v1.4
+MPTABLE: OEM ID: 
+MPTABLE: Product ID: 
+MPTABLE: APIC at: 0xFEE00000
+Processor #0 (Bootup-CPU)
+I/O APIC #1 Version 17 at 0xFEC00000.
+Processors: 1
+SMP: Allowing 1 CPUs, 0 hotplug CPUs
+Allocating PCI resources starting at 30000000 (gap: 20000000:dfff0000)
+PERCPU: Allocating 45056 bytes of per cpu data
+Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 127266
+Kernel command line: earlyprintk=ttyS0 console=ttyS0 lpj=7999923 root=/dev/hda1
+Initializing CPU#0
+PID hash table entries: 2048 (order: 11, 16384 bytes)
+Fast TSC calibration using PIT
+Detected 2000.002 MHz processor.
+Console: colour dummy device 80x25
+console handover: boot [earlyser0] -> real [ttyS0]
+Dentry cache hash table entries: 65536 (order: 7, 524288 bytes)
+Inode-cache hash table entries: 32768 (order: 6, 262144 bytes)
+Checking aperture...
+No AGP bridge found
+Memory: 506896k/524288k available (4206k kernel code, 388k absent, 16344k reserved, 2004k data, 324k init)
+Calibrating delay loop (skipped) preset value.. 3999.96 BogoMIPS (lpj=7999923)
+Mount-cache hash table entries: 256
+CPU: L1 I Cache: 64K (64 bytes/line), D cache 64K (64 bytes/line)
+CPU: L2 Cache: 1024K (64 bytes/line)
+SMP alternatives: switching to UP code
+Freeing SMP alternatives: 34k freed
+Setting APIC routing to flat
+..TIMER: vector=0x30 apic1=0 pin1=2 apic2=0 pin2=0
+CPU0: M5 Simulator Fake M5 x86_64 CPU stepping 01
+Brought up 1 CPUs
+Total of 1 processors activated (3999.96 BogoMIPS).
+net_namespace: 888 bytes
+NET: Registered protocol family 16
+PCI: Using configuration type 1 for base access
+SCSI subsystem initialized
+usbcore: registered new interface driver usbfs
+usbcore: registered new interface driver hub
+usbcore: registered new device driver usb
+PCI: Probing PCI hardware
+bus: 00 index 0 io port: [0x00-0xffff]
+bus: 00 index 1 mmio: [0x000000-0xffffffffffffffff]
+NET: Registered protocol family 2
+IP route cache hash table entries: 16384 (order: 5, 131072 bytes)
+TCP established hash table entries: 65536 (order: 8, 1048576 bytes)
+TCP bind hash table entries: 65536 (order: 8, 1048576 bytes)
+TCP: Hash tables configured (established 65536 bind 65536)
+TCP reno registered
+NET: Registered protocol family 1
+platform rtc_cmos: registered platform RTC device (no PNP device found)
+HugeTLB registered 2 MB page size, pre-allocated 0 pages
+Installing knfsd (copyright (C) 1996 okir@monad.swb.de).
+msgmni has been set to 991
+io scheduler noop registered
+io scheduler deadline registered
+io scheduler cfq registered (default)
+Real Time Clock Driver v1.12ac
+Linux agpgart interface v0.103
+Serial: 8250/16550 driver4 ports, IRQ sharing disabled
+serial8250: ttyS0 at I/O 0x3f8 (irq = 4) is a 8250
+floppy0: no floppy controllers found
+brd: module loaded
+loop: module loaded
+Intel(R) PRO/1000 Network Driver - version 7.3.20-k3-NAPI
+Copyright (c) 1999-2006 Intel Corporation.
+e100: Intel(R) PRO/100 Network Driver, 3.5.23-k6-NAPI
+e100: Copyright(c) 1999-2006 Intel Corporation
+tun: Universal TUN/TAP device driver, 1.6
+tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+console [netcon0] enabled
+netconsole: network logging started
+Uniform Multi-Platform E-IDE driver
+piix 0000:00:04.0: IDE controller (0x8086:0x7111 rev 0x00)
+pci 0000:00:04.0: enabling device (0000 -> 0001)
+piix 0000:00:04.0: not 100% native mode: will probe irqs later
+    ide0: BM-DMA at 0x1000-0x1007
+    ide1: BM-DMA at 0x1008-0x100f
+hda: M5 IDE Disk, ATA DISK drive
+hdb: M5 IDE Disk, ATA DISK drive
+hda: UDMA/33 mode selected
+hdb: UDMA/33 mode selected
+ide0 at 0x1f0-0x1f7,0x3f6 on irq 14
+isa bounce pool size: 16 pages
+ide1 at 0x170-0x177,0x376 on irq 15
+ide_generic: please use "probe_mask=0x3f" module parameter for probing all legacy ISA IDE ports
+ide-gd driver 1.18
+hda: max request size: 128KiB
+hda: 2096640 sectors (1073 MB), CHS=2080/16/63
+ hda: hda1
+hdb: max request size: 128KiB
+hdb: 4177920 sectors (2139 MB), CHS=4144/16/63
+ hdb: unknown partition table
+ide-cd driver 5.00
+megaraid cmm: 2.20.2.7 (Release Date: Sun Jul 16 00:01:03 EST 2006)
+megaraid: 2.20.5.1 (Release Date: Thu Nov 16 15:32:35 EST 2006)
+megasas: 00.00.04.01 Thu July 24 11:41:51 PST 2008
+Driver 'sd' needs updating - please use bus_type methods
+Driver 'sr' needs updating - please use bus_type methods
+Fusion MPT base driver 3.04.07
+Copyright (c) 1999-2008 LSI Corporation
+Fusion MPT SPI Host driver 3.04.07
+Fusion MPT SAS Host driver 3.04.07
+ieee1394: raw1394: /dev/raw1394 device initialized
+ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+uhci_hcd: USB Universal Host Controller Interface driver
+usbcore: registered new interface driver usblp
+Initializing USB Mass Storage driver...
+usbcore: registered new interface driver usb-storage
+USB Mass Storage support registered.
+serio: i8042 KBD port at 0x60,0x64 irq 1
+serio: i8042 AUX port at 0x60,0x64 irq 12
+mice: PS/2 mouse device common for all mice
+input: AT Translated Set 2 keyboard as /class/input/input0
+device-mapper: ioctl: 4.14.0-ioctl (2008-04-23) initialised: dm-devel@redhat.com
+usbcore: registered new interface driver usbhid
+usbhid: v2.6:USB HID core driver
+oprofile: using timer interrupt.
+TCP cubic registered
+NET: Registered protocol family 10
+IPv6 over IPv4 tunneling driver
+NET: Registered protocol family 17
+RPC: Registered udp transport module.
+RPC: Registered tcp transport module.
+input: PS/2 Generic Mouse as /class/input/input1
+EXT2-fs warning: mounting unchecked fs, running e2fsck is recommended
+VFS: Mounted root (ext2 filesystem).
+Freeing unused kernel memory: 324k freed
+INIT: version 2.86 booting
+mounting filesystems...
+loading script...
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	98675568	18137058	194740
+Times	5944145	6923173	155366
+Times	37688661	38919520	155335
+Times	28254403	22924321	155342
+Times	4531325	22927179	187424
+Times	1723018	4209619	155814
+Times	1715219	4127068	122267
+Times	1686098	4132519	122268
+Times	1686098	4122975	122340
+Times	1688118	4125233	122340
+Times	1686090	4120994	122351
+Times	1686098	4120996	122339
+Times	3689396	6419336	453912
+Times	3701767	6378837	453375
+Times	3703376	6362764	453373
+Times	3699426	6394418	453606
+Times	3747431	6372219	453356
+Times	3755849	6356250	453318
+Times	3734473	6383946	498487
+Times	3760648	6356066	453512
+Times	3734987	6370118	453549
+cov: 0.0027413992368203388	mean: 489.4	iteration: 20

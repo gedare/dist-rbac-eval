@@ -1,0 +1,107 @@
+tar: Data/instructions: time stamp 2014-02-03 23:05:41 is 66092725.990789965 s in the future
+tar: Data/rbac-state: time stamp 2014-02-03 23:05:41 is 66092725.990068458 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519874.989851462 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	62467188	35512543	513655
+Times	52375566	29457848	288593
+Times	15460536	19240601	290723
+Times	38636897	23305295	290537
+Times	10894976	7310463	281661
+Times	10895238	7234364	282810
+Times	32961803	7281946	292147
+Times	10967982	7308261	282899
+Times	10955039	7239954	8311689
+Times	2298307	7276802	259830
+Times	2120964	7241658	261532
+Times	2171432	23283808	260940
+Times	2168156	7262977	261297
+Times	2177153	7251521	261412
+Times	2165884	7252983	12284978
+Times	2177285	7255560	259757
+Times	2180425	7263180	260701
+cov: 6.042834923931666E-4	mean: 906.4	iteration: 16
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	17025542	199901627	1438662
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f033db9e6b1, pid=974, tid=1095321936
+#
+# JRE version: OpenJDK Runtime Environment (7.0_45-b15) (build 1.7.0_45-mockbuild_2013_12_10_15_14-b00)
+# Java VM: OpenJDK 64-Bit Server VM (24.45-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.so+0x7966b1]  JVM_RaiseSignal+0x15f9c1
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /tmp/jvm-974/hs_error.log
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+#
+./doit.sh: line 4:   974 Aborted                 java -classpath ${CLASSPATH}:hwds.jar:gem5OpJni.jar:AccessMatrix.jar:Cpol.jar:Helper.jar:HWDSBitSet.jar:HWDS.jar:PDP_SDP.jar:RbacGraph.jar:Structures.jar -Xms256M -Xmx256M -Djava.library.path=. Simulate.Simulaserial8250: too much work for irq4
+te3 Data/rbac-state 3
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	7842669	122272540	347322
+Times	606986	58052908	224182
+Times	593364	27270738	222379
+Times	599667	23297542	222050
+Times	599878	11295521	221757
+Times	599840	31278854	232495
+Times	599876	11274298	222176
+Times	599850	11279260	223025
+Times	597054	43288994	222162
+Times	596942	11268126	221698
+Times	600915	27303999	223340
+Times	606695	43317938	222110
+Times	601155	23305017	222209
+Times	595732	11298878	222309
+Times	596887	47309559	221771
+Times	602008	11312728	12247501
+Times	599126	10448904	275830
+Times	663578	4794908	192880
+Times	578782	4840638	193180
+Times	578796	4795274	192248
+Times	577512	4794521	192817
+Times	577516	4782390	191890
+cov: 0.00505693594134815	mean: 599.8	iteration: 21
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	9897595	129649086	887863
+Times	3066710	64187558	445734
+Times	1928722	40255186	446363
+Times	1941560	12233045	445814
+Times	1939322	28318442	442647
+Times	1939285	52285047	442817
+Times	1939315	12266487	442503
+Times	1939716	12229591	488542
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007ffcfa41df92, pid=994, tid=1082513744
+#
+# JRE version: OpenJDK Runtime Environment (7.0_45-b15) (build 1.7.0_45-mockbuild_2013_12_10_15_14-b00)
+# Java VM: OpenJDK 64-Bit Server VM (24.45-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.so+0x826f92]  JVM_handle_linux_signal+0x6b9e2
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /tmp/jvm-994/hs_error.log
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+#
+./doit.sh: line 6:   994 Aborted                 java -classpath ${CLASSPATH}:hwds.jar:gem5OpJni.jar:AccessMatrix.jar:Cpol.jar:Helper.jar:HWDSBitSet.jar:HWDS.jar:PDP_SDP.jar:RbacGraph.jar:Structures.jar -Xms256M -Xmx256M -Djava.library.path=. Simulate.Simulaserial8250: too much work for irq4
+te3 Data/rbac-state 7

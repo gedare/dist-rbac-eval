@@ -1,0 +1,68 @@
+tar: Data/instructions: time stamp 2014-03-05 08:19:54 is 68631540.593587788 s in the future
+tar: Data/rbac-state: time stamp 2014-03-05 08:19:54 is 68631540.592967987 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519836.592752933 s in the future
+tar: doit.sh: time stamp 2014-03-05 08:19:54 is 68631540.592399108 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	170280833	63269791	674223
+Times	23721931	42256582	445644
+Times	11676608	11352792	436433
+Times	11670618	11340385	435298
+Times	11839336	31645266	429568
+Times	20055304	79711477	16469702
+Times	8479396	67689608	429879
+Times	8519727	55717017	436626
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007fa4a5895f92, pid=964, tid=1081436496
+#
+# JRE version: OpenJDK Runtime Environment (7.0_45-b15) (build 1.7.0_45-mockbuild_2013_12_10_15_14-b00)
+# Java VM: OpenJDK 64-Bit Server VM (24.45-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.so+0x826f92]  JVM_handle_linux_signal+0x6b9e2
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /tmp/jvm-964/hs_error.log
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+#
+./doit.sh: line 3:   964 Aborted                 java -classpath ${CLASSPATH}:hwds.jar:gem5OpJni.jar:AccessMatrix.jar:Cpol.jar:Helper.jar:HWDSBitSet.jar:HWDS.jar:PDP_SDP.jar:RbacGraph.jar:Structures.jar -Xms256M -Xmx256M -Djava.library.path=. Simulate.Simulaserial8250: too much work for irq4
+te3 Data/rbac-state 1
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	51917451	282313560	1803319
+Times	17149176	67032422	1695337
+Times	3558885	46714065	1692519
+Times	3568386	18689242	5746787
+Times	3623079	18896004	1688573
+Times	3642327	34923532	1687990
+Times	3621585	50971877	1702064
+Times	3622918	42962188	1686541
+Times	3622980	18914245	1686615
+Times	3673076	33102236	1685616
+Times	3583373	30641841	1686058
+Times	3583953	42953852	1672643
+Times	3583326	30947547	1672328
+Times	3584387	42934288	13704367
+Times	3584049	18969466	1672558
+Times	3581789	66694543	1688763
+Times	3583453	42994364	1683401
+Times	3572227	34977721	1671790
+Times	3571811	33314872	5816759
+Times	3706469	12895943	1677004
+Times	3619777	12693444	1682277
+Times	3616068	12707208	1682318
+Times	3687849	12722441	1684492
+Times	3666203	12668740	1681584
+cov: 0.007142596634866262	mean: 1273.2	iteration: 23
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+Exception in thread "main" java.lang.NullPointerException
+	at RbacGraph.RbacGraph.load(RbacGraph.java:641)
+	at PDP_SDP.PDP.init(PDP.java:48)
+	at Simulate.Simulate3.main(Simulate3.java:169)

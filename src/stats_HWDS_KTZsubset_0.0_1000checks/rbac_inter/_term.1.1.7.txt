@@ -1,0 +1,120 @@
+tar: Data/instructions: time stamp 2014-01-29 21:05:43 is 65653527.990917735 s in the future
+tar: Data/rbac-state: time stamp 2014-01-29 21:05:43 is 65653527.990303588 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519874.990087106 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	80833015	49079334	576813
+Times	34586784	31842392	345803
+Times	17452016	19673788	345976
+Times	8517667	31692164	350978
+Times	11905254	7684489	301458
+Times	5861814	7651424	300674
+Times	5873307	7642497	302241
+Times	5872792	7674252	301988
+Times	5949629	19723059	302095
+Times	5942133	7660540	302006
+Times	5928094	19649134	301647
+Times	6036934	7637449	300912
+Times	7365803	7626883	300686
+Times	18339407	39662163	301954
+Times	18353715	7633789	453869
+Times	8570890	23660795	273556
+Times	1339695	7621924	273326
+Times	1329743	3739723	356748
+Times	1393308	3588939	266306
+Times	1300868	3420903	265480
+Times	1315884	3380497	264575
+Times	1316080	3386203	265461
+Times	1302708	3413262	264802
+Times	1317150	3385687	264583
+cov: 0.005575425541108665	mean: 484.6	iteration: 23
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	26844556	243880004	1312589
+Times	2519418	78055154	1205811
+Times	2466273	12072283	1192299
+Times	2463461	24057124	1191991
+Times	2471900	35366735	13209368
+Times	2471594	23318040	1199745
+Times	2471108	11355552	13210434
+Times	2471209	11345878	13212157
+Times	2475315	11324749	1201826
+Times	2469108	23348650	1236444
+Times	2471655	11317012	1201962
+Times	2469182	11323401	1199955
+Times	2469544	27332089	1201265
+Times	2469700	23329222	1202567
+Times	2469653	35363394	1201883
+Times	2474731	47611566	13216284
+Times	2469513	11326273	1191129
+Times	2469276	11350297	3406124
+Times	2440457	39376125	1190714
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f8d53f3bf92, pid=974, tid=1098312016
+#
+# JRE version: OpenJDK Runtime Environment (7.0_45-b15) (build 1.7.0_45-mockbuild_2013_12_10_15_14-b00)
+# Java VM: OpenJDK 64-Bit Server VM (24.45-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.so+0x826f92]  JVM_handle_linux_signal+0x6b9e2
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /tmp/jvm-974/hs_error.log
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+#
+./doit.sh: line 4:   974 Aborted                 java -classpath ${CLASSPATH}:hwds.jar:gem5OpJni.jar:AccessMatrix.jar:Cpol.jar:Helper.jar:HWDSBitSet.jar:HWDS.jar:PDP_SDP.jar:RbacGraph.jar:Structures.jar -Xms256M -Xmx256M -Djava.library.path=. Simulate.Simulaserial8250: too much work for irq4
+te3 Data/rbac-state 3
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	7642516	172773250	294294
+Times	496103	103465978	190152
+Times	493197	21380922	190044
+Times	490660	9357353	190068
+Times	486529	8744821	188350
+Times	486533	8691469	188072
+Times	486539	8716904	188703
+Times	486530	8715509	188669
+Times	487618	20699365	188550
+Times	486380	8683362	198738
+Times	501483	8686344	188844
+Times	486379	8693870	188217
+Times	486373	8694711	188252
+Times	486400	8705480	188613
+cov: 0.0010504676772804783	mean: 1241.2	iteration: 13
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	7586553	96358487	882687
+Times	915123	60397735	402288
+Times	688946	25165119	402232
+Times	687150	9151660	401755
+Times	693792	8861597	404876
+Times	692981	8843407	404364
+Times	693011	8822341	404790
+Times	693007	8849709	404756
+Times	694811	20823692	404817
+Times	693507	8829222	404581
+Times	693198	20818131	404170
+Times	693514	8812549	404259
+Times	693510	8821418	404394
+Times	705961	20835640	404743
+Times	693503	8845918	404180
+Times	693021	8809088	403933
+Times	693883	8812915	404673
+Times	693880	48831936	404346
+Times	693925	4579450	467889
+Times	742872	4057561	389614
+Times	663081	4085846	389472
+Times	663084	4046681	387351
+Times	660291	4095572	388550
+Times	663659	4070759	387343
+cov: 0.004926985913033845	mean: 581.2	iteration: 23

@@ -1,0 +1,65 @@
+tar: Data/instructions: time stamp 2014-03-04 11:14:59 is 68555645.59424701 s in the future
+tar: Data/rbac-state: time stamp 2014-03-04 11:14:59 is 68555645.593633046 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519836.593418704 s in the future
+tar: doit.sh: time stamp 2014-03-04 11:14:59 is 68555645.593092488 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	21915719	10373115	378811
+Times	1979284	41993434	225523
+Times	1970947	11001488	219841
+Times	1934276	9406681	207518
+Times	1533449	23484472	207920
+Times	1580249	2288197	208790
+Times	1563274	2289200	207957
+Times	1563214	2285966	233533
+Times	1595178	2276959	207595
+Times	1595184	2277676	210400
+Times	1594444	2228471	209085
+Times	1628799	2291258	210804
+Times	1370360	2287633	132234
+Times	1370376	2285177	132234
+Times	1370311	2281307	132249
+Times	1371328	2227119	133411
+Times	1370369	2278044	132234
+Times	1370387	2278227	132234
+Times	1370409	2278119	132234
+Times	1370477	2288803	132234
+Times	1370473	2278120	132196
+cov: 0.00196146313815771	mean: 1140.0	iteration: 20
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	20226032	72422516	431663
+Times	844638	93458278	343985
+Times	763064	80100524	340668
+Times	775474	56279539	339970
+Times	756958	13736250	332143
+Times	751881	3430524	332917
+Times	752116	3409410	347736
+Times	751967	3409576	347385
+Times	751980	3410742	330721
+Times	752198	3399888	347763
+Times	752109	3415712	350203
+Times	752685	3401468	350602
+Times	752590	3408356	349077
+Times	751945	3408167	383473
+Times	752199	3400501	362725
+Times	752373	3385563	351368
+Times	752208	3433037	346867
+Times	752261	3419206	349077
+Times	752076	3420596	349703
+Times	752250	3408949	348776
+Times	751945	3438842	333179
+cov: 0.0034712434628448117	mean: 1711.6	iteration: 20
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+Exception in thread "main" java.lang.NoClassDefFoundError: hwds/HWDS
+	at Simulate.Simulate3.main(Simulate3.java:229)
+Caused by: java.lang.ClassNotFoundException: hwds.HWDS
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	... 1 more

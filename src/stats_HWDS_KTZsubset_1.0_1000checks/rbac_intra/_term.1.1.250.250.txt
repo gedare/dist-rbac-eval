@@ -1,0 +1,72 @@
+tar: Data/instructions: time stamp 2014-02-07 01:55:05 is 66362089.990811209 s in the future
+tar: Data/rbac-state: time stamp 2014-02-07 01:55:05 is 66362089.99017037 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519874.98995453 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Exception in thread "main" java.lang.NullPointerException
+	at AccessMatrix.SDP_ACM.access_request(SDP_ACM.java:54)
+	at Simulate.Simulate3.main(Simulate3.java:281)
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	6503539	64618768	1390770
+Times	231449	51293044	1208736
+Times	225393	8702638	1182585
+Times	223378	28724096	1182983
+Times	227304	8931390	1177341
+Times	227276	8918529	1181037
+Times	229058	8879751	1195992
+Times	227268	28899794	1180117
+Times	227243	31276015	1178896
+Times	227962	20904277	1177951
+Times	227469	8921748	1180985
+Times	227282	8877029	29201787
+Times	227191	20872262	1185363
+Times	227191	8898065	1191338
+Times	227185	20921130	1177603
+Times	226993	8905728	1179605
+Times	226966	24974640	7899796
+Times	226966	4812787	1279025
+Times	297611	4509751	1191539
+Times	221619	4282348	1195419
+Times	223366	16297513	1196938
+Times	223407	4271519	1196035
+Times	222653	4287281	1200486
+Times	239139	4271205	13231701
+Times	223272	4271491	1195997
+Times	223264	4278536	1197047
+cov: 0.0016762128766864988	mean: 533.6	iteration: 25
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	3074666	150321441	195305
+Times	85891	79590769	63733
+Times	82874	11402965	63376
+Times	82371	11432958	63523
+Times	81462	35448823	61038
+Times	82119	25450826	61109
+Times	81401	23417975	61123
+Times	81395	11414312	61216
+Times	81437	11422953	61220
+Times	81437	11444863	61094
+Times	81472	27459637	61038
+Times	81437	11469362	61154
+Times	81445	11412392	61054
+Times	81411	39436094	61197
+Times	81445	11414494	61063
+Times	81488	27468143	61634
+Times	94274	5450098	126289
+Times	149144	4815989	52993
+Times	74760	4788906	52323
+Times	74760	4807017	52716
+Times	74940	4793882	51871
+Times	74940	4794934	52062
+cov: 0.0019021945697349648	mean: 599.4	iteration: 21

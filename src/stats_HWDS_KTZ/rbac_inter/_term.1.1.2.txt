@@ -1,0 +1,49 @@
+tar: Data/timinginfo: time stamp 2013-12-20 18:50:55 is 62187904.579484062 s in the future
+tar: Data/instructions: time stamp 2014-01-03 06:49:43 is 63354232.578919282 s in the future
+tar: Data/rbac-state: time stamp 2014-01-03 06:49:43 is 63354232.578587196 s in the future
+tar: Data: time stamp 2013-12-26 03:26:56 is 62650865.578374639 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	25993056	113755	449238
+Times	3131924	53515	238664
+Times	3099174	54320	227641
+Times	3156543	54431	241378
+Times	3194296	53067	240070
+Times	3212643	53067	241073
+cov: 0.012392020968022034	mean: 5367.6	iteration: 5
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	42616096	571255	465616
+Times	926977	305524	352791
+Times	914361	305588	353015
+Times	927585	304126	351759
+Times	916472	301408	352184
+Times	914792	301848	353529
+cov: 0.006538628232709572	mean: 30369.2	iteration: 5
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	7646837	196300	166587
+Times	129906	120846	33261
+Times	127488	117604	32495
+Times	127518	117565	32496
+Times	126757	113086	32002
+Times	126240	112946	32002
+Times	126324	112945	32002
+Times	126319	112945	32002
+cov: 0.01801153964935088	mean: 11389.2	iteration: 7
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	7438367	152976	371939
+Times	277400	107130	223096
+Times	257374	102750	202632
+Times	257343	102717	202590
+Times	246045	97098	187617
+Times	246045	97098	187617
+Times	246045	97098	187617
+Times	246044	97098	188474
+Times	246045	97763	187922
+cov: 0.0030818841951058573	mean: 9722.4	iteration: 8

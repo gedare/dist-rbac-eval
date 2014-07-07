@@ -1,0 +1,86 @@
+tar: Data/instructions: time stamp 2014-01-28 08:32:17 is 65521921.991342393 s in the future
+tar: Data/rbac-state: time stamp 2014-01-28 08:32:17 is 65521921.990731728 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519874.99051607 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Exception in thread "main" java.lang.NullPointerException
+	at AccessMatrix.SDP_ACM.access_request(SDP_ACM.java:54)
+	at Simulate.Simulate3.main(Simulate3.java:281)
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	27143223	7425064	1400179
+Times	232942	7466573	1266711
+Times	236422	7333172	1261488
+Times	232797	6871907	1244525
+Times	239295	6860657	1238635
+Times	239240	30305352	1229852
+Times	240134	35230468	1232523
+Times	239283	6423247	1244967
+Times	237819	6461093	1229967
+Times	237824	6460812	1229782
+Times	237707	11132026	1223491
+Times	240021	4573838	1209309
+Times	240469	28345063	1212062
+Times	253354	906715	1212791
+Times	240431	898587	1212681
+Times	240256	898492	17248801
+Times	240148	899939	1212447
+Times	240125	899148	1212102
+cov: 0.0038942236580530834	mean: 1125.2	iteration: 17
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	3353241	8738912	225790
+Times	85983	8752385	71866
+Times	87947	8817826	68894
+Times	97856	8593887	68151
+Times	86453	9661747	69340
+Times	88676	41867571	66532
+Times	80094	24985695	54324
+Times	78905	8986855	54168
+Times	79057	8995565	54168
+Times	78939	8990379	54171
+Times	78971	8937963	54145
+Times	78896	9008223	54384
+Times	78282	5600389	72544
+Times	78236	1144217	71749
+Times	78279	1162720	71749
+Times	77963	17165409	72468
+Times	78565	1146272	72225
+Times	78576	1157051	72293
+Times	78563	1145783	73841
+Times	78453	1145247	72260
+Times	78571	1146273	72261
+cov: 0.004452452090525949	mean: 1434.6	iteration: 20
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	10030505	20987011	328529
+Times	84485	21321486	138155
+Times	87394	8766623	137490
+Times	84923	8668804	136330
+Times	87242	9133174	138553
+Times	89492	46264768	136403
+Times	81985	8669428	129266
+Times	80868	8689305	128052
+Times	80793	8695947	127969
+Times	80793	8740752	128057
+Times	80862	8709122	127969
+Times	93215	16742015	128189
+Times	80547	25216060	143985
+Times	80520	923862	102657
+Times	80520	912714	102690
+Times	80622	914657	103221
+Times	80701	914779	103692
+Times	80700	914888	103695
+cov: 0.004729117107364794	mean: 1144.6	iteration: 17

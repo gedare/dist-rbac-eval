@@ -1,0 +1,57 @@
+tar: Data/instructions: time stamp 2014-01-16 22:41:44 is 64533891.374051049 s in the future
+tar: Data/rbac-state: time stamp 2014-01-16 22:41:44 is 64533891.373525853 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64517677.373311633 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	69411231	223932	666339
+Times	25030086	159844	26288515
+Times	51241310	164424	424621
+Times	15539020	159098	365767
+Times	14300907	163448	376238
+Times	30052972	163447	376262
+Times	5626209	150711	372777
+Times	5606214	150911	372590
+Times	5620664	152026	373623
+Times	7435487	151360	366168
+Times	5342844	150626	363052
+cov: 0.0038419699186745338	mean: 5037.0	iteration: 10
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	15554256	1349258	1146077
+Times	2500199	1107691	1033411
+Times	2460829	1086952	1036517
+Times	2449183	1122030	1036890
+Times	2472633	1075441	1031322
+Times	2483981	1070739	1027258
+Times	2471478	1070275	1040664
+Times	2485078	1081893	1029117
+Times	2473022	1073960	1030677
+cov: 0.004367201360494888	mean: 35815.0	iteration: 8
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	7930515	426883	283335
+Times	452046	349221	157014
+Times	451873	350304	157040
+Times	452878	351578	169342
+Times	454839	347808	164215
+Times	454674	348417	161008
+Times	454675	348608	170077
+Times	470697	348268	162046
+Times	457942	358033	161140
+cov: 0.012498724142320904	mean: 11673.6	iteration: 8
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	8221899	343027	785066
+Times	791040	290858	614383
+Times	790389	290888	620722
+Times	790387	290858	615149
+Times	784536	294185	602767
+Times	796561	297327	602664
+Times	784227	296636	602664
+Times	783754	296676	603587
+Times	784960	296712	602848
+cov: 0.0040944921948696976	mean: 9876.4	iteration: 8

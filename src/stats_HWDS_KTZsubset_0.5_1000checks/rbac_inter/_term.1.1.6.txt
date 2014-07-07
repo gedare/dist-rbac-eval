@@ -1,0 +1,94 @@
+tar: Data/instructions: time stamp 2014-02-02 16:00:20 is 65980804.990966631 s in the future
+tar: Data/rbac-state: time stamp 2014-02-02 16:00:20 is 65980804.990332208 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519874.990116068 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	68415753	36718474	554385
+Times	25318376	32502912	17166264
+Times	8977070	6098915	12308517
+Times	4983238	6070680	282362
+Times	5037713	18295837	283040
+Times	5022266	18323653	282942
+Times	5022160	6278839	281843
+Times	5022070	6294084	283565
+Times	5022289	18296630	283512
+Times	5039640	6300849	283148
+Times	5093679	6306779	31198117
+Times	5087464	6286666	283040
+Times	5047296	6313852	283057
+Times	5046858	6292774	281555
+cov: 0.001975651805766742	mean: 1049.6	iteration: 13
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	25155359	217882713	1184860
+Times	2379435	123822561	1039516
+Times	2296724	11201687	1055565
+Times	2292996	35277235	13065148
+Times	2343707	13294638	13037436
+Times	2270064	11077271	1023121
+Times	2284043	31120103	1020586
+Times	2269617	23042106	1023214
+Times	2269502	11037085	1023623
+Times	2269744	11082266	1023130
+Times	2283753	11095168	1023663
+Times	2283840	11090077	1023286
+Times	2270110	39111002	1023528
+Times	2270087	23062173	1021669
+Times	2270169	11076699	1021160
+Times	2284452	23056972	13041028
+Times	2272335	11030118	13050553
+Times	2268813	43053025	1023945
+Times	2268745	11047229	1023135
+Times	2289337	39092398	17055847
+Times	2283868	11070674	1023881
+Times	2283724	11050607	1023116
+Times	2268191	22885361	1023566
+Times	2268809	23056266	1024110
+Times	2268672	11044282	1024392
+Times	2281470	15074632	1039753
+Times	2269057	23074000	1023187
+Times	2268844	27090882	1021865
+Times	2268566	11063240	1023588
+Times	2270566	19068452	13052364
+cov: 0.296029245558449	mean: 3170.6	iteration: 26
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	7264676	114112542	265121
+Times	395332	75304346	162457
+Times	394117	10284904	161731
+Times	391965	22101686	161204
+Times	393186	22263231	160909
+Times	393200	38270839	160980
+Times	393166	22298008	160809
+Times	393166	10283471	161300
+Times	393231	10238024	161300
+Times	396558	10261977	161267
+Times	393982	10235550	161224
+Times	392926	10263665	160923
+Times	392928	10253942	160854
+cov: 0.0013352563825964842	mean: 1707.8	iteration: 12
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f1cc83a04f0, pid=994, tid=1104230736
+#
+# JRE version: OpenJDK Runtime Environment (7.0_45-b15) (build 1.7.0_45-mockbuild_2013_12_10_15_14-b00)
+# Java VM: OpenJDK 64-Bit Server VM (24.45-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.so+0x3b64f0]  dlerror+0x3b64f0
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /tmp/jvm-994/hs_error.log
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+#
+./doit.sh: line 6:   994 Aborted                 java -classpath ${CLASSPATH}:hwds.jar:gem5OpJni.jar:AccessMatrix.jar:Cpol.jar:Helper.jar:HWDSBitSet.jar:HWDS.jar:PDP_SDP.jar:RbacGraph.jar:Structures.jar -Xms256M -Xmx256M -Djava.library.path=. Simulate.Simulaserial8250: too much work for irq4
+te3 Data/rbac-state 7

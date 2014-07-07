@@ -1,0 +1,96 @@
+tar: Data/instructions: time stamp 2014-01-30 13:36:31 is 65712975.990789842 s in the future
+tar: Data/rbac-state: time stamp 2014-01-30 13:36:31 is 65712975.990067904 s in the future
+tar: Data: time stamp 2014-01-16 18:11:30 is 64519874.989851097 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Unauthorised
+Exception in thread "main" java.lang.NullPointerException
+	at AccessMatrix.SDP_ACM.access_request(SDP_ACM.java:54)
+	at Simulate.Simulate3.main(Simulate3.java:281)
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	6605067	112216246	1341563
+Times	230432	40451336	1251233
+Times	226184	46686080	1237457
+Times	224305	10659874	1236969
+Times	228952	34689436	1231971
+Times	228958	10646409	1233766
+Times	229616	38682762	1248128
+Times	228932	22680694	1232700
+Times	228956	10684912	1232996
+Times	228960	10698788	1231279
+Times	228786	38685843	13265155
+Times	229898	26683710	5289551
+Times	228956	10644986	1232849
+Times	228956	10669064	1233097
+Times	228960	22664551	1232344
+Times	228706	10648996	5388552
+Times	229845	5168458	1325962
+Times	292732	4584006	1237663
+Times	214003	4575527	1257622
+Times	214670	4575878	1242159
+Times	214362	4595459	1256809
+Times	215727	4577744	1241097
+cov: 0.0022786446715143825	mean: 572.2	iteration: 21
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	3025784	123801870	198904
+Times	79585	67570963	72883
+Times	78051	10828344	72692
+Times	77499	22823106	72544
+Times	75479	22852078	72897
+Times	75477	10827862	73074
+Times	75576	10875485	73114
+Times	75477	22840614	73120
+Times	75515	10886660	73159
+Times	75479	10887243	74805
+Times	75546	10839037	72965
+Times	76266	10842387	73147
+Times	76547	10834382	73158
+cov: 0.0023076036919502476	mean: 1356.6	iteration: 12
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	3021825	128275117	297154
+Times	82073	70548825	97724
+Times	79182	10780612	98739
+Times	78500	38768876	97590
+Times	75821	11060236	102781
+Times	75815	23050471	12113164
+Times	75805	11060729	98062
+Times	75802	11033031	96924
+Times	75902	11120487	96886
+Times	75845	11069420	96747
+Times	75810	39037683	96931
+Times	76451	11052052	96907
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f069e9dff92, pid=994, tid=1094535504
+#
+# JRE version: OpenJDK Runtime Environment (7.0_45-b15) (build 1.7.0_45-mockbuild_2013_12_10_15_14-b00)
+# Java VM: OpenJDK 64-Bit Server VM (24.45-b08 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# V  [libjvm.so+0x826f92]  JVM_handle_linux_signal+0x6b9e2
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# An error report file with more information is saved as:
+# /tmp/jvm-994/hs_error.log
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   http://icedtea.classpath.org/bugzilla
+#
+./doit.sh: line 6:   994 Aborted                 java -classpath ${CLASSPATH}:hwds.jar:gem5OpJni.jar:AccessMatrix.jar:Cpol.jar:Helper.jar:HWDSBitSet.jar:HWDS.jar:PDP_SDP.jar:RbacGraph.jar:Structures.jar -Xms256M -Xmx256M -Djava.library.path=. Simulate.Simulaserial8250: too much work for irq4
+te3 Data/rbac-state 7
