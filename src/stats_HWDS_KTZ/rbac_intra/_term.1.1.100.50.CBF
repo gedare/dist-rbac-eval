@@ -1,0 +1,31 @@
+tar: Data/timinginfo: time stamp 2013-12-20 18:50:55 is 62187904.579404184 s in the future
+tar: Data/instructions: time stamp 2014-01-04 00:40:26 is 63418475.578783694 s in the future
+tar: Data/rbac-state: time stamp 2014-01-04 00:40:26 is 63418475.578449277 s in the future
+tar: Data: time stamp 2013-12-26 03:26:56 is 62650865.578237607 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	52598761	0	0
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at Simulate.Simulate3.main(Simulate3.java:334)
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	58340111	0	0
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at Simulate.Simulate3.main(Simulate3.java:334)
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: -1
+	at java.util.ArrayList.elementData(ArrayList.java:400)
+	at java.util.ArrayList.get(ArrayList.java:413)
+	at HWDSBitSet.PDP_HWDSBitSet.request(PDP_HWDSBitSet.java:45)
+	at HWDSBitSet.SDP_HWDSBitSet.initiate_session_request(SDP_HWDSBitSet.java:38)
+	at Simulate.Simulate3.main(Simulate3.java:261)
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	45805000	0	0
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at Simulate.Simulate3.main(Simulate3.java:334)

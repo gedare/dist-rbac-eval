@@ -1,0 +1,52 @@
+tar: Data/timinginfo: time stamp 2013-12-20 18:50:55 is 62187904.579404184 s in the future
+tar: Data/instructions: time stamp 2014-01-04 01:51:03 is 63422712.578783203 s in the future
+tar: Data/rbac-state: time stamp 2014-01-04 01:51:03 is 63422712.578447789 s in the future
+tar: Data: time stamp 2013-12-26 03:26:56 is 62650865.578235341 s in the future
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 1
+Times	422770491	513538	1018266
+Times	66780757	492792	810218
+Times	67118438	490544	811791
+Times	16679945	435613	730384
+Times	16687697	384982	758154
+Times	44311071	380210	761856
+Times	24232500	380209	28784283
+Times	52191023	372985	753900
+Times	32183711	375618	758355
+cov: 0.01224715897013937	mean: 5050.4	iteration: 8
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 3
+Times	31942957	3164523	2590423
+Times	25108931	2904986	2468952
+Times	20077120	2885359	2464499
+Times	19957973	2860711	2459328
+Times	20268062	2850709	2455212
+Times	64124218	2884546	2443251
+cov: 0.007511237517158084	mean: 38363.0	iteration: 5
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 6
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	8430589	1014135	567890
+Times	1245521	941208	448760
+Times	1252800	937569	450141
+Times	1226023	911157	444487
+Times	1277506	844072	461632
+Times	1241285	844795	461086
+Times	1230962	837892	462310
+Times	1251289	849901	463288
+Times	1243811	855722	462711
+cov: 0.0079280668977762	mean: 11285.8	iteration: 8
+OpenJDK 64-Bit Server VM warning: Can't detect initial thread stack location - find_vma failed
+algorithm 7
+OpenJDK 64-Bit Server VM warning: You have loaded library /libgem5OpJni.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+Times	24117741	970734	1265297
+Times	17051292	884751	1101551
+Times	17565610	880097	1100276
+Times	16953191	686180	853237
+Times	17761603	672425	870412
+Times	34625104	675267	867746
+Times	10688393	695600	869663
+Times	18660620	672800	867113
+cov: 0.014926155921072555	mean: 9072.2	iteration: 7
